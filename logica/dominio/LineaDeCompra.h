@@ -5,12 +5,18 @@
 #ifndef LABORATORIO3_LINEADECOMPRA_H
 #define LABORATORIO3_LINEADECOMPRA_H
 
-
-
 class LineaDeCompra {
+    private:
+        float precioCompra;
+    public:
+        //CONSTRUCTORES
+        LineaDeCompra(float precioCompra);
 
+        //GETTERS
+        float getPrecioCompra();
+
+        //SETTERS
+        void setPrecioCompra(float precioCompra);
 };
-
-
 
 #endif //LABORATORIO3_LINEADECOMPRA_H
