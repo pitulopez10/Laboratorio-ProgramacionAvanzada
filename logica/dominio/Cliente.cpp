@@ -2,13 +2,15 @@
 
 using namespace std;
 
+//CONSTRUCTORES
 ClienteRegistrado :: ClienteRegistrado(int rut, string nombreCompleto, string direccion, string correo) {
     this-> rut = rut;
     this-> nombreCompleto = nombreCompleto;
     this-> direccion = direccion;
     this-> correo = correo;
 }
-    
+
+//GETTERS
 int ClienteRegistrado::getRut() {
     return rut;
 }
@@ -25,6 +27,7 @@ string ClienteRegistrado::getCorreo() {
     return correo;
 }
 
+//SETTERS
 void ClienteRegistrado::setNombreCompleto(string nombreCompleto) {
     this-> nombreCompleto = nombreCompleto;
 }
