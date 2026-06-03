@@ -18,12 +18,16 @@ class Venta {
         DTHora hora;
         float precioTotal;
     public:
+        //CONSTRUCTORES
         Venta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal);
+
+        //GETTERS
         string getIdVenta();
         DTFecha getFecha();
         DTHora getHora();
         float getPrecioTotal();
 
+        //SETTERS
         void setFecha(DTFecha fecha);
         void setHora(DTHora hora);
         void setPrecioTotal(float precioTotal);
