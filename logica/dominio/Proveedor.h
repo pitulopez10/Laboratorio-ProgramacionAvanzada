@@ -4,11 +4,41 @@
 
 #ifndef LABORATORIO3_PROVEEDOR_H
 #define LABORATORIO3_PROVEEDOR_H
+#include <string>
+#include <iostream>
 
-
+using namespace std;
 
 class Proveedor {
 
+private:
+
+    int rut, tiempoEntrega;
+    string nombre, telContacto, nombreContacto;
+
+public:
+
+    //CONSTRUCTORES
+    Proveedor();
+    Proveedor(int rut, int tiempoEntrega, string nombre, string telContacto, string nombreContacto);
+
+    //GETTERS
+
+    int getRut();
+    int getTiempoEntrega();
+    string getNombre();
+    string getTelContacto();
+    string getNombreContacto();
+
+    //SETTERS
+
+    void setRut(int rut);
+    void setTiempoEntrega(int tiempoEntrega);
+    void setNombre(string nombre);
+    void setTelContacto(string telContacto);
+    void setNombreContacto(string nombreContacto);
+
+    //METODOS
 };
 
 
