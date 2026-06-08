@@ -4,7 +4,9 @@
 
 #ifndef LABORATORIO3_EMPLEADOCONTROLLER_H
 #define LABORATORIO3_EMPLEADOCONTROLLER_H
-#include "..dominio/Empleado.h"
+#include "../dominio/Venta.h"
+#include "../dominio/DTFecha.h"
+#include "../dominio/DTHora.h"
 #include <string>
 #include <vector>
 using namespace std;
@@ -14,11 +16,15 @@ class AdminController;
 class EmpleadoController {
     private:
         AdminController& adminController;
+        vector<Venta*> venta;
+        string rut, nombreCompleto, direccion, correo;
     public:
         EmpleadoController(AdminController& adminController);
 
-        bool agregarEmpleado(const string& nombre, const string& apellido, int& idEmpleado);
-        Empleado* buscarEmpleado(int idEmpleado) const;
+        bool registrarVenta(string idVenta,DTFecha fecha,DTHora hora, float precioTotal);
+        void consultarHistorialDeCompras(string rut) const;
+        void consultarStock();
+        void altaClienteRegistrado(string rut, string nombreCompleto, string direccion, string correo);
 };
 
 

@@ -3,19 +3,28 @@
 //
 
 #include "Venta.h"
-#include <iostream>
+#include <vector>
+#include "LineaDeDetalle.h"
 
 using namespace std;
 
 //CONSTRUCTORES
-Venta :: Venta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal) {
+Venta ::Venta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal) {
     this-> idVenta = idVenta;
     this-> fecha = fecha;
     this-> hora = hora;
     this-> precioTotal = precioTotal;
 }
 
+void Venta::agregarLinea(LineaDeDetalle* linea) {
+    this->lineas.push_back(linea);
+}
+
 //GETTERS
+
+vector<LineaDeDetalle*> Venta::getLineas() {
+    return this->lineas;
+}
 
 string Venta :: getIdVenta() {
     return idVenta;

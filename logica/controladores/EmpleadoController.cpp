@@ -3,30 +3,34 @@
 //
 
 #include "EmpleadoController.h"
-#include "../dominio/MenuEmpleado.h"
+#include "AdminController.h"
 #include <string>
 #include <vector>
+#include "../dominio/Venta.h"
+#include "../dominio/DTFecha.h"
+#include "../dominio/DTHora.h"
 using namespace std;
 
-EmpleadoController::EmpleadoController() {}
+//EmpleadoController::EmpleadoController() {}
 
-EmpleadoController::~EmpleadoController() {
-    for (Empleado* e : empleados)
-        delete e;
+EmpleadoController::EmpleadoController(AdminController& adminController): adminController(adminController) {
+
 }
 
-Empleado* EmpleadoController::buscarEmpleado(int idEmpleado) const {
-    for (Empleado* e : empleados)
-        if (e->getIdEmpleado() == idEmpleado)
-            return e;
-    return nullptr;
+bool EmpleadoController::registrarVenta(string idVenta,DTFecha fecha,DTHora hora, float precioTotal) {
+
 }
 
 
-bool EmpleadoController::agregarEmpleado(const string& nombre, const string& apellido, int idEmpleado) {
-    if (buscarEmpleado(idEmpleado) != nullptr)
-        return false;  //El empleado ya existe
-    empleados.push_back(new Empleado(nombre, apellido, idEmpleado));
-    return true;
+void EmpleadoController::consultarHistorialDeCompras(string rut) const {
+
 }
 
+
+void EmpleadoController::consultarStock() {
+
+}
+
+void altaClienteRegistrado(string rut, string nombreCompleto, string direccion, string correo) {
+
+}

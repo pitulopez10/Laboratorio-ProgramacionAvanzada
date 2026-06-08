@@ -15,19 +15,7 @@ class MenuEmpleado {
 
     public:
         MenuEmpleado(EmpleadoController* controller);
-
-        //GETTERS
-        string getNombre();
-        string getApellido();
-        int getIdEmpleado();
-
-        //SETTERS
-        void setNombre(string nombre);
-        void setApellido(string apellido);
-        void setIdEmpleado(int idEmpleado);
-
-        //METODOS
-        void MenuEmpleado::MenuEmp();
+        void mostrar();
 };
 
 

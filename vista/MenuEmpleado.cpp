@@ -8,68 +8,57 @@
 #include <iostream>
 using namespace std;
 
-MenuEmpleado::MenuEmpleado(EmpleadoController* controlador) {
-    this->controlador = controlador;
+MenuEmpleado::MenuEmpleado(EmpleadoController* controller) {
+    this->controller = controller;
 }
 
-MenuEmpleado::MenuEmpleado(string nombre, string apellido, int idEmpleado) {
-    this->nombre = nombre;
-    this->apellido = apellido;
-    this->idEmpleado = idEmpleado;
-}
-
-void MenuEmpleado::MenuEmp() {
+void MenuEmpleado::mostrar() {
     int opcion;
     do {
         cout << "=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
         cout << "|        MENU EMPLEADOS       |";
         cout << "=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
-        cout << "1. Agregar Empleado" << endl;
-        cout << "2. Modificar Empleado" << endl;
-        cout << "3. Listar Empleados" << endl;
+        cout << "1. Registrar una venta" << endl;
+        cout << "2. Consultar historial de compras de un cliente registrado" << endl;
+        cout << "3. Consultar stock" << endl;
+        cout << "4. Dar de alta a cliente registrado" << endl;
         cout << "0. Volver" << endl;
         cout << "Elegir opcion: " << endl;
         cin >> opcion;
 
-        if (opcion == 1) {
-            string nombre, apellido, idEmpleado;
-            cout << "Ingrese nombre del empleado: " << endl; getline(cin, nombre);
-            cout << "Ingrese apellido del empleado: " << endl; getline(cin, apellido);
-            cout << "Ingrese el id del empleado:" << endl; cin >> idEmpleado;
-            if (ctrl.agregarEmpleado(nombre, apellido, idEmpleado)) {
-                cout << "El empleado fue agregado correctamente" << endl;
+        switch (opcion) {
+            case 1: {
+                string producto, cantidad;
+                cout << "Ingrese producto: " << endl; getline(cin, producto);
+                cout << "Ingrese cantidad: " << endl; getline(cin, cantidad);
+                cout << "La venta fue realizada correctamente" << endl;
+                cout << "No se puede realizar la venta" << endl;
+
+                break;
             }
-            else
-                cout << "El empleado ya existe" << endl;
+            case 2: {
+                string rut;
+                cout << "Ingrese RUT: " << endl; getline(cin, rut);
+                controller->consultarHistorialDeCompras(rut);
+                break;
+            }
+            case 3: {
+                controller->consultarStock();
+                break;
+            }
+            case 4: {
+                string rut, nombreCompleto, direccion, correo;
+                cout << "Ingrese nombre completo" << endl; getline(cin, nombreCompleto);
+                cout << "Ingrese direccion " << endl; getline(cin, direccion);
+                cout << "Ingrese correo " << endl; getline(cin, correo);
+                controller->altaClienteRegistrado(rut, nombreCompleto, direccion, correo);
+                break;
+            }
         }
     }while (opcion != 0);
 }
 
-//GETTERS
-string MenuEmpleado::getNombre() {
-    return this->nombre;
-}
-
-string MenuEmpleado::getApellido() {
-    return this->apellido;
-}
 
 
-int MenuEmpleado::getIdEmpleado() {
-    return this->idEmpleado;
-}
-
-//SETTERS
-void MenuEmpleado::setNombre(string nombre) {
-    this->nombre = nombre;
-}
-
-void MenuEmpleado::setApellido(string apellido) {
-    this->apellido = apellido;
-}
-
-void MenuEmpleado::setIdEmpleado(int idEmpleado) {
-    this->idEmpleado = idEmpleado;
-}
 
 
