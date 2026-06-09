@@ -11,7 +11,6 @@ MenuPrincipal::MenuPrincipal(AdminController* adminCtrl,EmpleadoController* empl
 : menuAdmin(*adminCtrl),
   menuEmpleado(empleadoCtrl),
   menuCliente(ventaCtrl)
-  //el cliente realizar compras,consultar compras, calificar productos por eso se relaciona con ventactrl
 {
 }
 
