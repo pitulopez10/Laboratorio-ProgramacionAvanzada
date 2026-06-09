@@ -19,9 +19,9 @@ void MenuPrincipal :: mostrar() {
     int opcion;
 
     do {
-        cout<<"\n========================\n";
-        cout<<"Sistema Stock y Ventas\n";
-        cout<<"\n========================\n";
+        cout<<"=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
+        cout<<"|        SISTEMA DE STOCK Y VENTAS        |";
+        cout<<"=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
 
         cout<<"1. Iniciar sesion como Administrador\n";
         cout<<"2. Iniciar sesion como Empleado\n";
