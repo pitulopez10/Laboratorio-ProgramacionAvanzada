@@ -25,7 +25,7 @@ void MenuPrincipal :: mostrar() {
         cout<<"1. Iniciar sesion como Administrador\n";
         cout<<"2. Iniciar sesion como Empleado\n";
         cout<<"3. Iniciar sesion como Cliente\n";
-        cout<<"4. Salir\n";
+        cout<<"0. Salir\n";
         cout<<"Seleccione opcion:";
         cin>>opcion;
 
@@ -39,10 +39,10 @@ void MenuPrincipal :: mostrar() {
             case 3:{
                 menuCliente.mostrar();
                 break;}
-            case 4:{
+            case 0:{
                 cout<<"Saliendo...\n";
                 break;}
             default: cout<<"Opcion invalida\n";
         }
-    }while(opcion != 4);
+    }while(opcion != 0);
 }
