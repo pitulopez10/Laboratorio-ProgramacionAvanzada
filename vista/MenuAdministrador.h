@@ -4,10 +4,25 @@
 
 #ifndef LABORATORIO3_MENUADMINISTRADOR_H
 #define LABORATORIO3_MENUADMINISTRADOR_H
-
-
+#include "../logica/controladores/AdminController.h"
 
 class MenuAdministrador {
+    private:
+        AdminController& adminController;
+
+        //Funciones para agregar.
+        void agregarProducto();
+        void agregarCategoria();
+        void agregarProveedor();
+
+        //Funciones para listar,
+        void listarProductos();
+        void listarCategorias();
+        void listarProveedores();   
+
+    public:
+        MenuAdministrador(AdminController& adminController);
+        void mostrar();
 
 };
 
