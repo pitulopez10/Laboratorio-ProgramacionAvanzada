@@ -1,16 +1,22 @@
-//
-// Created by facuw on 3/6/2026.
-//
-
 #ifndef LABORATORIO3_MENUPRINCIPAL_H
 #define LABORATORIO3_MENUPRINCIPAL_H
+#include "../logica/controladores/EmpleadoController.h"
+#include "../logica/controladores/AdminController.h"
+#include "../logica/controladores/VentaController.h"
 
-
+#include <string>
+using namespace std;
 
 class MenuPrincipal {
-
+    private:
+        MenuAdministrador menuAdmin;
+        MenuEmpleado menuEmpleado;
+        MenuCliente menuCliente;
+    public:
+        MenuPrincipal(AdminController* adminCtrl, EmpleadoController* empleadoCtrl, VentaController* ventaCtrl);
+        void mostrar();
 };
 
+#endif
 
 
-#endif //LABORATORIO3_MENUPRINCIPAL_H
