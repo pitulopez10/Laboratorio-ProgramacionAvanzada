@@ -22,4 +22,8 @@ vector<Venta*> VentaController::listarVentas() {
 
 void VentaController::consultarStock() {}
 
-void VentaController::calificarProducto(int rut, string codigoProducto, int puntaje, string comentario) {}
+void VentaController::calificarProducto(string rut, string codigoProducto, int puntaje, string comentario) {}
+
+void VentaController::consultarHistorialDeCompras(string rut) {
+
+}

@@ -9,11 +9,13 @@ using namespace std;
 
 class MenuPrincipal {
     private:
-        MenuAdministrador menuAdmin;
-        MenuEmpleado menuEmpleado;
-        MenuCliente menuCliente;
+    AdminController& adminController;
+    EmpleadoController& empleadoController;
+    VentaController& ventaController;
     public:
-        MenuPrincipal(AdminController* adminCtrl, EmpleadoController* empleadoCtrl, VentaController* ventaCtrl);
+    MenuPrincipal(AdminController& adminController,
+           EmpleadoController& empleadoController,
+           VentaController& ventaController);
         void mostrar();
 };
 

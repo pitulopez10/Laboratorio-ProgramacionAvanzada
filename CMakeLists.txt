@@ -10,6 +10,8 @@ add_executable(Laboratorio3 main.cpp
         logica/dominio/LineaDeDetalle.h
         logica/dominio/Calificacion.cpp
         logica/dominio/Calificacion.h
+        logica/dominio/DTHora.cpp
+        logica/dominio/DTHora.h
         logica/dominio/DTFecha.cpp
         logica/dominio/DTFecha.h
         logica/dominio/EstadoCompra.cpp

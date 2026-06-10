@@ -21,7 +21,7 @@ class MenuAdministrador {
         void listarProveedores();   
 
     public:
-        MenuAdministrador(AdminController& adminController);
+        MenuAdministrador(AdminController& adminCtrl);
         void mostrar();
 
 };

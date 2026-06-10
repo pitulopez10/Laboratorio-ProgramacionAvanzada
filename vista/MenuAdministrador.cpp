@@ -12,7 +12,7 @@ using namespace std;
 
 #include "MenuAdministrador.h"
 
-MenuAdministrador::MenuAdministrador(AdminController& adminController) : adminCtrl(adminCtrl) {
+MenuAdministrador::MenuAdministrador(AdminController& adminCtrl) : adminCtrl(adminCtrl) {
 
 }
 

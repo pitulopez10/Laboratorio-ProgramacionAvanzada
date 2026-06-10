@@ -31,6 +31,6 @@ void EmpleadoController::consultarStock() {
 
 }
 
-void altaClienteRegistrado(string rut, string nombreCompleto, string direccion, string correo) {
+void EmpleadoController::altaClienteRegistrado(string rut, string nombreCompleto, string direccion, string correo) {
 
 }

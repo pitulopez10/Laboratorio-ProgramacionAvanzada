@@ -20,7 +20,8 @@ public:
     void nuevaVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal);
     vector<Venta*> listarVentas();
     void consultarStock();
-    void calificarProducto(int rut, string codigoProducto, int puntaje, string comentario);
+    void calificarProducto(string rut, string codigoProducto, int puntaje, string comentario);
+    void consultarHistorialDeCompras(string rut);
 };
 
 #endif //LABORATORIO3_VENTACONTROLLER_H
