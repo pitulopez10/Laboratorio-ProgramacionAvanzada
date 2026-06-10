@@ -8,8 +8,8 @@
 #include <iostream>
 using namespace std;
 
-MenuEmpleado::MenuEmpleado(EmpleadoController* controllerEmp) {
-    this->controllerEmp = controllerEmp;
+MenuEmpleado::MenuEmpleado(EmpleadoController* empleadoCtrl) {
+    this->empleadoCtrl = empleadoCtrl;
 }
 
 void MenuEmpleado::mostrar() {
@@ -28,30 +28,19 @@ void MenuEmpleado::mostrar() {
 
         switch (opcion) {
             case 1: {
-                string producto, cantidad;
-                cout << "Ingrese producto: " << endl; getline(cin, producto);
-                cout << "Ingrese cantidad: " << endl; getline(cin, cantidad);
-                cout << "La venta fue realizada correctamente" << endl;
-                cout << "No se puede realizar la venta" << endl;
-
+                registrarVenta();
                 break;
             }
             case 2: {
-                string rut;
-                cout << "Ingrese RUT: " << endl; getline(cin, rut);
-                controllerEmp->consultarHistorialDeCompras(rut);
+                consultarHistorialDeCompras();
                 break;
             }
             case 3: {
-                controllerEmp->consultarStock();
+                consultarStock();
                 break;
             }
             case 4: {
-                string rut, nombreCompleto, direccion, correo;
-                cout << "Ingrese nombre completo" << endl; getline(cin, nombreCompleto);
-                cout << "Ingrese direccion " << endl; getline(cin, direccion);
-                cout << "Ingrese correo " << endl; getline(cin, correo);
-                controllerEmp->altaClienteRegistrado(rut, nombreCompleto, direccion, correo);
+                altaClienteRegistrado();
                 break;
             }
         }
@@ -59,6 +48,40 @@ void MenuEmpleado::mostrar() {
 }
 
 
+//Funciones
 
+void::MenuEmpleado::registrarVenta() {
+    string idVenta, dia, mes, anio;
+    DTFecha fecha; DTHora hora;
+    int horaReal, minuto, segundo;
+    float precioTotal;
+    cout << "Ingrese id de la venta: " << endl; getline(cin, idVenta);
+    cout << "Ingrese el dia: " << endl; cin >> dia;
+    cout << "Ingrese el mes: " << endl; cin >> mes;
+    cout << "Ingrese el año: " << endl; cin >> anio;
+    cout << "Ingrese la hora: " << endl; cin >> horaReal;
+    cout << "Ingrese minuto: " << endl; cin >> minuto;
+    cout << "Ingrese segundo: " << endl; cin >> segundo;
+    empleadoCtrl->registrarVenta( idVenta, fecha, hora, precioTotal);
+    cout << "La venta fue realizada correctamente" << endl;
+    cout << "No se puede realizar la venta" << endl;
 
+}
 
+void::MenuEmpleado::consultarHistorialDeCompras() {
+    string rut;
+    cout << "Ingrese RUT: " << endl; getline(cin, rut);
+    empleadoCtrl->consultarHistorialDeCompras(rut);
+}
+
+void::MenuEmpleado::consultarStock() {
+    empleadoCtrl->consultarStock();
+}
+
+void::MenuEmpleado::altaClienteRegistrado() {
+    string rut, nombreCompleto, direccion, correo;
+    cout << "Ingrese nombre completo" << endl; getline(cin, nombreCompleto);
+    cout << "Ingrese direccion " << endl; getline(cin, direccion);
+    cout << "Ingrese correo " << endl; getline(cin, correo);
+    empleadoCtrl->altaClienteRegistrado(rut, nombreCompleto, direccion, correo);
+}

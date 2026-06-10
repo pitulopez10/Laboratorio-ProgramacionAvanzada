@@ -17,7 +17,7 @@ EmpleadoController::EmpleadoController(AdminController& adminController): adminC
 
 }
 
-bool EmpleadoController::registrarVenta(string idVenta,DTFecha fecha,DTHora hora, float precioTotal) {
+bool EmpleadoController::registrarVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal){
 
 }
 

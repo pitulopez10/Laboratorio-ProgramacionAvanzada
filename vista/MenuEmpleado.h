@@ -11,7 +11,13 @@ using namespace std;
 
 class MenuEmpleado {
     private:
-        EmpleadoController* controllerEmp;
+        EmpleadoController* empleadoCtrl;
+
+        //Funciones
+        void registrarVenta();
+        void consultarHistorialDeCompras();
+        void consultarStock();
+        void altaClienteRegistrado();
 
     public:
         MenuEmpleado(EmpleadoController* controllerEmp);
