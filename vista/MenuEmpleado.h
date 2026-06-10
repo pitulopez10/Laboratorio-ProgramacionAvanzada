@@ -11,10 +11,10 @@ using namespace std;
 
 class MenuEmpleado {
     private:
-        EmpleadoController* controller;
+        EmpleadoController* controllerEmp;
 
     public:
-        MenuEmpleado(EmpleadoController* controller);
+        MenuEmpleado(EmpleadoController* controllerEmp);
         void mostrar();
 };
 

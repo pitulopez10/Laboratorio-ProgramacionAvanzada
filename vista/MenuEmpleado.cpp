@@ -8,8 +8,8 @@
 #include <iostream>
 using namespace std;
 
-MenuEmpleado::MenuEmpleado(EmpleadoController* controller) {
-    this->controller = controller;
+MenuEmpleado::MenuEmpleado(EmpleadoController* controllerEmp) {
+    this->controllerEmp = controllerEmp;
 }
 
 void MenuEmpleado::mostrar() {
@@ -39,11 +39,11 @@ void MenuEmpleado::mostrar() {
             case 2: {
                 string rut;
                 cout << "Ingrese RUT: " << endl; getline(cin, rut);
-                controller->consultarHistorialDeCompras(rut);
+                controllerEmp->consultarHistorialDeCompras(rut);
                 break;
             }
             case 3: {
-                controller->consultarStock();
+                controllerEmp->consultarStock();
                 break;
             }
             case 4: {
@@ -51,7 +51,7 @@ void MenuEmpleado::mostrar() {
                 cout << "Ingrese nombre completo" << endl; getline(cin, nombreCompleto);
                 cout << "Ingrese direccion " << endl; getline(cin, direccion);
                 cout << "Ingrese correo " << endl; getline(cin, correo);
-                controller->altaClienteRegistrado(rut, nombreCompleto, direccion, correo);
+                controllerEmp->altaClienteRegistrado(rut, nombreCompleto, direccion, correo);
                 break;
             }
         }
