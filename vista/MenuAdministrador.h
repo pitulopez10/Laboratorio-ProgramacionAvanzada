@@ -8,7 +8,7 @@
 
 class MenuAdministrador {
     private:
-        AdminController& adminController;
+        AdminController& adminCtrl;
 
         //Funciones para agregar.
         void agregarProducto();
