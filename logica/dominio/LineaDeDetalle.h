@@ -4,23 +4,25 @@
 
 #ifndef LABORATORIO3_LINEADEDETALLE_H
 #define LABORATORIO3_LINEADEDETALLE_H
-#include <iostream>
 using namespace std;
 
+class Producto;
 
 class LineaDeDetalle {
 
     private:
         int cantidad;
         float precioUnitario;
+        Producto* producto;
 
     public:
         LineaDeDetalle();
-        LineaDeDetalle(int cantidad, float precioUnitario);
+        LineaDeDetalle(int cantidad, float precioUnitario, Producto* producto);
 
         //GETTERS
         int getCantidad() const;
         float getPrecioUnitario() const;
+        Producto* getProducto() const;
 
         //SETTERS
         void setCantidad(int cantidad);
