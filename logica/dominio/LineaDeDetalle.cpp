@@ -3,16 +3,18 @@
 //
 
 #include "LineaDeDetalle.h"
-#include <iostream>
+#include "Producto.h"
+
 using namespace std;
 
 //CONSTRUCTORES
 LineaDeDetalle::LineaDeDetalle() {
 
 }
-LineaDeDetalle::LineaDeDetalle(int cantidad, float precioUnitario) {
+LineaDeDetalle::LineaDeDetalle(int cantidad, float precioUnitario, Producto* producto) {
     this->cantidad = cantidad;
     this->precioUnitario = precioUnitario;
+    this->producto = producto;
 }
 
 //GETTERS
@@ -22,6 +24,10 @@ int LineaDeDetalle::getCantidad() const {
 float LineaDeDetalle::getPrecioUnitario() const {
     return this->precioUnitario;
 }
+Producto* LineaDeDetalle::getProducto() const {
+    return this->producto;
+}
+
 
 //SETTERS
 void LineaDeDetalle::setCantidad(int cantidad) {
