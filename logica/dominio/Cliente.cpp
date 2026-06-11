@@ -1,4 +1,5 @@
 #include "Cliente.h"
+#include "Calificacion.h"
 
 using namespace std;
 
@@ -11,20 +12,24 @@ ClienteRegistrado :: ClienteRegistrado(int rut, string nombreCompleto, string di
 }
 
 //GETTERS
-int ClienteRegistrado::getRut() {
+int ClienteRegistrado::getRut() const{
     return rut;
 }
 
-string ClienteRegistrado::getNombreCompleto() {
+string ClienteRegistrado::getNombreCompleto() const{
     return nombreCompleto;
 }
 
-string ClienteRegistrado::getDireccion() {
+string ClienteRegistrado::getDireccion() const{
     return direccion;
 }
 
-string ClienteRegistrado::getCorreo() {
+string ClienteRegistrado::getCorreo() const{
     return correo;
+}
+
+vector<Calificacion*> ClienteRegistrado::getCalificaciones() const{
+    return calificaciones;
 }
 
 //SETTERS
@@ -37,4 +42,9 @@ void ClienteRegistrado::setDireccion(string direccion) {
 }
 void ClienteRegistrado::setCorreo(string correo) {
     this-> correo = correo;
+}
+
+//METODOS
+void ClienteRegistrado::agregarCalificacion(Calificacion* calificacion) {
+    calificaciones.push_back(calificacion);
 }
