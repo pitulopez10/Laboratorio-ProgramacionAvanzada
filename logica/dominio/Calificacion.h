@@ -5,9 +5,11 @@
 #ifndef LABORATORIO3_CALIFICACION_H
 #define LABORATORIO3_CALIFICACION_H
 #include "DTFecha.h"
-#include <iostream>
+#include <string>
 using namespace std;
 
+class ClienteRegistrado;
+class Producto;
 
 class Calificacion {
     private:
@@ -15,14 +17,19 @@ class Calificacion {
         int puntaje;
         DTFecha fechaCalificacion;
 
+        ClienteRegistrado* cliente;
+        Producto* producto;
+
     public:
         Calificacion();
-        Calificacion(string comentario, int puntaje, DTFecha fechaCalificacion);
+        Calificacion(string comentario, int puntaje, DTFecha fechaCalificacion, ClienteRegistrado* cliente, Producto* producto);
 
         //GETTERS
         string getComentario() const;
         int getPuntaje() const;
         DTFecha getFechaCalificacion() const;
+        ClienteRegistrado* getCliente() const;
+        Producto* getProducto() const;
 
         //SETTERS
         void setComentario(string comentario);
