@@ -7,6 +7,9 @@
 #include "DTFecha.h"
 #include "EstadoCompra.h"
 #include <iostream>
+#include <vector>
+
+#include "LineaDeCompra.h"
 using namespace std;
 
 
@@ -15,6 +18,7 @@ class OrdenDeCompra  {
         DTFecha fechaEmision;
         EstadoCompra estado;
         string idOrden;
+        vector<LineaDeCompra*> lineasCompra;
 
     public:
         OrdenDeCompra();

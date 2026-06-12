@@ -23,6 +23,10 @@ void AdminController::agregarProveedor(int rut, string nombre, string telContact
 
 }
 
+bool AdminController::agregarOrdenCompra(OrdenDeCompra* ordenesCompra) {
+
+}
+
 vector<Producto*> AdminController::listarProductos() {
 
 }
@@ -32,5 +36,9 @@ vector<Categoria*> AdminController::listarCategorias() {
 }
 
 vector<Proveedor*> AdminController::listarProveedores() {
+
+}
+
+vector<OrdenDeCompra*> AdminController::crearOrdenCompra() {
 
 }

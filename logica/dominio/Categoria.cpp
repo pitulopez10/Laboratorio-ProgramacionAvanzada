@@ -4,6 +4,8 @@
 
 #include "Categoria.h"
 
+#include <vector>
+
 //CONSTRUCTORES
 
 Categoria::Categoria() {
@@ -23,6 +25,10 @@ string Categoria::getDescripcion() {
     return this->descripcion;
 }
 
+vector<Producto*> Categoria::getProducto(){
+    return this->productos;
+}
+
 //SETTERS
 
 void Categoria::setNombre(string nombre) {
@@ -30,6 +36,9 @@ void Categoria::setNombre(string nombre) {
 }
 void Categoria::setDescripcion(string descripcion) {
     this->descripcion = descripcion;
+}
+void Categoria::setProducto(vector<Producto*> productos) {
+    this->productos = productos;
 }
 
 //METODOS

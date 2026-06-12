@@ -16,7 +16,7 @@ void MenuEmpleado::mostrar() {
     int opcion;
     do {
         cout << "=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
-        cout << "|        MENU EMPLEADOS       |";
+        cout << "|        MENU EMPLEADOS       |" <<endl;
         cout << "=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
         cout << "1. Registrar una venta" << endl;
         cout << "2. Consultar historial de compras de un cliente registrado" << endl;

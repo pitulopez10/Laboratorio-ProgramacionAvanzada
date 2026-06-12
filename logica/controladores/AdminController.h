@@ -11,14 +11,18 @@
 #include "../dominio/Categoria.h"
 #include "../dominio/Proveedor.h"
 
+
 using namespace std;
 
+class OrdenDeCompra;
 
 class AdminController {
 private:
-    vector<Producto*> produtos;
+    vector<Producto*> productos;
     vector<Categoria*> categorias;
     vector<Proveedor*> proveedores;
+    vector<OrdenDeCompra*> ordenesCompra;
+
 public:
     AdminController();
     ~AdminController();
@@ -31,10 +35,12 @@ public:
     void agregarProveedor(int rut, string nombre, string telContacto,
             string nombreContacto, int tiempoEntrega);
 
+    bool agregarOrdenCompra(OrdenDeCompra* ordenesCompra);
+
     vector<Producto*> listarProductos();
     vector<Categoria*> listarCategorias();
     vector<Proveedor*> listarProveedores();
-
+    vector<OrdenDeCompra*> crearOrdenCompra();
 };
 
 

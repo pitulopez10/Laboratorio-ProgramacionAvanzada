@@ -6,13 +6,17 @@
 #define LABORATORIO3_CATEGORIA_H
 #include <string>
 #include <iostream>
+#include <vector>
 
 using namespace std;
+
+class Producto;
 
 class Categoria {
 private:
 
     string nombre, descripcion;
+    vector<Producto*> productos;
 
 public:
 
@@ -25,11 +29,13 @@ public:
 
     string getNombre();
     string getDescripcion();
+    vector<Producto*> getProducto();
 
     //SETTERS
 
     void setNombre(string nombre);
     void setDescripcion(string descripcion);
+    void setProducto(vector<Producto*> productos);
 
     //METODOS
 };
