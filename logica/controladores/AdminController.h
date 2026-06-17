@@ -22,10 +22,11 @@ private:
     vector<Categoria*> categorias;
     vector<Proveedor*> proveedores;
     vector<OrdenDeCompra*> ordenesCompra;
-
+    static AdminController* instancia;
 public:
     AdminController();
     ~AdminController();
+    static AdminController* getInstancia();
 
     void agregarProducto(string codigo, string nombre, string descripcion,
             float precioUnitario, int cantVendidas, int estaEnStock);

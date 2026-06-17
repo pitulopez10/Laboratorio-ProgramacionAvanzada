@@ -3,6 +3,7 @@
 //
 
 #include "AdminController.h"
+AdminController* AdminController::instancia = NULL;
 
 AdminController::AdminController() {
 }
@@ -10,6 +11,17 @@ AdminController::AdminController() {
 AdminController::~AdminController() {
 
 }
+
+AdminController*  AdminController::getInstancia() {
+    if (instancia != NULL) {
+        return instancia;
+    }
+    else {
+        instancia = new AdminController();
+        return instancia;
+    }
+}
+
 
 void AdminController::agregarProducto(string codigo, string nombre, string descripcion,float precioUnitario, int cantVendidas, int estaEnStock) {
 
