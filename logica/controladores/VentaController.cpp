@@ -11,8 +11,20 @@
 #include "../dominio/DTHora.h"
 
 using namespace std;
+VentaController* VentaController::instancia = NULL;
 
 VentaController::VentaController() {}
+
+VentaController* VentaController::getInstancia() {
+    if (instancia != NULL) {
+        return instancia;
+    }
+    else {
+        instancia = new VentaController();
+        return instancia;
+    }
+
+}
 
 void VentaController::nuevaVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal) {}
 

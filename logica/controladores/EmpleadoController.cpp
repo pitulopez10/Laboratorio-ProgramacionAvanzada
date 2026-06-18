@@ -10,15 +10,27 @@
 #include "../dominio/DTFecha.h"
 #include "../dominio/DTHora.h"
 using namespace std;
+EmpleadoController* EmpleadoController::instancia = NULL;
 
-//EmpleadoController::EmpleadoController() {}
 
-EmpleadoController::EmpleadoController(AdminController& adminController): adminController(adminController) {
-
+EmpleadoController::EmpleadoController() {
+    this->adminController = AdminController::getInstancia();
 }
 
-bool EmpleadoController::registrarVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal){
 
+EmpleadoController*  EmpleadoController::getInstancia() {
+    if (instancia != NULL) {
+        return instancia;
+    }
+    else {
+        instancia = new EmpleadoController();
+        return instancia;
+    }
+}
+
+
+bool EmpleadoController::registrarVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal){
+    return true;
 }
 
 

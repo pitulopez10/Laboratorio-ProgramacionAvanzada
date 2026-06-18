@@ -4,15 +4,12 @@
 #include "vista/MenuPrincipal.h"
 
 int main() {
-    AdminController adminCtrl;
+    AdminController* adminCtrl = AdminController::getInstancia();
+    EmpleadoController* empleadoCtrl = EmpleadoController::getInstancia();
+    VentaController* ventaCtrl = VentaController::getInstancia();
 
-    EmpleadoController empleadoCtrl(adminCtrl);
-
-    VentaController ventaCtrl;
-
-    MenuPrincipal menuPrincipal(adminCtrl, empleadoCtrl, ventaCtrl);
-
-    menuPrincipal.mostrar();
+    MenuPrincipal menu(adminCtrl, empleadoCtrl, ventaCtrl);
+    menu.mostrar();
 
     return 0;
 }

@@ -14,12 +14,19 @@ using namespace std;
 class AdminController;
 
 class EmpleadoController {
-    private:
-        AdminController& adminController;
-        vector<Venta*> venta;
-        string rut, nombreCompleto, direccion, correo;
-    public:
-        EmpleadoController(AdminController& adminController);
+private:
+    AdminController* adminController;
+    vector<Venta*> venta;
+    static EmpleadoController* instancia;
+
+    string rut, nombreCompleto, direccion, correo;
+
+
+public:
+    EmpleadoController();
+    ~EmpleadoController();
+
+    static EmpleadoController* getInstancia();
 
         bool registrarVenta(string idVenta,DTFecha fecha,DTHora hora, float precioTotal);
         void consultarHistorialDeCompras(string rut) const;

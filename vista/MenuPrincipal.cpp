@@ -7,49 +7,56 @@
 
 using namespace std;
 
-MenuPrincipal::MenuPrincipal(AdminController& adminController,
-                             EmpleadoController& empleadoController,
-                             VentaController& ventaController)
-    : adminController(adminController),
-      empleadoController(empleadoController),
-      ventaController(ventaController) {
+MenuPrincipal::MenuPrincipal(AdminController* adminCtrl,
+                             EmpleadoController* empleadoCtrl,
+                             VentaController* ventaCtrl) {
+    this->adminCtrl = adminCtrl;
+    this->empleadoCtrl = empleadoCtrl;
+    this->ventaCtrl = ventaCtrl;
 }
 
 void MenuPrincipal::mostrar() {
     int opcion;
 
+    AdminController* adminCtrl = AdminController::getInstancia();
+    EmpleadoController* empleadoCtrl = EmpleadoController::getInstancia();
+    VentaController* ventaCtrl = VentaController::getInstancia();
+
     do {
         cout << "\n============================\n";
         cout << " Sistema Stock y Ventas\n";
         cout << "============================\n";
-        cout << "1. Iniciar sesion como Administrador\n";
-        cout << "2. Iniciar sesion como Empleado\n";
-        cout << "3. Iniciar sesion como Cliente\n";
-        cout << "0. Salir\n";
-        cout << "Seleccione: ";
+        cout << "1. Menu administrador" << endl;
+        cout << "2. Menu empleado" << endl;
+        cout << "3. Menu cliente" << endl;
+        cout << "0. Salir" << endl;
         cin >> opcion;
 
         switch (opcion) {
             case 1: {
-                MenuAdministrador menuAdministrador(adminController);
+                MenuAdministrador menuAdministrador(adminCtrl);
                 menuAdministrador.mostrar();
                 break;
             }
+
             case 2: {
-                MenuEmpleado menuEmpleado(&empleadoController);
+                MenuEmpleado menuEmpleado(empleadoCtrl);
                 menuEmpleado.mostrar();
                 break;
             }
+
             case 3: {
-                MenuCliente menuCliente(&ventaController);
+                MenuCliente menuCliente(ventaCtrl);
                 menuCliente.mostrar();
                 break;
             }
+
             case 0:
-                cout << "Hasta luego.\n";
+                cout << "Saliendo..." << endl;
                 break;
+
             default:
-                cout << "Opcion invalida.\n";
+                cout << "Opcion invalida" << endl;
                 break;
         }
 

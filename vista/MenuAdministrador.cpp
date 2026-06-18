@@ -12,8 +12,8 @@ using namespace std;
 
 #include "MenuAdministrador.h"
 
-MenuAdministrador::MenuAdministrador(AdminController& adminCtrl) : adminCtrl(adminCtrl) {
-
+MenuAdministrador::MenuAdministrador(AdminController* adminCtrl) {
+    this->adminCtrl = adminCtrl;
 }
 
 void MenuAdministrador::mostrar() {
@@ -88,7 +88,7 @@ void MenuAdministrador::agregarProducto() {
     cout << "Cantidad en Stock: " << endl;
     cin >> estaEnStock;
 
-    adminCtrl.agregarProducto(codigo, nombre, descripcion, precioUnitario, cantVendidas, estaEnStock);
+    adminCtrl->agregarProducto(codigo, nombre, descripcion, precioUnitario, cantVendidas, estaEnStock);
     cout << "\n---Producto agregado correctamente---\n";
 }
 
@@ -105,7 +105,7 @@ void MenuAdministrador::agregarCategoria() {
     cout << "Descripcion: "<< endl;
     getline(cin, descripcion);
 
-    adminCtrl.agregarCategoria(nombre, descripcion);
+    adminCtrl->agregarCategoria(nombre, descripcion);
     cout << "\n---Categoria agregado correctamente---\n";
 }
 
@@ -132,13 +132,13 @@ void MenuAdministrador::agregarProveedor() {
     cout << "Tiempo de entrega: "<< endl;
     cin >> tiempoEntrega;
 
-    adminCtrl.agregarProveedor(rut, nombre, telContacto, nombreContacto, tiempoEntrega);
+    adminCtrl->agregarProveedor(rut, nombre, telContacto, nombreContacto, tiempoEntrega);
     cout << "\n---Proveedor agregado correctamente---\n";
 }
 
 //Funciones para listar,
 void MenuAdministrador::listarProductos() {
-    vector<Producto*> productos = adminCtrl.listarProductos();
+    vector<Producto*> productos = adminCtrl->listarProductos();
 
     cout << "\n--- LISTA DE PRODUCTOS ---\n";
 
@@ -159,7 +159,7 @@ void MenuAdministrador::listarProductos() {
 }
 
 void MenuAdministrador::listarCategorias() {
-    vector<Categoria*> categorias = adminCtrl.listarCategorias();
+    vector<Categoria*> categorias = adminCtrl->listarCategorias();
 
     cout << "\n--- LISTA DE CATEGORIAS ---\n";
 
@@ -176,7 +176,7 @@ void MenuAdministrador::listarCategorias() {
 }
 
 void MenuAdministrador::listarProveedores() {
-    vector<Proveedor*> proveedores = adminCtrl.listarProveedores();
+    vector<Proveedor*> proveedores = adminCtrl->listarProveedores();
 
     cout << "\n--- LISTA DE PROVEEDORES ---\n";
 

@@ -13,9 +13,12 @@ using namespace std;
 class VentaController {
 private:
     vector<Venta*> ventas;
+    static VentaController* instancia;
+
 
 public:
     VentaController();
+    static VentaController* getInstancia();
 
     void nuevaVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal);
     vector<Venta*> listarVentas();

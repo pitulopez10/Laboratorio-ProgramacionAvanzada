@@ -8,7 +8,8 @@
 
 class MenuAdministrador {
     private:
-        AdminController& adminCtrl;
+
+        AdminController* adminCtrl;
 
         //Funciones para agregar.
         void agregarProducto();
@@ -21,7 +22,7 @@ class MenuAdministrador {
         void listarProveedores();   
 
     public:
-        MenuAdministrador(AdminController& adminCtrl);
+        MenuAdministrador(AdminController* adminCtrl);
         void mostrar();
 
 };
