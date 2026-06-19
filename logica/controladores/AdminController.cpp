@@ -5,7 +5,9 @@
 #include "AdminController.h"
 AdminController* AdminController::instancia = NULL;
 
+
 AdminController::AdminController() {
+    administradores.push_back(new Admin("Carlos Perez", "Montevideo 234", "carlosadmin@gmail.com"));
 }
 
 AdminController::~AdminController() {
@@ -22,6 +24,14 @@ AdminController*  AdminController::getInstancia() {
     }
 }
 
+Admin* AdminController::iniciarSesion(string correo) {
+    for (int i = 0; i < administradores.size(); i++) {
+        if (administradores[i]->getCorreo() == correo) {
+            return administradores[i];
+        }
+    }
+    return NULL;
+}
 
 void AdminController::agregarProducto(string codigo, string nombre, string descripcion,float precioUnitario, int cantVendidas, int estaEnStock) {
 

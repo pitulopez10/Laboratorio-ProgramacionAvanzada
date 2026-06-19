@@ -5,12 +5,12 @@
 #ifndef LABORATORIO3_ADMINCONTROLLER_H
 #define LABORATORIO3_ADMINCONTROLLER_H
 #include <vector>
-#include <iostream>
 #include <string>
 #include "../dominio/Producto.h"
 #include "../dominio/Categoria.h"
 #include "../dominio/Proveedor.h"
-
+#include "../dominio/OrdenDeCompra.h"
+#include "../dominio/Admin.h"
 
 using namespace std;
 
@@ -22,11 +22,16 @@ private:
     vector<Categoria*> categorias;
     vector<Proveedor*> proveedores;
     vector<OrdenDeCompra*> ordenesCompra;
+    vector<Admin*> administradores;
+
     static AdminController* instancia;
+
 public:
     AdminController();
     ~AdminController();
     static AdminController* getInstancia();
+
+    Admin* iniciarSesion(string correo);
 
     void agregarProducto(string codigo, string nombre, string descripcion,
             float precioUnitario, int cantVendidas, int estaEnStock);

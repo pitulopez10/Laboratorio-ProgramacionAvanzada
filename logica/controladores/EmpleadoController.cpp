@@ -10,11 +10,13 @@
 #include "../dominio/DTFecha.h"
 #include "../dominio/DTHora.h"
 using namespace std;
+
 EmpleadoController* EmpleadoController::instancia = NULL;
 
 
 EmpleadoController::EmpleadoController() {
     this->adminController = AdminController::getInstancia();
+    empleados.push_back(new Empleado("Maria Rodriguez", "18 de Julio 429", "mariaempleado@gmail.com"));
 }
 
 
@@ -45,4 +47,13 @@ void EmpleadoController::consultarStock() {
 
 void EmpleadoController::altaClienteRegistrado(string rut, string nombreCompleto, string direccion, string correo) {
 
+}
+
+Empleado* EmpleadoController::iniciarSesion(string correo) {
+    for (int i = 0; i < empleados.size(); i++) {
+        if (empleados[i]->getCorreo() == correo) {
+            return empleados[i];
+        }
+    }
+    return NULL;
 }

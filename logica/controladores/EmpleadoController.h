@@ -7,8 +7,10 @@
 #include "../dominio/Venta.h"
 #include "../dominio/DTFecha.h"
 #include "../dominio/DTHora.h"
+#include "../dominio/Empleado.h"
 #include <string>
 #include <vector>
+
 using namespace std;
 
 class AdminController;
@@ -17,10 +19,9 @@ class EmpleadoController {
 private:
     AdminController* adminController;
     vector<Venta*> venta;
+    vector<Empleado*> empleados;
+    
     static EmpleadoController* instancia;
-
-    string rut, nombreCompleto, direccion, correo;
-
 
 public:
     EmpleadoController();
@@ -32,6 +33,8 @@ public:
         void consultarHistorialDeCompras(string rut) const;
         void consultarStock();
         void altaClienteRegistrado(string rut, string nombreCompleto, string direccion, string correo);
+
+        Empleado* iniciarSesion(string correo);
 };
 
 

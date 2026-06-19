@@ -31,10 +31,8 @@ void MenuCliente::mostrar() {
                 break;
             }
             case 2: {
-                string rut;
-                string codigoProducto;
-                int puntaje;
-                string comentario;
+                string codigoProducto, comentario;
+                int puntaje, rut;
 
                 cout<<"Ingrese RUT: ";
                 cin>>rut;
