@@ -11,6 +11,9 @@ class MenuAdministrador {
 
         AdminController* adminCtrl;
 
+        //CERRAR SESION
+        void cerrarSesion();
+
         //FUNCIONES DE AGREGAR
         void altaEmpleado();
 

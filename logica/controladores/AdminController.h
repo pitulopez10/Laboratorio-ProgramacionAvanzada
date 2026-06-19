@@ -27,15 +27,19 @@ private:
     vector<Admin*> administradores;
 
     static AdminController* instancia;
+    Admin* adminLogeado;
 
 public:
-    //CONTROLADORES E INTANCIA
+    //CONTROLADORES E INSTANCIA
     AdminController();
     ~AdminController();
     static AdminController* getInstancia();
 
     //INICIO DE SESION
     Admin* iniciarSesion(string correo);
+
+    //CIERRE DE SESION
+    void cerrarSesion();
 
     //FUNCIONES DE AGREGAR
     void altaEmpleado(string nombreCompleto, string direccion, string correo);

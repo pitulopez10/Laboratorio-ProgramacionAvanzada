@@ -14,6 +14,7 @@ MenuEmpleado::MenuEmpleado(EmpleadoController* empleadoCtrl) {
 
 void MenuEmpleado::mostrar() {
     int opcion;
+    bool salir = false;
     do {
         cout << "=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
         cout << "|        MENU EMPLEADOS       |" <<endl;
@@ -43,12 +44,28 @@ void MenuEmpleado::mostrar() {
                 altaClienteRegistrado();
                 break;
             }
+            case 0: {
+                cerrarSesion();
+                salir = true;
+                break;
+            }
+
+
+
+
         }
     }while (opcion != 0);
 }
 
 
 //Funciones
+
+
+
+void MenuEmpleado::cerrarSesion() {
+    empleadoCtrl->cerrarSesion();
+    cout << "Sesion cerrada correctamente." << endl;
+}
 
 void::MenuEmpleado::registrarVenta() {
     string idVenta, dia, mes, anio;

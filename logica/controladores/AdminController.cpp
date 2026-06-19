@@ -16,6 +16,7 @@ AdminController::~AdminController() {
 AdminController::AdminController() {
     administradores.push_back(new Admin("Carlos Perez", "Montevideo 234", "carlosadmin@gmail.com"));
     empleados.push_back(new Empleado("Maria Rodriguez", "18 de Julio 429", "mariaempleado@gmail.com"));
+    adminLogeado = NULL;
 }
 
 AdminController*  AdminController::getInstancia() {
@@ -32,10 +33,16 @@ AdminController*  AdminController::getInstancia() {
 Admin* AdminController::iniciarSesion(string correo) {
     for (int i = 0; i < administradores.size(); i++) {
         if (administradores[i]->getCorreo() == correo) {
+            adminLogeado = administradores[i];
             return administradores[i];
         }
     }
     return NULL;
+}
+
+//CIERRE DE SESION
+void AdminController::cerrarSesion() {
+    adminLogeado = NULL;
 }
 
 //FUNCIONES DE AGREGAR

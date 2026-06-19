@@ -50,10 +50,17 @@ void EmpleadoController::altaClienteRegistrado(string rut, string nombreCompleto
 }
 
 Empleado* EmpleadoController::iniciarSesion(string correo) {
+
+    vector<Empleado*> empleados = AdminController::getInstancia()->listarEmpleados();
     for (int i = 0; i < empleados.size(); i++) {
         if (empleados[i]->getCorreo() == correo) {
+            empleadoLogeado = empleados[i];
             return empleados[i];
         }
     }
     return NULL;
+}
+
+void EmpleadoController::cerrarSesion() {
+    empleadoLogeado = NULL;
 }

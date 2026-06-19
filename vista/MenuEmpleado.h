@@ -14,6 +14,8 @@ class MenuEmpleado {
         EmpleadoController* empleadoCtrl;
 
         //Funciones
+        void cerrarSesion();
+
         void registrarVenta();
         void consultarHistorialDeCompras();
         void consultarStock();

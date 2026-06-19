@@ -18,6 +18,7 @@ MenuAdministrador::MenuAdministrador(AdminController* adminCtrl) {
 //MENU DEL ADMIN
 void MenuAdministrador::mostrar() {
     int opcion;
+    bool salir = false;
 
     do {
         cout<<"=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!="<<endl;
@@ -29,7 +30,7 @@ void MenuAdministrador::mostrar() {
         cout << "4. Listar productos\n";
         cout << "5. Listar categorias\n";
         cout << "6. Listar proveedores\n";
-        cout << "0. Volver\n";
+        cout << "0. Cerrar sesoin\n";
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
@@ -53,7 +54,8 @@ void MenuAdministrador::mostrar() {
                 listarProveedores();
                 break;
             case 0:
-                cout << "Volviendo al menu principal...\n";
+                cerrarSesion();
+                salir = true;
                 break;
             default:
                 cout << "Opcion invalida.\n";
@@ -61,6 +63,13 @@ void MenuAdministrador::mostrar() {
         }
     }while(opcion != 0);
 }
+
+//CERRAR SESION
+void MenuAdministrador::cerrarSesion() {
+    adminCtrl->cerrarSesion();
+    cout << "Sesion cerrada correctamente." << endl;
+}
+
 
 //FUNCIONES DE AGREGAR
 void MenuAdministrador::altaEmpleado() {

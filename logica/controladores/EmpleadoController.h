@@ -8,6 +8,7 @@
 #include "../dominio/DTFecha.h"
 #include "../dominio/DTHora.h"
 #include "../dominio/Empleado.h"
+#include "../controladores/AdminController.h"
 #include <string>
 #include <vector>
 
@@ -22,12 +23,17 @@ private:
     vector<Empleado*> empleados;
     
     static EmpleadoController* instancia;
+    Empleado* empleadoLogeado;
+
 
 public:
     EmpleadoController();
     ~EmpleadoController();
 
     static EmpleadoController* getInstancia();
+
+    void cerrarSesion();
+
 
         bool registrarVenta(string idVenta,DTFecha fecha,DTHora hora, float precioTotal);
         void consultarHistorialDeCompras(string rut) const;
