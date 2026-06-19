@@ -6,12 +6,16 @@
 AdminController* AdminController::instancia = NULL;
 
 
-AdminController::AdminController() {
-    administradores.push_back(new Admin("Carlos Perez", "Montevideo 234", "carlosadmin@gmail.com"));
-}
 
+
+//CONTROLADORES E INTANCIA
 AdminController::~AdminController() {
 
+}
+
+AdminController::AdminController() {
+    administradores.push_back(new Admin("Carlos Perez", "Montevideo 234", "carlosadmin@gmail.com"));
+    empleados.push_back(new Empleado("Maria Rodriguez", "18 de Julio 429", "mariaempleado@gmail.com"));
 }
 
 AdminController*  AdminController::getInstancia() {
@@ -24,6 +28,7 @@ AdminController*  AdminController::getInstancia() {
     }
 }
 
+//INICIO DE SESION
 Admin* AdminController::iniciarSesion(string correo) {
     for (int i = 0; i < administradores.size(); i++) {
         if (administradores[i]->getCorreo() == correo) {
@@ -32,6 +37,21 @@ Admin* AdminController::iniciarSesion(string correo) {
     }
     return NULL;
 }
+
+//FUNCIONES DE AGREGAR
+void AdminController::altaEmpleado(string nombreCompleto, string direccion, string correo) {
+    for (int i =0; i < administradores.size(); i++) {
+        if (administradores[i]->getCorreo() == correo) {
+            throw 1;
+        }
+    }
+
+    Empleado* empleado = new Empleado(nombreCompleto, direccion, correo);
+    empleados.push_back(empleado);
+}
+
+
+
 
 void AdminController::agregarProducto(string codigo, string nombre, string descripcion,float precioUnitario, int cantVendidas, int estaEnStock) {
 
@@ -48,6 +68,12 @@ void AdminController::agregarProveedor(int rut, string nombre, string telContact
 bool AdminController::agregarOrdenCompra(OrdenDeCompra* ordenesCompra) {
 
 }
+
+//FUNCIONES DE LISTAR
+vector<Empleado*> AdminController::listarEmpleados() {
+    return empleados;
+}
+
 
 vector<Producto*> AdminController::listarProductos() {
 

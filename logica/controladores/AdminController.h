@@ -6,6 +6,7 @@
 #define LABORATORIO3_ADMINCONTROLLER_H
 #include <vector>
 #include <string>
+#include "../dominio/Empleado.h"
 #include "../dominio/Producto.h"
 #include "../dominio/Categoria.h"
 #include "../dominio/Proveedor.h"
@@ -18,6 +19,7 @@ class OrdenDeCompra;
 
 class AdminController {
 private:
+    vector<Empleado*> empleados;
     vector<Producto*> productos;
     vector<Categoria*> categorias;
     vector<Proveedor*> proveedores;
@@ -27,11 +29,16 @@ private:
     static AdminController* instancia;
 
 public:
+    //CONTROLADORES E INTANCIA
     AdminController();
     ~AdminController();
     static AdminController* getInstancia();
 
+    //INICIO DE SESION
     Admin* iniciarSesion(string correo);
+
+    //FUNCIONES DE AGREGAR
+    void altaEmpleado(string nombreCompleto, string direccion, string correo);
 
     void agregarProducto(string codigo, string nombre, string descripcion,
             float precioUnitario, int cantVendidas, int estaEnStock);
@@ -42,6 +49,9 @@ public:
             string nombreContacto, int tiempoEntrega);
 
     bool agregarOrdenCompra(OrdenDeCompra* ordenesCompra);
+
+    //FUNCIONES DE LISTAR
+    vector<Empleado*> listarEmpleados();
 
     vector<Producto*> listarProductos();
     vector<Categoria*> listarCategorias();

@@ -11,12 +11,17 @@ class MenuAdministrador {
 
         AdminController* adminCtrl;
 
-        //Funciones para agregar.
+        //FUNCIONES DE AGREGAR
+        void altaEmpleado();
+
+
         void agregarProducto();
         void agregarCategoria();
         void agregarProveedor();
 
-        //Funciones para listar,
+        //FUNCIONES DE LISTAR
+        void listarEmpleados();
+
         void listarProductos();
         void listarCategorias();
         void listarProveedores();   

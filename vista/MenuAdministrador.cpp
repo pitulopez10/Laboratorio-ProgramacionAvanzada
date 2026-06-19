@@ -15,14 +15,16 @@ using namespace std;
 MenuAdministrador::MenuAdministrador(AdminController* adminCtrl) {
     this->adminCtrl = adminCtrl;
 }
-
+//MENU DEL ADMIN
 void MenuAdministrador::mostrar() {
     int opcion;
 
     do {
-        cout << "\n===== MENU ADMINISTRADOR =====\n";
-        cout << "1. Agregar producto\n";
-        cout << "2. Agregar categoria\n";
+        cout<<"=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!="<<endl;
+        cout<<"|      MENU ADMINISTRADOR     |"<<endl;
+        cout<<"=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!="<<endl;
+        cout << "1. Alta empleado\n";
+        cout << "2. Listar empleados\n";
         cout << "3. Agregar proveedor\n";
         cout << "4. Listar productos\n";
         cout << "5. Listar categorias\n";
@@ -33,10 +35,10 @@ void MenuAdministrador::mostrar() {
 
         switch (opcion) {
             case 1:
-                agregarProducto();
+                altaEmpleado();
                 break;
             case 2:
-                agregarCategoria();
+                listarEmpleados();
                 break;
             case 3:
                 agregarProveedor();
@@ -60,7 +62,34 @@ void MenuAdministrador::mostrar() {
     }while(opcion != 0);
 }
 
-//Funciones para agregar.
+//FUNCIONES DE AGREGAR
+void MenuAdministrador::altaEmpleado() {
+    string nombreCompleto, direccion, correo;
+
+    cout << "\n---ALTA-EMPLEADO---\n";
+
+    cout << "Ingrese nombre completo: "<< endl;
+    cin.ignore();
+    getline(cin, nombreCompleto);
+
+    cout << "Ingrese direccion: "<< endl;
+    getline(cin,direccion);
+
+    cout << "Ingrese correo: "<< endl;
+    getline(cin,correo);
+
+    try {
+        adminCtrl->altaEmpleado(nombreCompleto,direccion,correo);
+        cout << "Empledo agregado correctamente." << endl;
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "Ya existe un empleado con ese correo.";
+        }
+    }
+}
+
+
 void MenuAdministrador::agregarProducto() {
     string codigo, nombre, descripcion;
     float precioUnitario;
@@ -136,7 +165,25 @@ void MenuAdministrador::agregarProveedor() {
     cout << "\n---Proveedor agregado correctamente---\n";
 }
 
-//Funciones para listar,
+//FUNCIONES DE LISTAR
+void MenuAdministrador::listarEmpleados() {
+    vector<Empleado*> empleados = adminCtrl->listarEmpleados();
+
+    if (empleados.size() == 0) {
+        cout << "No hay empleados registrados. " << endl;
+        return;
+    }
+
+    cout << "\n---LISTAR EMPLEADOS---\n";
+
+    for (int i = 0; i < empleados.size(); i++) {
+        cout << "Nombre completo: " << empleados[i]->getNombreCompleto() << endl;
+        cout << "Descripcion: " << empleados[i]->getDireccion() << endl;
+        cout << "Correo: " << empleados[i]->getCorreo() << endl;
+        cout << "------------------------" << endl;
+    }
+}
+
 void MenuAdministrador::listarProductos() {
     vector<Producto*> productos = adminCtrl->listarProductos();
 
