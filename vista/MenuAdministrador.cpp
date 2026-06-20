@@ -30,6 +30,7 @@ void MenuAdministrador::mostrar() {
         cout << "4. Listar categorias\n";
         cout << "5. Modificar categoria\n";
         cout << "6. Agregar Producto\n";
+        cout << "7. Modificar Producto\n";
         cout << "0. Cerrar sesion\n";
         cout << "Seleccione una opcion: ";
         cin >> opcion;
@@ -52,6 +53,9 @@ void MenuAdministrador::mostrar() {
                 break;
             case 6:
                 agregarProducto();
+                break;
+            case 7:
+                modificarProducto();
                 break;
             case 0:
                 cerrarSesion();
@@ -149,15 +153,7 @@ void MenuAdministrador::modificarCategoria() {
             cout << "Ya existe una categoria con ese nombre" << endl;
         }
     }
-
-
-
-
-
-
-
 }
-
 
 void MenuAdministrador::agregarProducto() {
 
@@ -194,6 +190,52 @@ void MenuAdministrador::agregarProducto() {
     catch(int error) {
         if(error == 1) {
             cout << "Ya existe un producto con ese codigo." << endl;
+        }
+        else if(error == 2) {
+            cout << "El precio no puede ser negativo." << endl;
+        }
+        else if(error == 3) {
+            cout << "El stock no puede ser negativo." << endl;
+        }
+        else if(error == 4) {
+            cout << "La categoria ingresada no existe." << endl;
+        }
+    }
+}
+
+void MenuAdministrador::modificarProducto() {
+    string codigo, nuevoNombre, nuevaDescripcion, nuevaCategoria;
+    float nuevoPrecioUnitario;
+    int nuevoStock;
+
+    cout << "\n---MODIFICAR PRODUCTO---\n";
+    cin.ignore();
+
+    cout << "Ingrese codigo del producto a modificar: " << endl;
+    getline(cin, codigo);
+
+    cout << "Ingrese nuevo nombre: " << endl;
+    getline(cin, nuevoNombre);
+
+    cout << "Ingrese nueva descripcion: " << endl;
+    getline(cin, nuevaDescripcion);
+
+    cout << "Ingrese nuevo precio unitario: " << endl;
+    cin >> nuevoPrecioUnitario;
+
+    cout << "Ingrese nuevo stock: " << endl;
+    cin >> nuevoStock;
+
+    cout << "Ingrese nueva categoria: " << endl;
+    getline(cin, nuevaCategoria);
+
+    try {
+        adminCtrl->modificarProducto(codigo, nuevoNombre, nuevaDescripcion, nuevoPrecioUnitario, nuevoStock, nuevaCategoria);
+        cout << "Producto modificado correctamente." << endl;
+    }
+    catch(int error) {
+        if(error == 1) {
+            cout << "No existe un producto con ese codigo." << endl;
         }
         else if(error == 2) {
             cout << "El precio no puede ser negativo." << endl;

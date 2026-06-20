@@ -46,6 +46,7 @@ public:
     void agregarCategoria(string nombre, string descripcion);
     void modificarCategoria(string nombreActual, string nuevoNuombre, string nuevaDescripcion);
     void agregarProducto(string nombre, string codigo, string descripcion, float precioUnitario, int estaEnStock, string nombreCategoria);
+    void modificarProducto(string codigo, string nuevoNombre, string nuevaDescripcion, float nuevoPrecioUnitario, int nuevoStock, string nuevaCategoria);
 
 
     void agregarProveedor(int rut, string nombre, string telContacto,

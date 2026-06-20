@@ -115,6 +115,39 @@ void AdminController::agregarProducto(string nombre, string codigo, string descr
     productos.push_back(producto);
 }
 
+void AdminController::modificarProducto(string codigo, string nuevoNombre, string nuevaDescripcion, float nuevoPrecioUnitario, int nuevoStock, string nuevaCategoria) {
+    Producto* producto = NULL;
+    for (int i =0; i < productos.size(); i++) {
+        if (productos[i]->getCodigo() == codigo) {
+            producto = productos[i];
+        }
+    }
+
+    if (producto == NULL) {
+        throw 1;
+    }
+    if (nuevoPrecioUnitario < 0) {
+        throw 2;
+    }
+    if (nuevoStock < 0) {
+        throw 3;
+    }
+    Categoria* categoria = NULL;
+
+    for (int i =0; i < categorias.size(); i++) {
+        if (categorias[i]->getNombre() == nuevaCategoria) {
+            categoria = categorias[i];
+        }
+    }
+    if (categoria == NULL) {
+        throw 4;
+    }
+    producto->setNombre(nuevoNombre);
+    producto->setDescripcion(nuevaDescripcion);
+    producto->setPrecioUnitario(nuevoPrecioUnitario);
+    producto->setEstaEnStock(nuevoStock);
+    producto->setCategoria(categoria);
+}
 
 
 
