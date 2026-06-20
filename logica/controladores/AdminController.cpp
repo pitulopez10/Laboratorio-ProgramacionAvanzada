@@ -57,14 +57,21 @@ void AdminController::altaEmpleado(string nombreCompleto, string direccion, stri
     empleados.push_back(empleado);
 }
 
+void AdminController::agregarCategoria(string nombre, string descripcion) {
+    for (int i =0; i < categorias.size(); i++) {
+        if (categorias[i]->getNombre() == descripcion) {
+            throw 1;
+        }
+    }
+
+    Categoria* categoria = new Categoria(nombre, descripcion);
+    categorias.push_back(categoria);
+}
+
 
 
 
 void AdminController::agregarProducto(string codigo, string nombre, string descripcion,float precioUnitario, int cantVendidas, int estaEnStock) {
-
-}
-
-void AdminController::agregarCategoria(string nombre, string descripcion) {
 
 }
 
@@ -81,14 +88,16 @@ vector<Empleado*> AdminController::listarEmpleados() {
     return empleados;
 }
 
+vector<Categoria*> AdminController::listarCategorias() {
+    return categorias;
+}
+
 
 vector<Producto*> AdminController::listarProductos() {
 
 }
 
-vector<Categoria*> AdminController::listarCategorias() {
 
-}
 
 vector<Proveedor*> AdminController::listarProveedores() {
 

@@ -16,10 +16,9 @@ class MenuAdministrador {
 
         //FUNCIONES DE AGREGAR
         void altaEmpleado();
-
+        void agregarCategoria();
 
         void agregarProducto();
-        void agregarCategoria();
         void agregarProveedor();
 
         //FUNCIONES DE LISTAR

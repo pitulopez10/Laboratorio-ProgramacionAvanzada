@@ -43,11 +43,12 @@ public:
 
     //FUNCIONES DE AGREGAR
     void altaEmpleado(string nombreCompleto, string direccion, string correo);
+    void agregarCategoria(string nombre, string descripcion);
+
 
     void agregarProducto(string codigo, string nombre, string descripcion,
             float precioUnitario, int cantVendidas, int estaEnStock);
 
-    void agregarCategoria(string codigo, string descripcion);
 
     void agregarProveedor(int rut, string nombre, string telContacto,
             string nombreContacto, int tiempoEntrega);
@@ -56,9 +57,9 @@ public:
 
     //FUNCIONES DE LISTAR
     vector<Empleado*> listarEmpleados();
+    vector<Categoria*> listarCategorias();
 
     vector<Producto*> listarProductos();
-    vector<Categoria*> listarCategorias();
     vector<Proveedor*> listarProveedores();
     vector<OrdenDeCompra*> crearOrdenCompra();
 };

@@ -26,9 +26,9 @@ void MenuAdministrador::mostrar() {
         cout<<"=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!="<<endl;
         cout << "1. Alta empleado\n";
         cout << "2. Listar empleados\n";
-        cout << "3. Agregar proveedor\n";
+        cout << "3. Agregar categoria\n";
+        cout << "4. Listar categorias\n";
         cout << "4. Listar productos\n";
-        cout << "5. Listar categorias\n";
         cout << "6. Listar proveedores\n";
         cout << "0. Cerrar sesoin\n";
         cout << "Seleccione una opcion: ";
@@ -42,13 +42,13 @@ void MenuAdministrador::mostrar() {
                 listarEmpleados();
                 break;
             case 3:
-                agregarProveedor();
+                agregarCategoria();
                 break;
             case 4:
-                listarProductos();
+                listarCategorias();
                 break;
             case 5:
-                listarCategorias();
+                listarProductos();
                 break;
             case 6:
                 listarProveedores();
@@ -98,6 +98,29 @@ void MenuAdministrador::altaEmpleado() {
     }
 }
 
+void MenuAdministrador::agregarCategoria() {
+    string nombre, descripcion;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    cout << "\n---AGREGAR CATEGORIA---\n";
+
+    cout << "Ingrese nombre: "<< endl;
+    getline(cin, nombre);
+
+    cout << "Ingrese descripcion: "<< endl;
+    getline(cin, descripcion);
+
+    try {
+        adminCtrl->agregarCategoria(nombre, descripcion);
+        cout << "\nCategoria agregado correctamente\n";
+    }catch (int error) {
+        if (error == 1) {
+            cout << "Ya existe una categoria con ese nombre." << endl;
+        }
+    }
+}
+
 
 void MenuAdministrador::agregarProducto() {
     string codigo, nombre, descripcion;
@@ -130,22 +153,7 @@ void MenuAdministrador::agregarProducto() {
     cout << "\n---Producto agregado correctamente---\n";
 }
 
-void MenuAdministrador::agregarCategoria() {
-    string nombre, descripcion;
 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    cout << "\n---AGREGAR CATEGORIA---\n";
-
-    cout << "Nombre: "<< endl;
-    getline(cin, nombre);
-
-    cout << "Descripcion: "<< endl;
-    getline(cin, descripcion);
-
-    adminCtrl->agregarCategoria(nombre, descripcion);
-    cout << "\n---Categoria agregado correctamente---\n";
-}
 
 void MenuAdministrador::agregarProveedor() {
     int rut, tiempoEntrega;
@@ -183,13 +191,32 @@ void MenuAdministrador::listarEmpleados() {
         return;
     }
 
-    cout << "\n---LISTAR EMPLEADOS---\n";
+    cout << "\n---LISTA DE EMPLEADOS---\n";
 
     for (int i = 0; i < empleados.size(); i++) {
+        cout << "Empleado #" << i+1 << endl;
         cout << "Nombre completo: " << empleados[i]->getNombreCompleto() << endl;
         cout << "Descripcion: " << empleados[i]->getDireccion() << endl;
         cout << "Correo: " << empleados[i]->getCorreo() << endl;
         cout << "------------------------" << endl;
+    }
+}
+
+void MenuAdministrador::listarCategorias() {
+    vector<Categoria*> categorias = adminCtrl->listarCategorias();
+
+    cout << "\n--- LISTA DE CATEGORIAS ---\n";
+
+    if (categorias.size() == 0) {
+        cout << "No hay categorias registradas. " << endl;
+        return;
+    }
+
+    for (int i = 0; i < categorias.size(); i++) {
+        cout << "Categoria #" << i+1 << endl;
+        cout << "Nombre: " << categorias[i]->getNombre() << endl;
+        cout << "Descripcion: " << categorias[i]->getDescripcion() << endl;
+        cout << "-----------------------------\n";
     }
 }
 
@@ -214,22 +241,7 @@ void MenuAdministrador::listarProductos() {
     }
 }
 
-void MenuAdministrador::listarCategorias() {
-    vector<Categoria*> categorias = adminCtrl->listarCategorias();
 
-    cout << "\n--- LISTA DE CATEGORIAS ---\n";
-
-    if (categorias.empty()) {
-        cout << "No hay categorias cargadas.\n";
-        return;
-    }
-
-    for (int i = 0; i < categorias.size(); i++) {
-        cout << "Nombre: " << categorias[i]->getNombre() << endl;
-        cout << "Descripcion: " << categorias[i]->getDescripcion() << endl;
-        cout << "-----------------------------\n";
-    }
-}
 
 void MenuAdministrador::listarProveedores() {
     vector<Proveedor*> proveedores = adminCtrl->listarProveedores();
