@@ -68,12 +68,55 @@ void AdminController::agregarCategoria(string nombre, string descripcion) {
     categorias.push_back(categoria);
 }
 
+void AdminController::modificarCategoria(string nombreActual, string nuevoNuombre, string nuevaDescripcion) {
+    Categoria* categoria = NULL;
 
+    for (int i =0; i < categorias.size(); i++) {
+        if (categorias[i]->getNombre() == nombreActual) {
+            categoria = categorias[i];
+        }
+    }
+    if (categoria == NULL) {
+        throw 1;
+    }
 
-
-void AdminController::agregarProducto(string codigo, string nombre, string descripcion,float precioUnitario, int cantVendidas, int estaEnStock) {
-
+    for (int i =0; i < categorias.size(); i++) {
+        if (categorias[i]->getNombre() == nuevoNuombre && categorias[i] != categoria) {
+            throw 2;
+        }
+    }
+    categoria->setNombre(nuevoNuombre);
+    categoria->setDescripcion(nuevaDescripcion);
 }
+
+void AdminController::agregarProducto(string nombre, string codigo, string descripcion, float precioUnitario, int estaEnStock, string nombreCategoria) {
+    for (int i =0; i < productos.size(); i++) {
+        if (productos[i]->getCodigo() == codigo) {
+            throw 1;
+        }
+    }
+    if (precioUnitario < 0) {
+        throw 2;
+    }
+    if (estaEnStock < 0) {
+        throw 3;
+    }
+    Categoria* categoria = NULL;
+    for (int i =0; i < categorias.size(); i++) {
+        if (categorias[i]->getNombre() == nombreCategoria) {
+            categoria = categorias[i];
+        }
+    }
+    if (categoria == NULL) {
+        throw 4;
+    }
+
+    Producto* producto =  new Producto(nombre, codigo, descripcion, precioUnitario, 0, 0, estaEnStock, categoria);
+    productos.push_back(producto);
+}
+
+
+
 
 void AdminController::agregarProveedor(int rut, string nombre, string telContacto, string nombreContacto, int tiempoEntrega) {
 

@@ -44,14 +44,12 @@ public:
     //FUNCIONES DE AGREGAR
     void altaEmpleado(string nombreCompleto, string direccion, string correo);
     void agregarCategoria(string nombre, string descripcion);
-
-
-    void agregarProducto(string codigo, string nombre, string descripcion,
-            float precioUnitario, int cantVendidas, int estaEnStock);
+    void modificarCategoria(string nombreActual, string nuevoNuombre, string nuevaDescripcion);
+    void agregarProducto(string nombre, string codigo, string descripcion, float precioUnitario, int estaEnStock, string nombreCategoria);
 
 
     void agregarProveedor(int rut, string nombre, string telContacto,
-            string nombreContacto, int tiempoEntrega);
+                          string nombreContacto, int tiempoEntrega);
 
     bool agregarOrdenCompra(OrdenDeCompra* ordenesCompra);
 

@@ -28,9 +28,9 @@ void MenuAdministrador::mostrar() {
         cout << "2. Listar empleados\n";
         cout << "3. Agregar categoria\n";
         cout << "4. Listar categorias\n";
-        cout << "4. Listar productos\n";
-        cout << "6. Listar proveedores\n";
-        cout << "0. Cerrar sesoin\n";
+        cout << "5. Modificar categoria\n";
+        cout << "6. Agregar Producto\n";
+        cout << "0. Cerrar sesion\n";
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
@@ -48,10 +48,10 @@ void MenuAdministrador::mostrar() {
                 listarCategorias();
                 break;
             case 5:
-                listarProductos();
+                modificarCategoria();
                 break;
             case 6:
-                listarProveedores();
+                agregarProducto();
                 break;
             case 0:
                 cerrarSesion();
@@ -121,36 +121,90 @@ void MenuAdministrador::agregarCategoria() {
     }
 }
 
+void MenuAdministrador::modificarCategoria() {
+    string nombreActual, nuevoNombre, nuevaDescripcion;
+
+    cout << "\n---MODIFICAR CATEGORIA---\n";
+
+    cin.ignore();
+
+    cout << "Ingrese nombre actual: "<< endl;
+    getline(cin, nombreActual);
+
+    cout << "Ingrese nuevo nombre: ";
+    getline(cin, nuevoNombre);
+
+    cout << "Ingrese nueva descripcion: ";
+    getline(cin, nuevaDescripcion);
+
+    try {
+        adminCtrl->modificarCategoria(nombreActual,nuevoNombre,nuevaDescripcion);
+        cout << "\nCategoria modificada correctamente\n";
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "La categoria no existe." << endl;
+        }
+        if (error == 2) {
+            cout << "Ya existe una categoria con ese nombre" << endl;
+        }
+    }
+
+
+
+
+
+
+
+}
+
 
 void MenuAdministrador::agregarProducto() {
-    string codigo, nombre, descripcion;
-    float precioUnitario;
-    int cantVendidas, estaEnStock;
 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    string nombre, codigo, descripcion, nombreCategoria;
+    float precioUnitario;
+    int estaEnStock;
 
     cout << "\n---AGREGAR PRODUCTO---\n";
 
-    cout << "Codigo: "<< endl;
-    getline(cin, codigo);
-
-    cout << "Nombre: "<< endl;
+    cin.ignore();
+    cout << "Nombre del producto: ";
     getline(cin, nombre);
 
-    cout << "Descripcion: "<< endl;
+    cout << "Codigo del producto: ";
+    getline(cin, codigo);
+
+    cout << "Descripcion del producto: ";
     getline(cin, descripcion);
 
-    cout << "Precio Unitario: "<< endl;
+    cout << "Precio unitario: ";
     cin >> precioUnitario;
 
-    cout << "Cantidad de Vendidas: "<< endl;
-    cin >> cantVendidas;
-
-    cout << "Cantidad en Stock: " << endl;
+    cout << "Stock inicial: ";
     cin >> estaEnStock;
+    cin.ignore();
 
-    adminCtrl->agregarProducto(codigo, nombre, descripcion, precioUnitario, cantVendidas, estaEnStock);
-    cout << "\n---Producto agregado correctamente---\n";
+    cout << "Nombre de la categoria: ";
+    getline(cin, nombreCategoria);
+
+    try {
+        adminCtrl->agregarProducto(nombre,codigo,descripcion,precioUnitario,estaEnStock,nombreCategoria);
+        cout << "Producto agregado correctamente." << endl;
+    }
+    catch(int error) {
+        if(error == 1) {
+            cout << "Ya existe un producto con ese codigo." << endl;
+        }
+        else if(error == 2) {
+            cout << "El precio no puede ser negativo." << endl;
+        }
+        else if(error == 3) {
+            cout << "El stock no puede ser negativo." << endl;
+        }
+        else if(error == 4) {
+            cout << "La categoria ingresada no existe." << endl;
+        }
+    }
 }
 
 

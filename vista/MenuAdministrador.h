@@ -17,15 +17,16 @@ class MenuAdministrador {
         //FUNCIONES DE AGREGAR
         void altaEmpleado();
         void agregarCategoria();
-
+        void modificarCategoria();
         void agregarProducto();
+
         void agregarProveedor();
 
         //FUNCIONES DE LISTAR
         void listarEmpleados();
+        void listarCategorias();
 
         void listarProductos();
-        void listarCategorias();
         void listarProveedores();   
 
     public:
