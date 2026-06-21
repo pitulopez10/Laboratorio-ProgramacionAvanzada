@@ -14,7 +14,7 @@ using namespace std;
 VentaController* VentaController::instancia = NULL;
 
 VentaController::VentaController() {
-    clientesRegistrados.push_back(new ClienteRegistrado(86469,"Marcos Lopez", "Herrera 748", "marcoscliente@gmail.com"));
+    clientesRegistrados.push_back(new ClienteRegistrado(86469,"Marcos Lopez", "Herrera 748", "marcoscliente@gmail.com", "1234"));
 }
 
 VentaController* VentaController::getInstancia() {
