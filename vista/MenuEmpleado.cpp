@@ -77,10 +77,10 @@ void MenuEmpleado::mostrar() {
 void MenuEmpleado::altaClienteRegistrado() {
     string nombreCompleto, direccion, correo, password;
     int rut;
-    while(true) {
         cout << "\n======================================\n";
         cout << "====== REGISTRAR NUEVO CLIENTE =======";
         cout << "\n======================================\n";
+    while(true) {
         cout << "Ingrese RUT: "<< endl; cin >> rut;
         cin.ignore();
 
@@ -88,27 +88,30 @@ void MenuEmpleado::altaClienteRegistrado() {
             empleadoCtrl->validarRutCliente(rut);
         }
         catch (int error) {
-                cout << "--- --- Ya existe un cliente con ese RUT, ingrese los datos nuevamente --- ---\n";
-                continue;
-        }
-        cout << "Ingrese nombre completo: "<< endl; getline(cin, nombreCompleto);
-        cout << "Ingrese dirección: "<< endl; getline(cin, direccion);
-        cout << "Ingrese correo electrónico: "<< endl; getline(cin, correo);
-
-        try {
-            empleadoCtrl->validarCorreoCliente(correo);
-        }
-        catch (int error) {
-                cout << "--- --- Ya existe un cliente con ese correo, ingrese los datos nuevamente --- ---\n";
-                continue;
+            cout << "--- --- Ya existe un cliente con ese RUT, ingrese los datos nuevamente --- ---\n";
+            continue;
         }
         break;
     }
+        cout << "Ingrese nombre completo: "<< endl; getline(cin, nombreCompleto);
+        cout << "Ingrese dirección: "<< endl; getline(cin, direccion);
+    while(true) {
+        cout << "Ingrese correo electrónico: ";
+        getline(cin, correo);
+
+    try {
+        empleadoCtrl->validarCorreoCliente(correo);
+        break;
+    }
+    catch (int error) {
+        cout << "--- --- Ya existe un cliente con ese correo, ingrese el correo nuevamente --- ---\n";
+    }
+}
     cout << "Ingrese contraseña: "<< endl; getline(cin, password);
 
     cout << "\n--------------------------------------\n";
     cout << "==== RESUMEN DE DATOS DEL CLIENTE ====";
-    cout << "\n--------------------------------------n";
+    cout << "\n--------------------------------------\n";
 
     cout << "RUT:" << rut << endl;
     cout << "Nombre completo:" << nombreCompleto << endl;
