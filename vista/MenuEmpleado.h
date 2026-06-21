@@ -15,12 +15,15 @@ class MenuEmpleado {
 
         //Funciones
         void cerrarSesion();
-
+        
+        void altaClienteRegistrado();
+        void modificarClienteRegistrado();
         void registrarVenta();
         void consultarHistorialDeCompras();
+        void emitirOrdenDeCompra();
+        void cancelarOdenDeCompra();
+        
         void consultarStock();
-        void altaClienteRegistrado();
-
     public:
         MenuEmpleado(EmpleadoController* controllerEmp);
         void mostrar();
@@ -29,3 +32,4 @@ class MenuEmpleado {
 
 
 #endif //LABORATORIO3_MENUEMPLEADO_H
+
