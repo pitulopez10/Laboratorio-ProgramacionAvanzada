@@ -9,6 +9,7 @@
 #include "../dominio/Venta.h"
 #include "../dominio/DTFecha.h"
 #include "../dominio/DTHora.h"
+#include "../dominio/Cliente.h"
 using namespace std;
 
 EmpleadoController* EmpleadoController::instancia = NULL;
@@ -29,6 +30,56 @@ EmpleadoController*  EmpleadoController::getInstancia() {
         return instancia;
     }
 }
+void EmpleadoController::validarRutCliente(int rut) {
+    for(ClienteRegistrado* c : clientes) {
+        if(c->getRut() == rut) {
+            throw 1;
+        }
+    }
+    return;
+}
+void EmpleadoController::validarCorreoCliente(string correo) {
+    for(ClienteRegistrado* c : clientes) {
+        
+        if(c->getCorreo() == correo) {
+            throw 2;
+        }
+    }
+    return;
+}
+
+ClienteRegistrado* EmpleadoController::buscarCliente(int rutBuscado) {
+    for(ClienteRegistrado* c : clientes) {
+        if (c->getRut() == rutBuscado) {
+            return c;
+        }
+    }
+    return nullptr;
+}
+
+
+void EmpleadoController::altaClienteRegistrado(int rut, string nombreCompleto, string direccion, string correo, string password) {
+
+    ClienteRegistrado* nuevoCliente = new ClienteRegistrado(rut, nombreCompleto, direccion, correo, password);
+
+    clientes.push_back(nuevoCliente);
+}
+
+void EmpleadoController::modificarClienteRegistrado(ClienteRegistrado* cliente, string nombreCompleto, string direccion, string correo, string password) {
+
+    if(nombreCompleto != "") {
+        cliente->setNombreCompleto(nombreCompleto);
+    }
+    if(direccion != "") {
+        cliente->setDireccion(direccion);
+    }    
+    if(correo != "") {
+        cliente->setCorreo(correo);
+    }
+    if(password != "") {
+        cliente->setPassword(password);
+    }
+}
 
 
 bool EmpleadoController::registrarVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal){
@@ -45,9 +96,6 @@ void EmpleadoController::consultarStock() {
 
 }
 
-void EmpleadoController::altaClienteRegistrado(string rut, string nombreCompleto, string direccion, string correo) {
-
-}
 
 Empleado* EmpleadoController::iniciarSesion(string correo) {
 
