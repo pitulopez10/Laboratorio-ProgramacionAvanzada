@@ -8,6 +8,8 @@
 #include "../dominio/DTFecha.h"
 #include "../dominio/DTHora.h"
 #include "../dominio/Empleado.h"
+#include "../dominio/Cliente.h"
+#include "../dominio/EstadoCompra.h"
 #include "../controladores/AdminController.h"
 #include <string>
 #include <vector>
@@ -21,7 +23,8 @@ private:
     AdminController* adminController;
     vector<Venta*> venta;
     vector<Empleado*> empleados;
-    
+    vector<ClienteRegistrado*> clientes;
+
     static EmpleadoController* instancia;
     Empleado* empleadoLogeado;
 
@@ -34,13 +37,21 @@ public:
 
     void cerrarSesion();
 
+    //METODOS
+    
+    void altaClienteRegistrado(int rut, string nombreCompleto, string direccion, string correo, string password);
+    void modificarClienteRegistrado(ClienteRegistrado* cliente, string nombreCompleto, string direccion, string correo, string password);
 
-        bool registrarVenta(string idVenta,DTFecha fecha,DTHora hora, float precioTotal);
-        void consultarHistorialDeCompras(string rut) const;
-        void consultarStock();
-        void altaClienteRegistrado(string rut, string nombreCompleto, string direccion, string correo);
+    bool registrarVenta(string idVenta,DTFecha fecha,DTHora hora, float precioTotal);
+    void consultarHistorialDeCompras(string rut) const;
+    void consultarStock();
+    Empleado* iniciarSesion(string correo);
 
-        Empleado* iniciarSesion(string correo);
+    //METODOS AUXILIARES
+    void validarRutCliente(int rut);
+    void validarCorreoCliente(string correo);
+    
+    ClienteRegistrado* buscarCliente(int rutBuscado);
 };
 
 
