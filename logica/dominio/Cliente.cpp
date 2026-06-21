@@ -1,5 +1,6 @@
 #include "Cliente.h"
 #include "Calificacion.h"
+#include "Venta.h"
 using namespace std;
 
 //CONSTRUCTORES
@@ -34,6 +35,10 @@ string ClienteRegistrado::getPassword() const {
 
 vector<Calificacion*> ClienteRegistrado::getCalificaciones() const{
     return calificaciones;
+}
+
+vector<Venta*> ClienteRegistrado::getVentas() const {
+    return ventas;
 }
 
 //SETTERS

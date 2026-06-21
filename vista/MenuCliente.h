@@ -8,10 +8,14 @@ using namespace std;
 
 class MenuCliente {
 private:
-    VentaController* controller;
+    VentaController* ventaCtrl;
 
 public:
     MenuCliente(VentaController* controller);
     void mostrar();
+
+    void cerrarSesion();
+
+    void calificarProducto();
 };
 #endif

@@ -28,7 +28,6 @@ Producto* LineaDeDetalle::getProducto() const {
     return this->producto;
 }
 
-
 //SETTERS
 void LineaDeDetalle::setCantidad(int cantidad) {
     this->cantidad = cantidad;

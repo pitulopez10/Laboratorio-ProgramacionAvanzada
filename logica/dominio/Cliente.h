@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+
+#include "Venta.h"
 using namespace std;
 
 class Calificacion;
@@ -16,6 +18,7 @@ class ClienteRegistrado : public Cliente {
         string nombreCompleto, direccion, correo, password;
 
         vector<Calificacion*> calificaciones;
+        vector<Venta*> ventas;
 
     public:
         ClienteRegistrado(int rut, string nombreCompleto, string direccion, string correo, string password);
@@ -27,6 +30,8 @@ class ClienteRegistrado : public Cliente {
         string getCorreo() const;
         string getPassword() const;
         vector<Calificacion*> getCalificaciones() const;
+
+        vector<Venta *> getVentas() const;
 
         //SETTERS
         void setNombreCompleto(string nombreCompleto);
