@@ -1,14 +1,14 @@
 #include "Cliente.h"
 #include "Calificacion.h"
-
 using namespace std;
 
 //CONSTRUCTORES
-ClienteRegistrado :: ClienteRegistrado(int rut, string nombreCompleto, string direccion, string correo) {
+ClienteRegistrado :: ClienteRegistrado(int rut, string nombreCompleto, string direccion, string correo, string password) {
     this-> rut = rut;
     this-> nombreCompleto = nombreCompleto;
     this-> direccion = direccion;
     this-> correo = correo;
+    this-> password = password;
 }
 
 //GETTERS
@@ -28,6 +28,10 @@ string ClienteRegistrado::getCorreo() const{
     return correo;
 }
 
+string ClienteRegistrado::getPassword() const {
+    return password;
+}
+
 vector<Calificacion*> ClienteRegistrado::getCalificaciones() const{
     return calificaciones;
 }
@@ -42,6 +46,10 @@ void ClienteRegistrado::setDireccion(string direccion) {
 }
 void ClienteRegistrado::setCorreo(string correo) {
     this-> correo = correo;
+}
+
+void ClienteRegistrado::setPassword(string password) {
+    this-> password = password;
 }
 
 //METODOS
