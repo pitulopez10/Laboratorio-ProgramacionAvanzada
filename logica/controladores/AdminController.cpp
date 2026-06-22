@@ -149,6 +149,41 @@ void AdminController::modificarProducto(string codigo, string nuevoNombre, strin
     producto->setCategoria(categoria);
 }
 
+void AdminController::eliminarProducto(string codigo) {
+
+    Producto* producto = NULL;
+
+    for (int i =0; i < productos.size(); i++) {
+        if (productos[i]->getCodigo() == codigo) {
+            producto = productos[i];
+        }
+    }
+
+    if (producto == NULL) {
+        throw 1;
+    }
+    if (producto->getCantVendidas() > 0) {
+        throw 2;
+    }
+    for(int i = 0; i < ordenesCompra.size(); i++) {
+        if(ordenesCompra[i]->getEstado() == PENDIENTE) {
+            vector<LineaDeCompra*> lineas = ordenesCompra[i]->getLineasCompra();
+            for(int j = 0; j < lineas.size(); j++) {
+                if(lineas[j]->getProducto()->getCodigo() == codigo) {
+                    throw 3;
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < productos.size(); i++) {
+        if(productos[i] == producto) {
+            productos.erase(productos.begin() + i);
+            delete producto;
+            return;
+        }
+    }
+}
 
 
 void AdminController::agregarProveedor(int rut, string nombre, string telContacto, string nombreContacto, int tiempoEntrega) {

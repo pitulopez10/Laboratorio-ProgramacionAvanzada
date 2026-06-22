@@ -20,6 +20,7 @@ class MenuAdministrador {
         void modificarCategoria();
         void agregarProducto();
         void modificarProducto();
+        void eliminarProducto();
 
         void agregarProveedor();
 

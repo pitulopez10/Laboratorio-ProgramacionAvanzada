@@ -30,6 +30,10 @@ EstadoCompra OrdenDeCompra::getEstado() const {
 string OrdenDeCompra::getIdOrden() const {
   return this->idOrden;
 }
+vector<LineaDeCompra*> OrdenDeCompra::getLineasCompra() {
+  return lineasCompra;
+}
+
 
 //SETTERS
 void OrdenDeCompra::setFechaEmision(DTFecha fechaEmision) {
@@ -40,4 +44,10 @@ void OrdenDeCompra::setEstado(EstadoCompra estado) {
 }
 void OrdenDeCompra::setIdOrden(string idOrden) {
   this->idOrden = idOrden;
+}
+
+//METODOS
+
+void OrdenDeCompra::agregarLineaCompra(LineaDeCompra* lineaCompra) {
+  lineasCompra.push_back(lineaCompra);
 }
