@@ -1,6 +1,8 @@
 #include "MenuCliente.h"
 #include <iostream>
 
+#include "../logica/dominio/Producto.h"
+
 using namespace std;
 
 MenuCliente :: MenuCliente(VentaController* ventaCtrl) {
@@ -14,25 +16,19 @@ void MenuCliente::mostrar() {
         cout<<"=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!="<<endl;
         cout<<"|        MENU CLIENTES        |"<<endl;
         cout<<"=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!="<<endl;
-        cout<<"1. Consultar su historial de compras"<<endl;
-        cout<<"2. Calificar productos comprados"<<endl;
+        cout<<"1. Calificar productos comprados"<<endl;
+        cout<<"2. Consultar informacion detallada de producto" << endl;
         cout<<"0. Cerrar sesion\n";
         cout<<"Seleccione opcion: ";
         cin>>opcion;
 
         switch(opcion) {
             case 1: {
-                cin.ignore();
-
-                string rut;
-                cout<<"Ingrese RUT: ";
-                getline(cin, rut);
-
-                ventaCtrl->consultarHistorialDeCompras(rut);
+                calificarProducto();
                 break;
             }
             case 2: {
-                calificarProducto();
+                consultarInfoDetalladaProducto();
                 break;
             }
             case 0:
@@ -52,6 +48,7 @@ void MenuCliente::cerrarSesion() {
     cout << "Sesion cerrada correctamente." << endl;
 }
 
+//CALIFICAR PRODUCTO
 void MenuCliente::calificarProducto() {
     string codigoProducto, comentario;
     int puntaje, rut, dia, mes, anio;
@@ -62,10 +59,10 @@ void MenuCliente::calificarProducto() {
     cin>>rut;
 
     cout<<"Ingrese codigo del producto: ";
-    cin>>codigoProducto;
+    cin >> codigoProducto;
 
     try {
-        ventaCtrl->verificarCompra(rut, codigoProducto);
+        ventaCtrl->consultarHistorialDeCompras(rut, codigoProducto);
 
         cout<<"Ingrese dia: ";
         cin>>dia;
@@ -96,5 +93,36 @@ void MenuCliente::calificarProducto() {
        if (error == 3) {
             cout << "La calificacion ingresada debe ser entre 1-5" << endl;
        }
+    }
+}
+
+//CONSULTAR INFO DETALLADA PRODUCTO
+void MenuCliente::consultarInfoDetalladaProducto() {
+    string nombre, codigoProducto, descripcion;
+    int cantVendidas, estaEnStock;
+    float precioUnitario, puntajePromedio;
+    Categoria* categoria;
+
+    cout << "\n---CONSULTAR INFO DETALLADA PRODUCTO---\n";
+
+    cout<<"Ingrese codigo del producto: ";
+    cin >> codigoProducto;
+
+    try {
+        Producto* producto = ventaCtrl->consultarInfoDetalladaProducto(codigoProducto);
+
+        cout<<"Nombre: "<< producto->getNombre()<<endl;
+        cout<<"Codigo: "<< producto->getCodigo()<<endl;
+        cout<<"Descripcion: "<< producto->getDescripcion()<<endl;
+        cout<<"Precio unitario: "<< producto->getPrecioUnitario()<<endl;
+        cout<<"Puntaje promedio: "<< producto->getPuntajePromedio()<<endl;
+        cout<<"Cantidad de vendidas: "<< producto->getCantVendidas()<<endl;
+        cout<<"Esta en stock: "<< producto->getEstaEnStock()<<endl;
+        cout<<"Categoria: " << producto->getCategoria()->getNombre()<<endl;
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe un producto con ese codigo." << endl;
+        }
     }
 }

@@ -2,6 +2,7 @@
 // Created by facuw on 3/6/2026.
 //
 #include "VentaController.h"
+#include "AdminController.h"
 
 #include <vector>
 #include <string>
@@ -37,10 +38,8 @@ vector<Venta*> VentaController::listarVentas() {
     return ventas;
 }
 
-void VentaController::consultarStock() {}
-
 //Verifica que haya comprado un producto
-void VentaController::verificarCompra(int rut, string codigoProducto) {
+void VentaController::consultarHistorialDeCompras(int rut, string codigoProducto) {
     ClienteRegistrado* cliente = NULL;
     Producto* producto = NULL;
 
@@ -68,6 +67,7 @@ void VentaController::verificarCompra(int rut, string codigoProducto) {
     }
 }
 
+//Caso uso 19 calificar producto
 void VentaController::calificarProducto(int rut, string codigoProducto, int puntaje, string comentario, DTFecha fecha) {
     ClienteRegistrado* cliente = NULL;
     Producto* producto = NULL;
@@ -97,9 +97,22 @@ void VentaController::calificarProducto(int rut, string codigoProducto, int punt
     cliente->agregarCalificacion(calificacion);
 }
 
-void VentaController::consultarHistorialDeCompras(string rut) {
+//Caso de uso 25 consultar info de un producto
+Producto* VentaController::consultarInfoDetalladaProducto(string codigoProducto) {
+    Producto* producto = NULL;
+    AdminController* adminCtrl = AdminController::getInstancia();
+    vector<Producto*> productos = adminCtrl->listarProductos();
+    string codigoGuardado;
 
+    for (int i = 0; i < productos.size(); i++) {
+        codigoGuardado = productos[i]->getCodigo();
+        if (codigoGuardado == codigoProducto) {
+            return productos[i];
+        }
+    }
+    throw 1;
 }
+
 
 //INICIAR SESION
 ClienteRegistrado* VentaController::iniciarSesion(string correo) {

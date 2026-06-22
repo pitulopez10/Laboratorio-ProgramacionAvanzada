@@ -17,5 +17,7 @@ public:
     void cerrarSesion();
 
     void calificarProducto();
+
+    void consultarInfoDetalladaProducto();
 };
 #endif

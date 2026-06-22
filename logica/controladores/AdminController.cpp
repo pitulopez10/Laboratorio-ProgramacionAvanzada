@@ -170,7 +170,7 @@ vector<Categoria*> AdminController::listarCategorias() {
 
 
 vector<Producto*> AdminController::listarProductos() {
-
+    return productos;
 }
 
 
