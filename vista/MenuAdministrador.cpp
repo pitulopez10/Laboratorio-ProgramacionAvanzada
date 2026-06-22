@@ -19,57 +19,128 @@ MenuAdministrador::MenuAdministrador(AdminController* adminCtrl) {
 void MenuAdministrador::mostrar() {
     int opcion;
     bool salir = false;
-
     do {
-        cout<<"=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!="<<endl;
-        cout<<"|      MENU ADMINISTRADOR     |"<<endl;
-        cout<<"=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!="<<endl;
-        cout << "1. Alta empleado\n";
-        cout << "2. Listar empleados\n";
-        cout << "3. Agregar categoria\n";
-        cout << "4. Listar categorias\n";
-        cout << "5. Modificar categoria\n";
-        cout << "6. Agregar Producto\n";
-        cout << "7. Modificar Producto\n";
-        cout << "8. Eliminar Producto\n";
-        cout << "0. Cerrar sesion\n";
-        cout << "Seleccione una opcion: ";
-        cin >> opcion;
-
-        switch (opcion) {
-            case 1:
-                altaEmpleado();
-                break;
-            case 2:
-                listarEmpleados();
-                break;
-            case 3:
-                agregarCategoria();
-                break;
-            case 4:
-                listarCategorias();
-                break;
-            case 5:
-                modificarCategoria();
-                break;
-            case 6:
-                agregarProducto();
-                break;
-            case 7:
-                modificarProducto();
-                break;
-            case 8:
-                eliminarProducto();
-                break;
-            case 0:
-                cerrarSesion();
-                salir = true;
-                break;
-            default:
-                cout << "Opcion invalida.\n";
-                break;
+    cout << "\n========== MENU ADMINISTRADOR ==========\n";
+    cout << "1. Gestion de empleados\n";
+    cout << "2. Gestion de categorias\n";
+    cout << "3. Gestion de productos\n";
+    cout << "4. Gestion de proveedores\n";
+    cout << "0. Cerrar sesion\n";
+    cin >> opcion;
+    switch(opcion) {
+        case 1: {
+            int opEmpleado;
+            do {
+                cout << "\n--- GESTION DE EMPLEADOS ---\n";
+                cout << "1. Alta empleado\n";
+                cout << "2. Listar empleados\n";
+                cout << "0. Volver\n";
+                cin >> opEmpleado;
+                switch(opEmpleado) {
+                    case 1:
+                        altaEmpleado();
+                        break;
+                    case 2:
+                        listarEmpleados();
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        cout << "Opcion invalida." << endl;
+                }
+            } while(opEmpleado != 0);
+            break;
         }
-    }while(opcion != 0);
+        case 2: {
+            int opCategoria;
+            do {
+                cout << "\n--- GESTION DE CATEGORIAS ---\n";
+                cout << "1. Agregar categoria\n";
+                cout << "2. Modificar categoria\n";
+                cout << "3. Listar categorias\n";
+                cout << "0. Volver\n";
+                cin >> opCategoria;
+                switch(opCategoria) {
+                    case 1:
+                        agregarCategoria();
+                        break;
+                    case 2:
+                        modificarCategoria();
+                        break;
+                    case 3:
+                        listarCategorias();
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        cout << "Opcion invalida." << endl;
+                }
+            } while(opCategoria != 0);
+            break;
+        }
+        case 3: {
+            int opProducto;
+            do {
+                cout << "\n--- GESTION DE PRODUCTOS ---\n";
+                cout << "1. Agregar producto\n";
+                cout << "2. Modificar producto\n";
+                cout << "3. Eliminar producto\n";
+                cout << "4. Listar productos\n";
+                cout << "0. Volver\n";
+                cin >> opProducto;
+                switch(opProducto) {
+                    case 1:
+                        agregarProducto();
+                        break;
+                    case 2:
+                        modificarProducto();
+                        break;
+                    case 3:
+                        eliminarProducto();
+                        break;
+                    case 4:
+                        listarProductos();
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        cout << "Opcion invalida." << endl;
+                }
+            } while(opProducto != 0);
+            break;
+        }
+        case 4: {
+            int opProveedor;
+            do {
+                cout << "\n--- GESTION DE PROVEEDORES ---\n";
+                cout << "1. Agregar proveedor\n";
+                cout << "2. Listar proveedores\n";
+                cout << "0. Volver\n";
+                cin >> opProveedor;
+                switch(opProveedor) {
+                    case 1:
+                        agregarProveedor();
+                        break;
+                    case 2:
+                        listarProveedores();
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        cout << "Opcion invalida." << endl;
+                }
+            } while(opProveedor != 0);
+            break;
+        }
+        case 0:
+            cerrarSesion();
+            salir = true;
+            break;
+        default:
+            cout << "Opcion invalida." << endl;
+    }
+
+} while(salir == false);
 }
 
 //CERRAR SESION
