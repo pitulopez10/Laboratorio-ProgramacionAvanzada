@@ -14,61 +14,180 @@ MenuEmpleado::MenuEmpleado(EmpleadoController* empleadoCtrl) {
 
 void MenuEmpleado::mostrar() {
     int opcion;
-    bool salir = false;
-    do {
-        cout << "=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
-        cout << "|        MENU EMPLEADOS       |" <<endl;
-        cout << "=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
-        
-        cout << "1. Dar de alta cliente registrado" << endl;
-        cout << "2. Modificar cliente registrado" << endl;
-        cout << "3. Registrar una venta" << endl;
-        cout << "4. Consultar historial de compras de un cliente registrado" << endl;
-        cout << "5. Emitir orden de compra" << endl;
-        cout << "6. Cancelar orden de compra" << endl;
 
-        cout << "9. Consultar stock" << endl;
-        cout << "0. Volver" << endl;
-        cout << "Elegir opcion: " << endl;
+    do {
+        cout << "\n=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
+        cout << "|        MENU EMPLEADOS       |" << endl;
+        cout << "=!!=!!=!!=!!=!!=!!=!!=!!=!!=!!=" << endl;
+
+        cout << "1. Gestion de clientes" << endl;
+        cout << "2. Ventas" << endl;
+        cout << "3. Ordenes de compra" << endl;
+        cout << "4. Reportes" << endl;
+        cout << "5. Informacion de producto" << endl;
+        cout << "0. Cerrar sesion" << endl;
+        cout << "Elegir opcion: ";
         cin >> opcion;
         cin.ignore();
 
         switch (opcion) {
             case 1: {
-                altaClienteRegistrado();
+                int opcionClientes;
+
+                do {
+                    cout << "\n--- GESTION DE CLIENTES ---\n";
+                    cout << "1. Alta cliente registrado" << endl;
+                    cout << "2. Modificar cliente registrado" << endl;
+                    cout << "0. Volver" << endl;
+                    cout << "Elegir opcion: ";
+                    cin >> opcionClientes;
+                    cin.ignore();
+
+                    switch (opcionClientes) {
+                        case 1:
+                            altaClienteRegistrado();
+                            break;
+                        case 2:
+                            modificarClienteRegistrado();
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            cout << "Opcion invalida." << endl;
+                            break;
+                    }
+
+                } while (opcionClientes != 0);
+
                 break;
             }
+
             case 2: {
-                modificarClienteRegistrado();
+                int opcionVentas;
+
+                do {
+                    cout << "\n--- VENTAS ---\n";
+                    cout << "1. Registrar venta" << endl;
+                    cout << "2. Consultar historial de compras" << endl;
+                    cout << "0. Volver" << endl;
+                    cout << "Elegir opcion: ";
+                    cin >> opcionVentas;
+                    cin.ignore();
+
+                    switch (opcionVentas) {
+                        case 1:
+                            registrarVenta();
+                            break;
+                        case 2:
+                            consultarHistorialDeCompras();
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            cout << "Opcion invalida." << endl;
+                            break;
+                    }
+
+                } while (opcionVentas != 0);
+
                 break;
             }
+
             case 3: {
-                registrarVenta();
+                int opcionOrdenes;
+
+                do {
+                    cout << "\n--- ORDENES DE COMPRA ---\n";
+                    cout << "1. Emitir orden de compra" << endl;
+                    cout << "2. Cancelar orden de compra" << endl;
+                    cout << "0. Volver" << endl;
+                    cout << "Elegir opcion: ";
+                    cin >> opcionOrdenes;
+                    cin.ignore();
+
+                    switch (opcionOrdenes) {
+                        case 1:
+                            emitirOrdenDeCompra();
+                            break;
+                        case 2:
+                            cancelarOdenDeCompra();
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            cout << "Opcion invalida." << endl;
+                            break;
+                    }
+
+                } while (opcionOrdenes != 0);
+
                 break;
             }
+
             case 4: {
-                consultarHistorialDeCompras();
+                int opcionReportes;
+
+                do {
+                    cout << "\n--- REPORTES ---\n";
+                    cout << "1. Consultar stock" << endl;
+                    cout << "0. Volver" << endl;
+                    cout << "Elegir opcion: ";
+                    cin >> opcionReportes;
+                    cin.ignore();
+
+                    switch (opcionReportes) {
+                        case 1:
+                            consultarStock();
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            cout << "Opcion invalida." << endl;
+                            break;
+                    }
+
+                } while (opcionReportes != 0);
+
                 break;
             }
+
             case 5: {
-                emitirOrdenDeCompra();
+                int opcionInfo;
+
+                do {
+                    cout << "\n--- INFORMACION DE PRODUCTO ---\n";
+                    cout << "1. Consultar informacion detallada de producto" << endl;
+                    cout << "0. Volver" << endl;
+                    cout << "Elegir opcion: ";
+                    cin >> opcionInfo;
+                    cin.ignore();
+
+                    switch (opcionInfo) {
+                        case 1:
+                            consultarInfoDetalladaProducto();
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            cout << "Opcion invalida." << endl;
+                            break;
+                    }
+
+                } while (opcionInfo != 0);
+
                 break;
             }
-            case 6: {
-                cancelarOdenDeCompra();
-                break;
-            }
-            case 9: {
-                consultarStock();
-                break;
-            }
-            case 0: {
+
+            case 0:
                 cerrarSesion();
-                salir = true;
                 break;
-            }
+
+            default:
+                cout << "Opcion invalida." << endl;
+                break;
         }
-    }while (opcion != 0);
+
+    } while (opcion != 0);
 }
 
 
@@ -208,6 +327,36 @@ void MenuEmpleado::modificarClienteRegistrado() {
     }
 }
 
+//CONSULTAR INFO DETALLADA PRODUCTO
+void MenuEmpleado::consultarInfoDetalladaProducto() {
+    string nombre, codigoProducto, descripcion;
+    int cantVendidas, estaEnStock;
+    float precioUnitario, puntajePromedio;
+    Categoria* categoria;
+
+    cout << "\n---CONSULTAR INFO DETALLADA PRODUCTO---\n";
+
+    cout<<"Ingrese codigo del producto: ";
+    cin >> codigoProducto;
+
+    try {
+        Producto* producto = empleadoCtrl->consultarInfoDetalladaProducto(codigoProducto);
+
+        cout<<"Nombre: "<< producto->getNombre()<<endl;
+        cout<<"Codigo: "<< producto->getCodigo()<<endl;
+        cout<<"Descripcion: "<< producto->getDescripcion()<<endl;
+        cout<<"Precio unitario: "<< producto->getPrecioUnitario()<<endl;
+        cout<<"Puntaje promedio: "<< producto->getPuntajePromedio()<<endl;
+        cout<<"Cantidad de vendidas: "<< producto->getCantVendidas()<<endl;
+        cout<<"Esta en stock: "<< producto->getEstaEnStock()<<endl;
+        cout<<"Categoria: " << producto->getCategoria()->getNombre()<<endl;
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe un producto con ese codigo." << endl;
+        }
+    }
+}
 
 void MenuEmpleado::registrarVenta() { }
 void MenuEmpleado::consultarHistorialDeCompras() { }

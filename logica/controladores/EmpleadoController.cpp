@@ -17,7 +17,7 @@ EmpleadoController* EmpleadoController::instancia = NULL;
 
 EmpleadoController::EmpleadoController() {
     this->adminController = AdminController::getInstancia();
-    empleados.push_back(new Empleado("Maria Rodriguez", "18 de Julio 429", "mariaempleado@gmail.com"));
+    empleados.push_back(new Empleado("Maria Rodriguez", "18 de Julio 429", "mariaempleado@gmail.com","1234"));
 }
 
 
@@ -81,6 +81,20 @@ void EmpleadoController::modificarClienteRegistrado(ClienteRegistrado* cliente, 
     }
 }
 
+Producto* EmpleadoController::consultarInfoDetalladaProducto(string codigoProducto) {
+    Producto* producto = NULL;
+    AdminController* adminCtrl = AdminController::getInstancia();
+    vector<Producto*> productos = adminCtrl->listarProductos();
+    string codigoGuardado;
+
+    for (int i = 0; i < productos.size(); i++) {
+        codigoGuardado = productos[i]->getCodigo();
+        if (codigoGuardado == codigoProducto) {
+            return productos[i];
+        }
+    }
+    throw 1;
+}
 
 bool EmpleadoController::registrarVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal){
     return true;
@@ -97,11 +111,11 @@ void EmpleadoController::consultarStock() {
 }
 
 
-Empleado* EmpleadoController::iniciarSesion(string correo) {
+Empleado* EmpleadoController::iniciarSesion(string correo, string password) {
 
     vector<Empleado*> empleados = AdminController::getInstancia()->listarEmpleados();
     for (int i = 0; i < empleados.size(); i++) {
-        if (empleados[i]->getCorreo() == correo) {
+        if (empleados[i]->getCorreo() == correo && empleados[i]->getPassword() == password) {
             empleadoLogeado = empleados[i];
             return empleados[i];
         }

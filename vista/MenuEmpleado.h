@@ -20,6 +20,7 @@ class MenuEmpleado {
         void modificarClienteRegistrado();
         void registrarVenta();
         void consultarHistorialDeCompras();
+        void consultarInfoDetalladaProducto();
         void emitirOrdenDeCompra();
         void cancelarOdenDeCompra();
         

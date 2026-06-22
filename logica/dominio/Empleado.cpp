@@ -10,10 +10,11 @@
 using namespace std;
 
 
-Empleado::Empleado(string nombreCompleto, string direccion, string correo) {
+Empleado::Empleado(string nombreCompleto, string direccion, string correo, string password) {
     this->nombreCompleto = nombreCompleto;
     this->direccion = direccion;
     this->correo = correo;
+    this->password = password;
 }
 
 Empleado::~Empleado() {
@@ -30,6 +31,9 @@ string Empleado::getDireccion(){
 string Empleado::getCorreo() {
     return this->correo;
 }
+string Empleado::getPassword() {
+    return password;
+}
 
 //SETTERS
 void Empleado::setNombreCompleto(string nombreCompleto) {
@@ -40,6 +44,9 @@ void Empleado::setDireccion(string direccion) {
 }
 void Empleado::setCorreo(string correo) {
     this->correo = correo;
+}
+void Empleado::setPassword(string password) {
+    this->password = password;
 }
 
 //METODOS

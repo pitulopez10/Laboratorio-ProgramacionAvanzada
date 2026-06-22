@@ -36,13 +36,13 @@ public:
     static AdminController* getInstancia();
 
     //INICIO DE SESION
-    Admin* iniciarSesion(string correo);
+    Admin* iniciarSesion(string correo, string password);
 
     //CIERRE DE SESION
     void cerrarSesion();
 
     //FUNCIONES DE AGREGAR
-    void altaEmpleado(string nombreCompleto, string direccion, string correo);
+    void altaEmpleado(string nombreCompleto, string direccion, string correo, string password);
     void agregarCategoria(string nombre, string descripcion);
     void modificarCategoria(string nombreActual, string nuevoNuombre, string nuevaDescripcion);
     void agregarProducto(string nombre, string codigo, string descripcion, float precioUnitario, int estaEnStock, string nombreCategoria);

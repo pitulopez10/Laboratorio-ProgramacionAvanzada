@@ -152,7 +152,7 @@ void MenuAdministrador::cerrarSesion() {
 
 //FUNCIONES DE AGREGAR
 void MenuAdministrador::altaEmpleado() {
-    string nombreCompleto, direccion, correo;
+    string nombreCompleto, direccion, correo, password;
 
     cout << "\n---ALTA-EMPLEADO---\n";
 
@@ -166,8 +166,11 @@ void MenuAdministrador::altaEmpleado() {
     cout << "Ingrese correo: "<< endl;
     getline(cin,correo);
 
+    cout << "Ingrese contrasenia: "<< endl;
+    getline(cin,password);
+
     try {
-        adminCtrl->altaEmpleado(nombreCompleto,direccion,correo);
+        adminCtrl->altaEmpleado(nombreCompleto,direccion,correo,password);
         cout << "Empledo agregado correctamente." << endl;
     }
     catch (int error) {

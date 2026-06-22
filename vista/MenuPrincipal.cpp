@@ -33,26 +33,29 @@ void MenuPrincipal::mostrar() {
 
         switch (opcion) {
             case 1: {
-                string correo;
+                string correo, password;
                 cout << "Ingrese el correo: ";
                 cin >> correo;
-                if (adminCtrl->iniciarSesion(correo) != NULL) {
+                cout << "Ingrese la contrasenia: ";
+                cin >> password;
+
+                if (adminCtrl->iniciarSesion(correo, password) != NULL) {
                     MenuAdministrador menuAdministrador(adminCtrl);
                     menuAdministrador.mostrar();
                     break;
                 }
-                else if (empleadoCtrl->iniciarSesion(correo) != NULL) {
+                else if (empleadoCtrl->iniciarSesion(correo, password) != NULL) {
                     MenuEmpleado menuEmpleado(empleadoCtrl);
                     menuEmpleado.mostrar();
                     break;
                 }
-                else if (ventaCtrl->iniciarSesion(correo) != NULL) {
+                else if (ventaCtrl->iniciarSesion(correo, password) != NULL) {
                     MenuCliente menuCliente(ventaCtrl);
                     menuCliente.mostrar();
                     break;
                 }
                 else {
-                    cout << "Correo no encontrado" << endl;
+                    cout << "Correo o contrasenia incorrectos" << endl;
                 }
             }
             case 0:

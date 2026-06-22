@@ -27,7 +27,7 @@ public:
     static VentaController* getInstancia();
     Venta* clienteLogeado;
 
-    ClienteRegistrado* iniciarSesion(string correo);
+    ClienteRegistrado* iniciarSesion(string correo, string password);
     void cerrarSesion();
 
     void nuevaVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal);

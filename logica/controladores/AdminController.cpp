@@ -14,8 +14,8 @@ AdminController::~AdminController() {
 }
 
 AdminController::AdminController() {
-    administradores.push_back(new Admin("Carlos Perez", "Montevideo 234", "carlosadmin@gmail.com"));
-    empleados.push_back(new Empleado("Maria Rodriguez", "18 de Julio 429", "mariaempleado@gmail.com"));
+    administradores.push_back(new Admin("Carlos Perez", "Montevideo 234", "carlosadmin@gmail.com", "1234"));
+    empleados.push_back(new Empleado("Maria Rodriguez", "18 de Julio 429", "mariaempleado@gmail.com", "1234"));
     adminLogeado = NULL;
 }
 
@@ -30,9 +30,9 @@ AdminController*  AdminController::getInstancia() {
 }
 
 //INICIO DE SESION
-Admin* AdminController::iniciarSesion(string correo) {
+Admin* AdminController::iniciarSesion(string correo, string password) {
     for (int i = 0; i < administradores.size(); i++) {
-        if (administradores[i]->getCorreo() == correo) {
+        if (administradores[i]->getCorreo() == correo && administradores[i]->getPassword() == password) {
             adminLogeado = administradores[i];
             return administradores[i];
         }
@@ -46,14 +46,14 @@ void AdminController::cerrarSesion() {
 }
 
 //FUNCIONES DE AGREGAR
-void AdminController::altaEmpleado(string nombreCompleto, string direccion, string correo) {
+void AdminController::altaEmpleado(string nombreCompleto, string direccion, string correo, string password) {
     for (int i =0; i < administradores.size(); i++) {
         if (administradores[i]->getCorreo() == correo) {
             throw 1;
         }
     }
 
-    Empleado* empleado = new Empleado(nombreCompleto, direccion, correo);
+    Empleado* empleado = new Empleado(nombreCompleto, direccion, correo, password);
     empleados.push_back(empleado);
 }
 

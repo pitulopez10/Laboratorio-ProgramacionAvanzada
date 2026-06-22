@@ -7,10 +7,11 @@
 using namespace std;
 
 
-Admin::Admin(string nombreCompleto, string direccion, string correo) {
+Admin::Admin(string nombreCompleto, string direccion, string correo, string password) {
     this->nombreCompleto = nombreCompleto;
     this->direccion = direccion;
     this->correo = correo;
+    this->password = password;
 }
 
 Admin::~Admin() {
@@ -27,6 +28,9 @@ string Admin::getDireccion(){
 string Admin::getCorreo() {
     return this->correo;
 }
+string Admin::getPassword() {
+    return this->password;
+}
 
 //SETTERS
 void Admin::setNombreCompleto(string nombreCompleto) {
@@ -38,6 +42,8 @@ void Admin::setDireccion(string direccion) {
 void Admin::setCorreo(string correo) {
     this->correo = correo;
 }
-
+void Admin::setPassword(string password) {
+    this->password = password;
+}
 //METODOS
 

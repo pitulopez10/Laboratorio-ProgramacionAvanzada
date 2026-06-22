@@ -35,6 +35,7 @@ public:
 
     static EmpleadoController* getInstancia();
 
+    Empleado* iniciarSesion(string correo, string password);
     void cerrarSesion();
 
     //METODOS
@@ -44,8 +45,9 @@ public:
 
     bool registrarVenta(string idVenta,DTFecha fecha,DTHora hora, float precioTotal);
     void consultarHistorialDeCompras(string rut) const;
+    Producto* consultarInfoDetalladaProducto(string codigoProducto);
     void consultarStock();
-    Empleado* iniciarSesion(string correo);
+
 
     //METODOS AUXILIARES
     void validarRutCliente(int rut);

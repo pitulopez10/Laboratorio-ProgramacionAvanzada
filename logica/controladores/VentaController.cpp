@@ -115,9 +115,9 @@ Producto* VentaController::consultarInfoDetalladaProducto(string codigoProducto)
 
 
 //INICIAR SESION
-ClienteRegistrado* VentaController::iniciarSesion(string correo) {
+ClienteRegistrado* VentaController::iniciarSesion(string correo, string password) {
     for (int i = 0; i < clientesRegistrados.size(); i++) {
-        if (clientesRegistrados[i]->getCorreo() == correo) {
+        if (clientesRegistrados[i]->getCorreo() == correo && clientesRegistrados[i]->getPassword() == password) {
             return clientesRegistrados[i];
         }
     }
