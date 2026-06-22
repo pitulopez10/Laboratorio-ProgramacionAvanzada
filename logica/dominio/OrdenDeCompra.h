@@ -28,11 +28,15 @@ class OrdenDeCompra  {
         DTFecha getFechaEmision() const;
         EstadoCompra getEstado() const;
         string getIdOrden() const;
+        vector<LineaDeCompra*> getLineasCompra();
 
         //SETTERS
         void setFechaEmision(DTFecha fechaEmision);
         void setEstado(EstadoCompra estado);
         void setIdOrden(string idOrden);
+
+        //METODOS
+        void agregarLineaCompra(LineaDeCompra* lineaCompra);
 };
 
 

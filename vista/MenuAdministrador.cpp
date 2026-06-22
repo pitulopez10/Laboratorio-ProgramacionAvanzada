@@ -31,6 +31,7 @@ void MenuAdministrador::mostrar() {
         cout << "5. Modificar categoria\n";
         cout << "6. Agregar Producto\n";
         cout << "7. Modificar Producto\n";
+        cout << "8. Eliminar Producto\n";
         cout << "0. Cerrar sesion\n";
         cout << "Seleccione una opcion: ";
         cin >> opcion;
@@ -56,6 +57,9 @@ void MenuAdministrador::mostrar() {
                 break;
             case 7:
                 modificarProducto();
+                break;
+            case 8:
+                eliminarProducto();
                 break;
             case 0:
                 cerrarSesion();
@@ -245,6 +249,31 @@ void MenuAdministrador::modificarProducto() {
         }
         else if(error == 4) {
             cout << "La categoria ingresada no existe." << endl;
+        }
+    }
+}
+
+void MenuAdministrador::eliminarProducto() {
+    string codigo;
+
+    cout << "\n---MODIFICAR PRODUCTO---\n";
+    cin.ignore();
+
+    cout << "Ingrese codigo del producto a eliminar: " << endl;
+    getline(cin, codigo);
+
+    try {
+        adminCtrl->eliminarProducto(codigo);
+        cout << "Producto eliminado correctamente." << endl;
+    }catch(int error) {
+        if(error == 1) {
+            cout << "No existe un producto con ese codigo." << endl;
+        }
+        else if(error == 2) {
+            cout << "No se puede eliminar un producto con ventas registradas." << endl;
+        }
+        else if(error == 3) {
+            cout << "No se puede eliminar un prodcto con orden de compra pendiente." << endl;
         }
     }
 }
