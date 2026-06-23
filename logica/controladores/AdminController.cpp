@@ -185,9 +185,17 @@ void AdminController::eliminarProducto(string codigo) {
     }
 }
 
-
 void AdminController::agregarProveedor(int rut, string nombre, string telContacto, string nombreContacto, int tiempoEntrega) {
-
+    for (int i =0; i < proveedores.size(); i++) {
+        if (proveedores[i]->getRut() == rut) {
+            throw 1;
+        }
+    }
+    if (tiempoEntrega < 0) {
+        throw 2;
+    }
+    Proveedor* proveedor = new Proveedor(rut, nombre, telContacto, nombreContacto, tiempoEntrega);
+    proveedores.push_back(proveedor);
 }
 
 bool AdminController::agregarOrdenCompra(OrdenDeCompra* ordenesCompra) {
@@ -203,15 +211,12 @@ vector<Categoria*> AdminController::listarCategorias() {
     return categorias;
 }
 
-
 vector<Producto*> AdminController::listarProductos() {
     return productos;
 }
 
-
-
 vector<Proveedor*> AdminController::listarProveedores() {
-
+    return proveedores;
 }
 
 vector<OrdenDeCompra*> AdminController::crearOrdenCompra() {

@@ -59,7 +59,6 @@ public:
     //FUNCIONES DE LISTAR
     vector<Empleado*> listarEmpleados();
     vector<Categoria*> listarCategorias();
-
     vector<Producto*> listarProductos();
     vector<Proveedor*> listarProveedores();
     vector<OrdenDeCompra*> crearOrdenCompra();

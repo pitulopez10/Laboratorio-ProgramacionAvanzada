@@ -31,6 +31,7 @@ void MenuAdministrador::mostrar() {
         case 1: {
             int opEmpleado;
             do {
+                cin.ignore();
                 cout << "\n--- GESTION DE EMPLEADOS ---\n";
                 cout << "1. Alta empleado\n";
                 cout << "2. Listar empleados\n";
@@ -54,6 +55,7 @@ void MenuAdministrador::mostrar() {
         case 2: {
             int opCategoria;
             do {
+                cin.ignore();
                 cout << "\n--- GESTION DE CATEGORIAS ---\n";
                 cout << "1. Agregar categoria\n";
                 cout << "2. Modificar categoria\n";
@@ -81,6 +83,7 @@ void MenuAdministrador::mostrar() {
         case 3: {
             int opProducto;
             do {
+                cin.ignore();
                 cout << "\n--- GESTION DE PRODUCTOS ---\n";
                 cout << "1. Agregar producto\n";
                 cout << "2. Modificar producto\n";
@@ -112,6 +115,7 @@ void MenuAdministrador::mostrar() {
         case 4: {
             int opProveedor;
             do {
+                cin.ignore();
                 cout << "\n--- GESTION DE PROVEEDORES ---\n";
                 cout << "1. Agregar proveedor\n";
                 cout << "2. Listar proveedores\n";
@@ -149,8 +153,7 @@ void MenuAdministrador::cerrarSesion() {
     cout << "Sesion cerrada correctamente." << endl;
 }
 
-
-//FUNCIONES DE AGREGAR
+//FUNCIONES DE AGREGAR Y MODIFICAR
 void MenuAdministrador::altaEmpleado() {
     string nombreCompleto, direccion, correo, password;
 
@@ -303,6 +306,7 @@ void MenuAdministrador::modificarProducto() {
 
     cout << "Ingrese nuevo stock: " << endl;
     cin >> nuevoStock;
+    cin.ignore();
 
     cout << "Ingrese nueva categoria: " << endl;
     getline(cin, nuevaCategoria);
@@ -352,8 +356,6 @@ void MenuAdministrador::eliminarProducto() {
     }
 }
 
-
-
 void MenuAdministrador::agregarProveedor() {
     int rut, tiempoEntrega;
     string nombre, telContacto, nombreContacto;
@@ -374,11 +376,20 @@ void MenuAdministrador::agregarProveedor() {
     cout << "Nombre de Contacto: "<< endl;
     getline(cin, nombreContacto);
 
-    cout << "Tiempo de entrega: "<< endl;
+    cout << "Tiempo de entrega (DIAS): "<< endl;
     cin >> tiempoEntrega;
-
-    adminCtrl->agregarProveedor(rut, nombre, telContacto, nombreContacto, tiempoEntrega);
-    cout << "\n---Proveedor agregado correctamente---\n";
+    try {
+        adminCtrl->agregarProveedor(rut,nombre,telContacto,nombreContacto,tiempoEntrega);
+        cout << "\nProveedor agregado correctamente.\n";
+    }
+    catch(int error) {
+        if(error == 1) {
+            cout << "Ya existe un proveedor con ese RUT." << endl;
+        }
+        else if(error == 2) {
+            cout << "El tiempo de entrega no puede ser negativo." << endl;
+        }
+    }
 }
 
 //FUNCIONES DE LISTAR
@@ -433,14 +444,12 @@ void MenuAdministrador::listarProductos() {
         cout << "Codigo: " << productos[i]->getCodigo() << endl;
         cout << "Nombre: " << productos[i]->getNombre() << endl;
         cout << "Descripcion: " << productos[i]->getDescripcion() << endl;
-        cout << "Precio unitario: " << productos[i]->getPrecioUnitario() << endl;
+        cout << "Precio unitario ($): " << productos[i]->getPrecioUnitario() << endl;
         cout << "Cantidad vendidas: " << productos[i]->getCantVendidas() << endl;
         cout << "Stock: " << productos[i]->getEstaEnStock() << endl;
         cout << "-----------------------------\n";
     }
 }
-
-
 
 void MenuAdministrador::listarProveedores() {
     vector<Proveedor*> proveedores = adminCtrl->listarProveedores();
@@ -451,13 +460,12 @@ void MenuAdministrador::listarProveedores() {
         cout << "No hay proveedores cargados.\n";
         return;
     }
-
     for (int i = 0; i < proveedores.size(); i++) {
         cout << "RUT: " << proveedores[i]->getRut() << endl;
         cout << "Nombre: " << proveedores[i]->getNombre() << endl;
         cout << "Telefono contacto: " << proveedores[i]->getTelContacto() << endl;
         cout << "Nombre contacto: " << proveedores[i]->getNombreContacto() << endl;
-        cout << "Tiempo entrega: " << proveedores[i]->getTiempoEntrega() << endl;
+        cout << "Tiempo entrega (DIAS): " << proveedores[i]->getTiempoEntrega() << endl;
         cout << "-----------------------------\n";
     }
 }

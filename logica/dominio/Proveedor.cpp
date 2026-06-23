@@ -9,7 +9,7 @@
 Proveedor::Proveedor() {
 
 }
-Proveedor::Proveedor(int rut, int tiempoEntrega, string nombre, string telContacto, string nombreContacto) {
+Proveedor::Proveedor(int rut, string nombre, string telContacto, string nombreContacto, int tiempoEntrega) {
     this->rut = rut;
     this->tiempoEntrega = tiempoEntrega;
     this->nombre = nombre;

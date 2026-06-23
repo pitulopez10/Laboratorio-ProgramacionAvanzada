@@ -20,7 +20,7 @@ public:
 
     //CONSTRUCTORES
     Proveedor();
-    Proveedor(int rut, int tiempoEntrega, string nombre, string telContacto, string nombreContacto);
+    Proveedor(int rut, string nombre, string telContacto, string nombreContacto, int tiempoEntrega);
 
     //GETTERS
 
