@@ -63,10 +63,11 @@ ClienteRegistrado* EmpleadoController::buscarCliente(int rutBuscado) {
 
 
 void EmpleadoController::altaClienteRegistrado(int rut, string nombreCompleto, string direccion, string correo, string password) {
+    ClienteRegistrado* cliente = new ClienteRegistrado(rut, nombreCompleto, direccion, correo, password);
 
-    ClienteRegistrado* nuevoCliente = new ClienteRegistrado(rut, nombreCompleto, direccion, correo, password);
+    clientes.push_back(cliente);
 
-    clientes.push_back(nuevoCliente);
+    VentaController::getInstancia()->agregarClienteRegistrado(cliente);
 }
 
 void EmpleadoController::modificarClienteRegistrado(ClienteRegistrado* cliente, string nombreCompleto, string direccion, string correo, string password) {
@@ -332,6 +333,15 @@ float EmpleadoController::montoTotalFacturadoAcliente(int rutCliente) {
     return montoTotal;
 }
 
+int EmpleadoController::unidadesVendidasDeProducto(string codigoProducto) {
+    vector<Producto*> productos = AdminController::getInstancia()->listarProductos();
+    for (int i = 0; i < productos.size(); i++) {
+        if (productos[i]->getCodigo() == codigoProducto) {
+            return productos[i]->getCantVendidas();
+        }
+    }
+    throw 1;
+}
 
 Empleado* EmpleadoController::iniciarSesion(string correo, string password) {
 

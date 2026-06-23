@@ -10,6 +10,7 @@
 #include "../logica/dominio/LineaDeCompra.h"
 #include <string>
 #include <iostream>
+#include <limits>
 using namespace std;
 
 MenuEmpleado::MenuEmpleado(EmpleadoController* empleadoCtrl, VentaController* ventaCtrl, AdminController* adminCtrl) {
@@ -153,8 +154,13 @@ void MenuEmpleado::mostrar() {
                             break;
                         case 2:
                             consultarProductosBajoMinimo();
+                            break;
                         case 3:
                             montoTotalFacturadoAcliente();
+                            break;
+                        case 4:
+                            unidadesVendidasDeProducto();
+                            break;
                         case 0:
                             break;
                         default:
@@ -820,6 +826,23 @@ void MenuEmpleado::montoTotalFacturadoAcliente() {
             cout << "No existe un cliente registrado con ese RUT.";
         } else if (error == 2) {
             cout << "El cliente no tiene ventas registradas.";
+        }
+    }
+}
+
+void MenuEmpleado::unidadesVendidasDeProducto() {
+    string codigoProducto;
+    cout << "\n--- UNIDADES VENDIDAS DE PRODUCTO ---\n";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Ingrese el codigo del producto: ";
+    getline(cin, codigoProducto);
+    try {
+        int unidadesVendidas = EmpleadoController::getInstancia()->unidadesVendidasDeProducto(codigoProducto);
+        cout << "Unidades vendidas: " << unidadesVendidas << endl;
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe un producto con ese codigo.";
         }
     }
 }

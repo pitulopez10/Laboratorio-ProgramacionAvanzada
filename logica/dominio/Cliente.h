@@ -11,6 +11,8 @@ class Calificacion;
 class Venta;
 
 class Cliente {
+public:
+    virtual ~Cliente() = default;
 };
 
 class ClienteRegistrado : public Cliente {
@@ -42,5 +44,6 @@ class ClienteRegistrado : public Cliente {
 
         //METODOS
         void agregarCalificacion(Calificacion* calificacion);
+        void agregarVenta(Venta* venta);
 };
 #endif //LABORATORIO3_CLIENTE_H

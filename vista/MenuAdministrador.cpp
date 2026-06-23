@@ -236,6 +236,8 @@ void MenuAdministrador::mostrar() {
                     case 1:
                         montoTotalFacturadoAcliente();
                         break;
+                    case 2:
+                        unidadesVendidasDeProducto();
                     case 0:
                         break;
                     default:
@@ -819,6 +821,23 @@ void MenuAdministrador::montoTotalFacturadoAcliente() {
             cout << "No existe un cliente registrado con ese RUT.";
         } else if (error == 2) {
             cout << "El cliente no tiene ventas registradas.";
+        }
+    }
+}
+
+void MenuAdministrador::unidadesVendidasDeProducto() {
+    string codigoProducto;
+    cout << "\n--- UNIDADES VENDIDAS DE PRODUCTO ---\n";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Ingrese el codigo del producto: ";
+    getline(cin, codigoProducto);
+    try {
+        int unidadesVendidas = EmpleadoController::getInstancia()->unidadesVendidasDeProducto(codigoProducto);
+        cout << "Unidades vendidas: " << unidadesVendidas << endl;
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe un producto con ese codigo.";
         }
     }
 }

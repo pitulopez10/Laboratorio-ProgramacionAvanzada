@@ -61,3 +61,7 @@ void ClienteRegistrado::setPassword(string password) {
 void ClienteRegistrado::agregarCalificacion(Calificacion* calificacion) {
     calificaciones.push_back(calificacion);
 }
+
+void ClienteRegistrado::agregarVenta(Venta* venta) {
+    ventas.push_back(venta);
+}

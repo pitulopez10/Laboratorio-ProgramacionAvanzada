@@ -33,6 +33,8 @@ class MenuEmpleado {
         void consultarStock();
         void consultarProductosBajoMinimo();
         void montoTotalFacturadoAcliente();
+        void unidadesVendidasDeProducto();
+
     public:
         MenuEmpleado(EmpleadoController* controllerEmp,
         VentaController* controllerVenta,

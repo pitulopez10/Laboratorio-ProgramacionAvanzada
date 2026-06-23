@@ -56,7 +56,8 @@ public:
     void setCalificaciones(vector<Calificacion*> calificaciones);
 
     //METODOS
-
+    void agregarCalificacion(Calificacion* calificacion);
+    
 };
 
 

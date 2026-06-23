@@ -73,6 +73,19 @@ float VentaController::calcularTotal(vector<LineaDeDetalle*> lineas) {
 
 void VentaController::agregarVenta(Venta* v) {
     ventas.push_back(v);
+    ClienteRegistrado* clienteRegistrado = dynamic_cast<ClienteRegistrado*>(v->getCliente());
+    if (clienteRegistrado != nullptr) {
+        clienteRegistrado->agregarVenta(v);
+    }
+}
+
+void VentaController::agregarClienteRegistrado(ClienteRegistrado* cliente) {
+    for (int i = 0; i < clientesRegistrados.size(); i++) {
+        if (clientesRegistrados[i]->getRut() == cliente->getRut() || clientesRegistrados[i]->getCorreo() == cliente->getCorreo()) {
+                return;
+        }
+    }
+    clientesRegistrados.push_back(cliente);
 }
 
 //CONSULTAR HISTORIAL CLIENTE
@@ -130,61 +143,75 @@ vector<Venta*> VentaController::listarVentas() {
 
 //Verifica que haya comprado un producto
 void VentaController::validarCompra(int rut, string codigoProducto) {
-    ClienteRegistrado* cliente = NULL;
-    Producto* producto = NULL;
+    ClienteRegistrado* cliente = nullptr;
+    Producto* producto = nullptr;
 
     for (int i = 0; i < clientesRegistrados.size(); i++) {
         if (clientesRegistrados[i]->getRut() == rut) {
             cliente = clientesRegistrados[i];
+            break;
         }
     }
-    if (cliente == NULL) {
-        throw 1;
+
+    if (cliente == nullptr) {
+        throw 1; //Cliente no encontrado
     }
 
-    ventas = cliente->getVentas();
+    vector<Venta*> ventasCliente = cliente->getVentas();
 
-    for (int i = 0; i < ventas.size(); i++) {
-        vector<LineaDeDetalle*> lineas = ventas[i]->getLineas();
-        for (int j = 0; j < lineas.size(); j++) {
-            if (lineas[j]->getProducto()->getCodigo() == codigoProducto) {
-                producto = lineas[j]->getProducto();
+    for (int i = 0; i < ventasCliente.size(); i++) {
+        vector<LineaDeDetalle*> lineasVenta = ventasCliente[i]->getLineas();
+
+        for (int j = 0; j < lineasVenta.size(); j++) {
+            if (lineasVenta[j]->getProducto()->getCodigo() == codigoProducto) {
+                producto = lineasVenta[j]->getProducto();
+                break;
             }
         }
     }
-    if (producto == NULL) {
-        throw 2;
+
+    if (producto == nullptr) {
+        throw 2; //Producto no comprado
     }
 }
 
 //Caso uso 19 calificar producto
 void VentaController::calificarProducto(int rut, string codigoProducto, int puntaje, string comentario, DTFecha fecha) {
-    ClienteRegistrado* cliente = NULL;
-    Producto* producto = NULL;
+    ClienteRegistrado* cliente = nullptr;
+    Producto* producto = nullptr;
 
     if (puntaje < 1 || puntaje > 5) {
-        throw 3;
+        throw 3; // puntaje inválido
     }
-
     for (int i = 0; i < clientesRegistrados.size(); i++) {
         if (clientesRegistrados[i]->getRut() == rut) {
             cliente = clientesRegistrados[i];
+            break;
         }
     }
+    if (cliente == nullptr) {
+        throw 1; //Cliente no encontrado
+    }
 
-    ventas = cliente->getVentas();
+    vector<Venta*> ventasCliente = cliente->getVentas();
 
-    for (int j = 0; j < ventas.size(); j++) {
-        lineas = ventas[j]->getLineas();
-        for (int k = 0; k < lineas.size(); k++) {
-            if (lineas[k]->getProducto()->getCodigo() == codigoProducto) {
-                producto = lineas[k]->getProducto();
+    for (int i = 0; i < ventasCliente.size(); i++) {
+        vector<LineaDeDetalle*> lineasVenta = ventasCliente[i]->getLineas();
+        for (int j = 0; j < lineasVenta.size(); j++) {
+            if (lineasVenta[j]->getProducto()->getCodigo() == codigoProducto) {
+                producto = lineasVenta[j]->getProducto();
+                break;
             }
         }
     }
+    if (producto == nullptr) {
+        throw 2; //Producto no comprado
+    }
+
     Calificacion* calificacion = new Calificacion(comentario, puntaje, fecha, cliente, producto);
 
     cliente->agregarCalificacion(calificacion);
+    producto->agregarCalificacion(calificacion);
 }
 
 //Caso de uso 25 consultar info de un producto

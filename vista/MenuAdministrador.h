@@ -39,6 +39,7 @@ class MenuAdministrador {
         void consultarStock();
         void consultarProductosBajoMinimo();
         void montoTotalFacturadoAcliente();
+        void unidadesVendidasDeProducto();
 
     public:
         MenuAdministrador(AdminController* adminCtrl);

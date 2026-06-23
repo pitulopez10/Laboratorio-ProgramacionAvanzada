@@ -60,6 +60,7 @@ public:
     int consultarStock(string codigoProducto);//Caso de uso 21
     vector<Producto*> consultarProductosBajoMinimo();//Caso de uso 22
     float montoTotalFacturadoAcliente(int rutCliente); //Caso de uso 23
+    int unidadesVendidasDeProducto(string codigoProducto); //Caso de uso 24
     Producto* consultarInfoDetalladaProducto(string codigoProducto);//Caso de uso 25
 
 

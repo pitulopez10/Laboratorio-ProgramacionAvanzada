@@ -29,13 +29,15 @@ public:
 
     ClienteRegistrado* iniciarSesion(string correo, string password);
     void cerrarSesion();
+    void agregarClienteRegistrado(ClienteRegistrado* cliente);
 
     //FUNCIONES AUXILIARES REGISTRAR VENTA
     void agregarVenta(Venta* v);
     void agregarLineaTemporal(Producto* Producto, int cantidad);
     void limpiarLineasTemporales();
     string generarIdVenta();
-    float calcularTotal(vector<LineaDeDetalle*> lineas);    
+    float calcularTotal(vector<LineaDeDetalle*> lineas);
+
     
     //FUNCIONES AUXILIARES HISTORIAL CLIENTE
     vector<Venta*> obtenerVentasCliente(ClienteRegistrado* cliente);

@@ -88,3 +88,6 @@ void Producto::setCalificaciones(vector<Calificacion*> calificaciones) {
 }
 
 //METODOS
+void Producto::agregarCalificacion(Calificacion* calificacion) {
+    calificaciones.push_back(calificacion);
+}
