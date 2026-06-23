@@ -276,7 +276,7 @@ void MenuAdministrador::altaEmpleado() {
     cout << "Ingrese direccion: "<< endl;
     getline(cin,direccion);
 
-    cout << "Ingrese correo: "<< endl;
+    cout << "Ingrese correo (..empleado@gmail.com): "<< endl;
     getline(cin,correo);
 
     cout << "Ingrese contrasenia: "<< endl;
@@ -379,7 +379,7 @@ void MenuAdministrador::agregarProducto() {
     cin.ignore();
 
     try {
-        adminCtrl->agregarProducto(nombre,codigo,descripcion,precioUnitario,estaEnStock,nombreCategoria, stockMinimo);
+        adminCtrl->agregarProducto(nombre,codigo,descripcion,precioUnitario,estaEnStock, stockMinimo,nombreCategoria);
         cout << "Producto agregado correctamente." << endl;
     }
     catch(int error) {
@@ -401,7 +401,7 @@ void MenuAdministrador::agregarProducto() {
 void MenuAdministrador::modificarProducto() {
     string codigo, nuevoNombre, nuevaDescripcion, nuevaCategoria;
     float nuevoPrecioUnitario;
-    int nuevoStock;
+    int nuevoStock, nuevoStockMinimo;
 
     cout << "\n---MODIFICAR PRODUCTO---\n";
     cin.ignore();
@@ -422,11 +422,15 @@ void MenuAdministrador::modificarProducto() {
     cin >> nuevoStock;
     cin.ignore();
 
+    cout << "Ingrese nuevo stock minimo: " << endl;
+    cin >> nuevoStockMinimo;
+    cin.ignore();
+
     cout << "Ingrese nueva categoria: " << endl;
     getline(cin, nuevaCategoria);
 
     try {
-        adminCtrl->modificarProducto(codigo, nuevoNombre, nuevaDescripcion, nuevoPrecioUnitario, nuevoStock, nuevaCategoria);
+        adminCtrl->modificarProducto(codigo, nuevoNombre, nuevaDescripcion, nuevoPrecioUnitario, nuevoStock, nuevoStockMinimo, nuevaCategoria);
         cout << "Producto modificado correctamente." << endl;
     }
     catch(int error) {

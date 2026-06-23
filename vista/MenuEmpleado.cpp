@@ -235,9 +235,9 @@ void MenuEmpleado::altaClienteRegistrado() {
         break;
     }
         cout << "Ingrese nombre completo: "<< endl; getline(cin, nombreCompleto);
-        cout << "Ingrese dirección: "<< endl; getline(cin, direccion);
+        cout << "Ingrese direccion: "<< endl; getline(cin, direccion);
     while(true) {
-        cout << "Ingrese correo electrónico: " << endl; getline(cin, correo);
+        cout << "Ingrese correo electronico (..cliente@gmail.com): " << endl; getline(cin, correo);
 
     try {
         empleadoCtrl->validarCorreoCliente(correo);
@@ -247,7 +247,7 @@ void MenuEmpleado::altaClienteRegistrado() {
         cout << "--- --- Ya existe un cliente con ese correo, ingrese el correo nuevamente --- ---\n";
     }
 }
-    cout << "Ingrese contraseña: "<< endl; getline(cin, password);
+    cout << "Ingrese contrasenia: "<< endl; getline(cin, password);
 
     cout << "\n--------------------------------------\n";
     cout << "==== RESUMEN DE DATOS DEL CLIENTE ====";
@@ -257,7 +257,7 @@ void MenuEmpleado::altaClienteRegistrado() {
     cout << "Nombre completo:" << nombreCompleto << endl;
     cout << "Dirección:" << direccion << endl;
     cout << "Correo electrónico:" << correo << endl;
-    cout << "Contraseña:" << password << endl;
+    //cout << "Contraseña:" << password << endl;
     
     string confirmacion;
     while (true) { 
@@ -281,7 +281,7 @@ void MenuEmpleado::altaClienteRegistrado() {
         cin.get();
         return;
     } else {
-        cout << "Opcion inválida, Intente de nuevo\n";
+        cout << "Opcion invalida, Intente de nuevo\n";
     }
     }
 }
@@ -309,13 +309,13 @@ void MenuEmpleado::modificarClienteRegistrado() {
         cout << "RUT:" << cliente->getRut() << endl;
         cout << "Nombre completo:" << cliente->getNombreCompleto() << endl;
         cout << "Dirección:" << cliente->getDireccion() << endl;
-        cout << "Correo electrónico:" << cliente->getCorreo() << endl;
-        cout << "Contraseña:" << cliente->getPassword() << endl;
+        cout << "Correo electronico:" << cliente->getCorreo() << endl;
+        cout << "Contrasenia:" << cliente->getPassword() << endl;
 
         cout << "\n=== === MODIFICAR CLIENTE === ===\n";
         cout << "\n(Deje el campo vacío y presione Enter para mantener el valor actual)\n";
         cout << "Ingrese nuevo nombre completo: "<< endl; getline(cin, nombreCompleto);
-        cout << "Ingrese nueva dirección: "<< endl; getline(cin, direccion);
+        cout << "Ingrese nueva direccion: "<< endl; getline(cin, direccion);
         while (true) {
             cout << "Ingrese nuevo correo: "<< endl; getline(cin, correo);
             try {
@@ -327,11 +327,11 @@ void MenuEmpleado::modificarClienteRegistrado() {
             }
             break;
         }
-        cout << "Ingrese nueva contraseña: "<< endl; getline(cin, password);
+        cout << "Ingrese nueva contrasenia: "<< endl; getline(cin, password);
 
         string confirmacion;
         while (true) { 
-            cout << "\n¿Desea confirmar la modificación de este cliente?(si/no)\n";
+            cout << "\n¿Desea confirmar la modificacion de este cliente?(si/no)\n";
             cin >> confirmacion;  
             cin.ignore();
        
@@ -347,7 +347,7 @@ void MenuEmpleado::modificarClienteRegistrado() {
             return;
         } 
         if (confirmacion == "no") {
-            cout << "\n == == Modificación cancelada == ==\n\n";
+            cout << "\n == == Modificacion cancelada == ==\n\n";
             cout << "Enter para continuar";
             cin.get();
             return;
@@ -389,14 +389,14 @@ void MenuEmpleado::registrarVenta() {
         while (true) {
             cout << "\n=== Agregar nueva linea de detalle ===\n\n";
 
-            cout << "Ingrese código del producto:\n"; getline(cin, codigo);
+            cout << "Ingrese codigo del producto:\n"; getline(cin, codigo);
             cout << "Ingrese cantidad:\n";
             cin >> cantidad;
             cin.ignore();
 
             Producto* producto = adminCtrl->buscarProducto(codigo);
             if(!producto) {
-                cout << "\n--- --- No existe un producto registrado con ese código --- ---\n\n";
+                cout << "\n--- --- No existe un producto registrado con ese codigo --- ---\n\n";
                 cout << "Enter para continuar";
                 cin.get();
                 continue;

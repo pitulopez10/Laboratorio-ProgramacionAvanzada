@@ -89,7 +89,7 @@ void AdminController::modificarCategoria(string nombreActual, string nuevoNuombr
     categoria->setDescripcion(nuevaDescripcion);
 }
 
-void AdminController::agregarProducto(string nombre, string codigo, string descripcion, float precioUnitario, int estaEnStock, string nombreCategoria, int stockMinimo) {
+void AdminController::agregarProducto(string nombre, string codigo, string descripcion, float precioUnitario, int estaEnStock,int stockMinimo, string nombreCategoria) {
     for (int i =0; i < productos.size(); i++) {
         if (productos[i]->getCodigo() == codigo) {
             throw 1;
@@ -115,7 +115,7 @@ void AdminController::agregarProducto(string nombre, string codigo, string descr
     productos.push_back(producto);
 }
 
-void AdminController::modificarProducto(string codigo, string nuevoNombre, string nuevaDescripcion, float nuevoPrecioUnitario, int nuevoStock, string nuevaCategoria) {
+void AdminController::modificarProducto(string codigo, string nuevoNombre, string nuevaDescripcion, float nuevoPrecioUnitario, int nuevoStock, int nuevoStockMinimo, string nuevaCategoria) {
     Producto* producto = NULL;
     for (int i =0; i < productos.size(); i++) {
         if (productos[i]->getCodigo() == codigo) {

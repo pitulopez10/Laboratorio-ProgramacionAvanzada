@@ -45,8 +45,8 @@ public:
     void altaEmpleado(string nombreCompleto, string direccion, string correo, string password);
     void agregarCategoria(string nombre, string descripcion);
     void modificarCategoria(string nombreActual, string nuevoNuombre, string nuevaDescripcion);
-    void agregarProducto(string nombre, string codigo, string descripcion, float precioUnitario, int estaEnStock, string nombreCategoria, int stockMinimo);
-    void modificarProducto(string codigo, string nuevoNombre, string nuevaDescripcion, float nuevoPrecioUnitario, int nuevoStock, string nuevaCategoria);
+    void agregarProducto(string nombre, string codigo, string descripcion, float precioUnitario, int estaEnStock, int stockMinimo, string nombreCategoria);
+    void modificarProducto(string codigo, string nuevoNombre, string nuevaDescripcion, float nuevoPrecioUnitario, int nuevoStock, int nuevoStockMinimo, string nuevaCategoria);
     void eliminarProducto(string codigo);
 
 
