@@ -436,7 +436,6 @@ void MenuEmpleado::registrarVenta() {
             if(confirmacion == "si") {
                 try {
                     empleadoCtrl->registrarVenta(cliente, lineasTemp, fechaActual, horaActual, total);
-                    //llama a la funcion pero retorna error, problema con cliente, para almacenarlo si es registrado u ocacional
                     ventaCtrl->limpiarLineasTemporales();
                     cout << "\n----------------------------------------\n";
                     cout << "==== VENTA REGISTRADA CORRECTAMENTE ====";
@@ -640,10 +639,9 @@ void MenuEmpleado::emitirOrdenDeCompra() {
     cout << "Fecha: " << fechaActual.getDia() << "/" << fechaActual.getMes() << "/" << fechaActual.getAnio() << endl;
     cout << "\nDetalle de productos:\n";
     
-    // ---> AQUI AGREGAMOS EL FOR PARA IMPRIMIR EL RESUMEN DE LOS PRODUCTOS CARGADOS <---
     for(LineaOrden* linea : lineasTemp) {
-        cout << "- Producto: " << linea->getProducto()->getNombre() 
-             << " | Cantidad: " << linea->getCantidad() << endl;
+        cout << "Producto: " << linea->getProducto()->getNombre() << endl;
+        cout << "Cantidad: " << linea->getCantidad() << endl;
     }
 
     cout << "\n¿Desea confirmar la orden? (si/no): ";
@@ -671,16 +669,73 @@ void MenuEmpleado::emitirOrdenDeCompra() {
 }
 
 void MenuEmpleado::cancelarOdenDeCompra() {
-/*El caso de uso comienza cuando el Empleado desea cancelar una orden de
-compra pendiente. El sistema lista todas las órdenes con estado 'pendiente',
-mostrando para cada una su identificador, proveedor, fecha de emisión y
-cantidad de líneas. El Empleado selecciona la orden que desea cancelar
-ingresando su identificador.
-El sistema muestra el detalle completo de la orden seleccionada y solicita
-confirmación. En caso de confirmar, la orden pasa al estado 'cancelada'. El
-sistema informa que una orden cancelada no generará movimiento de stock.
-En caso de cancelar la operación, no se realiza ningún cambio*/
+    cout << "\n=====================================\n";
+    cout << "====== CANCELAR ORDEN DE COMPRA =====";
+    cout << "\n=====================================\n";
+    vector<OrdenDeCompra*> pendientes;
 
+    try {
+        pendientes = empleadoCtrl->listarOrdenesPendientes();
+    } catch (int error) {
+        if (error == 1) {
+            cout << "\n--- No hay ordenes de compra en estado PENDIENTE ---\n";
+            cout << "Enter para continuar";
+            cin.get(); 
+            return;
+        }
+    }
+
+    cout << "\n=== Ordenes en estado pendientes ===\n";
+    for (OrdenDeCompra* orden : pendientes) {
+        DTFecha fecha = orden->getFechaEmision();
+        cout << "- ID: " << orden->getIdOrden() << endl;
+        cout << "  Proveedor: " << orden->getProveedor()->getNombre() << endl;
+        cout << "  Fecha: " << fecha.getDia() << "/" << fecha.getMes() << "/" << fecha.getAnio() << endl;
+        cout << "  Cantidad de lineas: " << orden->getLineasOrden().size() << endl;
+    }
+
+    string idSeleccionado;
+    cout << "\nIngrese el ID de la orden que desea cancelar: ";
+    cin >> idSeleccionado;
+    cin.ignore();
+    
+    OrdenDeCompra* ordenSeleccionada;
+    try {
+        ordenSeleccionada = empleadoCtrl->buscarOrdenDeCompra(idSeleccionado);
+    } catch (int error){
+        if(error == 2) {
+            cout << "\n--- Error: El ID ingresado no es valido o no esta pendiente ---\n";
+            cout << "Enter para continuar";
+            cin.get();
+            return;
+        }
+    }
+    cout << "\n==== DETALLE DE LA ORDEN SELECCIONADA ===\n\n";
+    cout << "ID: " << ordenSeleccionada->getIdOrden() << endl;
+    cout << "Proveedor: " << ordenSeleccionada->getProveedor()->getNombre() << endl;
+    cout << "Productos solicitados:\n";
+    
+    vector<LineaOrden*> lineas = ordenSeleccionada->getLineasOrden();
+    for (LineaOrden* linea : lineas) {
+        cout << " Nombre: " << linea->getProducto()->getNombre() << endl;
+        cout << " Cantidad: " << linea->getCantidad() << endl;
+    }
+
+    string confirmacion;
+    cout << "\nConfirmar cancelacion de esta orden(si/no): ";
+    cin >> confirmacion;
+    cin.ignore();
+
+    if (confirmacion == "si") {
+        empleadoCtrl->cancelarOrdenDeCompra(idSeleccionado);
+        cout << "\n=== La orden ha pasado al estado 'CANCELADA' ===\n";
+        cout << "--- AVISO: Una orden cancelada no generara movimiento de stock ---\n";
+    } else {
+        cout << "\n--- Operacion cancelada ---\n";
+    }
+    
+    cout << "\nEnter para continuar";
+    cin.get();
 }
 
 

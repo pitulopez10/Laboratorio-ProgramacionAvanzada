@@ -12,6 +12,7 @@
 #include "../dominio/DTFecha.h"
 #include "../dominio/DTHora.h"
 #include "../dominio/Cliente.h"
+#include "../dominio/EstadoCompra.h"
 using namespace std;
 
 EmpleadoController* EmpleadoController::instancia = NULL;
@@ -203,10 +204,39 @@ void EmpleadoController::registrarOrdenDeCompra(Proveedor* proveedor, vector<Lin
     this->listaOrdenes.push_back(nuevaOrden);
 }
 
+//CANCELAR ORDEN DE COMPRA
 
+vector<OrdenDeCompra*> EmpleadoController::listarOrdenesPendientes() {
+    vector<OrdenDeCompra*> pendientes;
 
+    for (OrdenDeCompra* orden : this->listaOrdenes) {
+        if (orden->getEstado() == PENDIENTE) {
+            pendientes.push_back(orden);
+        }
+    }   
+    if (pendientes.empty()) {
+        throw 1; 
+    }
+    return pendientes;
+}
 
+OrdenDeCompra* EmpleadoController::buscarOrdenDeCompra(string idOrden) {
+    for (OrdenDeCompra* orden : this->listaOrdenes) {
+        if (orden->getIdOrden() == idOrden) {
+            if (orden->getEstado() != PENDIENTE) {
+                throw 2; 
+            }
+            return orden;
+        }
+    }
+    throw 2; 
+}
 
+void EmpleadoController::cancelarOrdenDeCompra(string idOrden) {
+    OrdenDeCompra* orden = buscarOrdenDeCompra(idOrden);
+    
+    orden->setEstado(CANCELADO);
+}
 
 void EmpleadoController::consultarStock() {
 

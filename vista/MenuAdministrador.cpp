@@ -120,7 +120,7 @@ void MenuAdministrador::mostrar() {
                 cout << "1. Agregar proveedor\n";
                 cout << "2. Listar proveedores\n";
                 cout << "3. Modificar proveedor\n";
-                cout << "4. Registrar combinación proveedor-producto\n";
+                cout << "4. Registrar combinacion proveedor-producto\n";
                 cout << "0. Volver\n";
                 cin >> opProveedor;
                 switch(opProveedor) {
@@ -515,7 +515,7 @@ void MenuAdministrador::registrarProveedorProducto() {
                     cout << "\n---- Actualizacion cancelada ----\n";
                 }
             } 
-            else if (error == 2) { // Asignamos el error 2 para "Producto no encontrado"
+            else if (error == 2) {
                 cout << "\nEl producto ingresado no existe en el sistema.\n";
                 cin.ignore();
                 cout << "Enter para continuar";

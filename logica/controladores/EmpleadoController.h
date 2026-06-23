@@ -71,6 +71,10 @@ public:
     DTFecha obtenerFechaActual();
     DTHora obtenerHoraActual();    
     ClienteRegistrado* buscarCliente(int rutBuscado);
+
+    vector<OrdenDeCompra*> listarOrdenesPendientes();
+    OrdenDeCompra* buscarOrdenDeCompra(string idOrden);
+    void cancelarOrdenDeCompra(string idOrden);
 };
 
 #endif //LABORATORIO3_EMPLEADOCONTROLLER_H
