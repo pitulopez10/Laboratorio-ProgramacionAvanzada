@@ -120,6 +120,7 @@ void MenuAdministrador::mostrar() {
                 cout << "1. Agregar proveedor\n";
                 cout << "2. Listar proveedores\n";
                 cout << "3. Modificar proveedor\n";
+                cout << "4. Registrar combinación proveedor-producto\n";
                 cout << "0. Volver\n";
                 cin >> opProveedor;
                 switch(opProveedor) {
@@ -131,6 +132,9 @@ void MenuAdministrador::mostrar() {
                         break;
                     case 3:
                         modificarProveedor();
+                        break;
+                    case 4: 
+                        registrarProveedorProducto();
                         break;
                     case 0:
                         break;
@@ -335,6 +339,7 @@ void MenuAdministrador::modificarProducto() {
     }
 }
 
+
 void MenuAdministrador::eliminarProducto() {
     string codigo;
 
@@ -380,18 +385,13 @@ void MenuAdministrador::agregarProveedor() {
     cout << "Nombre de Contacto: "<< endl;
     getline(cin, nombreContacto);
 
-    cout << "Tiempo de entrega (DIAS): "<< endl;
-    cin >> tiempoEntrega;
     try {
-        adminCtrl->agregarProveedor(rut,nombre,telContacto,nombreContacto,tiempoEntrega);
+        adminCtrl->agregarProveedor(rut,nombre,telContacto,nombreContacto);
         cout << "\nProveedor agregado correctamente.\n";
     }
     catch(int error) {
         if(error == 1) {
             cout << "Ya existe un proveedor con ese RUT." << endl;
-        }
-        else if(error == 2) {
-            cout << "El tiempo de entrega no puede ser negativo." << endl;
         }
     }
 }
@@ -447,6 +447,89 @@ void MenuAdministrador::modificarProveedor() {
         }
     }
 }
+void MenuAdministrador::registrarProveedorProducto() {
+    int rutProveedor, tiempoEntrega;
+    string codigoProducto, confirmacion;
+    float precioCompra; 
+
+    cout << "\n=== REGISTRAR ASOCIACION PRODUCTO-PROVEEDOR ===\n";
+
+    vector<Proveedor*> proveedores = adminCtrl->listarProveedores();
+    for (Proveedor* p : proveedores) {
+        cout << "RUT: " << p->getRut() << endl;
+        cout << "Nombre: " << p->getNombre() << endl <<endl;
+    }
+    
+    cout << "\nIngrese el RUT del proveedor: ";
+    cin >> rutProveedor;
+    try {
+        vector<Producto*> productos = adminCtrl->listarProductosNoAsociados(rutProveedor);
+        cout << "\n--- PRODUCTOS DISPONIBLES ---\n"; 
+        for (Producto* p : productos) {
+            cout << "Codigo: " << p->getCodigo() << endl;
+            cout << "Nombre: " << p->getNombre() << endl;
+        }
+    }
+    catch (int error) {
+        if(error == 1) { 
+            cout << "\n--- El proveedor no existe ---\n";
+        }
+        cin.ignore();
+        cout << "Enter para continuar";
+        cin.get();
+        return;
+    }
+    cout << "\nIngrese el Codigo del producto deseado: ";
+    cin >> codigoProducto;
+    cout << "Ingrese el precio de compra pactado:";
+    cin >> precioCompra;
+    cout << "Ingrese el tiempo de entrega estimado (dias): ";
+    cin >> tiempoEntrega;
+
+    cout << "\n=== RESUMEN DE ASOCIACION ===\n";
+    cout << "Proveedor RUT: " << rutProveedor << endl;
+    cout << "Producto Codigo: " << codigoProducto << endl;
+    cout << "Precio pactado: $" << precioCompra << endl;
+    cout << "Tiempo de entrega: " << tiempoEntrega << " dias" << endl;
+
+    cout << "\n¿Desea confirmar esta asociacion? (si/no): ";
+    cin >> confirmacion;
+
+    if (confirmacion == "si") {
+        try {
+            adminCtrl->asociarProductoProveedor(rutProveedor, codigoProducto, precioCompra, tiempoEntrega);
+            cout << "\n==== Asociacion registrada correctamente ====\n";
+
+        } catch (int error) {
+            
+            if (error == 3) { 
+                string actualizar;
+                cout << "\nEste proveedor ya abastece este producto\n";
+                cout << "¿Desea actualizar el precio y el tiempo de entrega con los nuevos datos? (si/no): ";
+                cin >> actualizar;
+
+                if (actualizar == "si") {
+                    adminCtrl->actualizarAsociacion(rutProveedor, codigoProducto, precioCompra, tiempoEntrega);
+                    cout << "\n---- Datos de la asociacion actualizados correctamente ----\n";
+                } else {
+                    cout << "\n---- Actualizacion cancelada ----\n";
+                }
+            } 
+            else if (error == 2) { // Asignamos el error 2 para "Producto no encontrado"
+                cout << "\nEl producto ingresado no existe en el sistema.\n";
+                cin.ignore();
+                cout << "Enter para continuar";
+                cin.get();
+            }
+        }
+    } else {
+        cout << "\n---- Operacion cancelada ----\n";
+        cin.ignore();
+        cout << "Enter para continuar";
+        cin.get();
+    }
+}
+
 
 //FUNCIONES DE LISTAR
 void MenuAdministrador::listarEmpleados() {
@@ -521,7 +604,6 @@ void MenuAdministrador::listarProveedores() {
         cout << "Nombre: " << proveedores[i]->getNombre() << endl;
         cout << "Telefono contacto: " << proveedores[i]->getTelContacto() << endl;
         cout << "Nombre contacto: " << proveedores[i]->getNombreContacto() << endl;
-        cout << "Tiempo entrega (DIAS): " << proveedores[i]->getTiempoEntrega() << endl;
         cout << "-----------------------------\n";
     }
 }

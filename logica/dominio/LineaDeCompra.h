@@ -4,23 +4,28 @@
 
 #ifndef LABORATORIO3_LINEADECOMPRA_H
 #define LABORATORIO3_LINEADECOMPRA_H
-#include "Producto.h"
+
+class Producto;
 
 class LineaDeCompra {
     private:
         float precioCompra;
         Producto* producto;
+        //nuevo
+        int tiempoEntrega;
     public:
         //CONSTRUCTORES
-        LineaDeCompra(float precioCompra, Producto* producto);
+        LineaDeCompra(float precioCompra, Producto* producto, int tiempoEntrega);
 
         //GETTERS
         float getPrecioCompra();
         Producto* getProducto();
+        int getTiempoEntrega();
 
         //SETTERS
         void setPrecioCompra(float precioCompra);
         void setProducto(Producto* producto);
+        void setTiempoEntrega(int tiempoEntrega);
 };
 
 #endif //LABORATORIO3_LINEADECOMPRA_H

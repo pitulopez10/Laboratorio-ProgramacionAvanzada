@@ -3,15 +3,16 @@
 //
 
 #include "Proveedor.h"
-
+#include "Producto.h"
+#include "LineaDeCompra.h"
+#include <vector>
 
 //CONSTRUCTORES
 Proveedor::Proveedor() {
 
 }
-Proveedor::Proveedor(int rut, string nombre, string telContacto, string nombreContacto, int tiempoEntrega) {
+Proveedor::Proveedor(int rut, string nombre, string telContacto, string nombreContacto) {
     this->rut = rut;
-    this->tiempoEntrega = tiempoEntrega;
     this->nombre = nombre;
     this->telContacto = telContacto;
     this->nombreContacto = nombreContacto;
@@ -22,9 +23,6 @@ Proveedor::Proveedor(int rut, string nombre, string telContacto, string nombreCo
 int Proveedor::getRut() {
     return this->rut;
 }
-int Proveedor::getTiempoEntrega() {
-    return this->tiempoEntrega;
-}
 string Proveedor::getNombre(){
     return this->nombre;
 }
@@ -34,14 +32,15 @@ string Proveedor::getTelContacto() {
 string Proveedor::getNombreContacto() {
     return this->nombreContacto;
 }
+vector<LineaDeCompra*> Proveedor::getLineasAsociadas() {
+    return this->lineasAsociadas;
+}
+
 
 //SETTERS
 
 void Proveedor::setRut(int rut) {
     this->rut = rut;
-}
-void Proveedor::setTiempoEntrega(int tiempoEntrega) {
-    this->tiempoEntrega = tiempoEntrega;
 }
 void Proveedor::setNombre(string nombre) {
     this->nombre = nombre;
@@ -54,3 +53,30 @@ void Proveedor::setNombreContacto(string nombreContacto) {
 }
 
 //METODOS
+bool Proveedor::abasteceProducto(string codigoProducto) {
+    for (LineaDeCompra* linea : lineasAsociadas) {
+        if (linea->getProducto()->getCodigo() == codigoProducto) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Proveedor::agregarProducto(Producto* p, float precioCompra, int tiempoEntrega) {
+    LineaDeCompra* nuevaLinea = new LineaDeCompra(precioCompra, p, tiempoEntrega); 
+    
+    lineasAsociadas.push_back(nuevaLinea);
+}
+void Proveedor::actualizarDatosProducto(string codigoProducto, float nuevoPrecio, int nuevoTiempo) {
+    
+    for (LineaDeCompra* linea : lineasAsociadas) {
+        
+        if (linea->getProducto()->getCodigo() == codigoProducto) {
+            
+            linea->setPrecioCompra(nuevoPrecio);
+            linea->setTiempoEntrega(nuevoTiempo);
+            
+            return;
+        }
+    }
+}

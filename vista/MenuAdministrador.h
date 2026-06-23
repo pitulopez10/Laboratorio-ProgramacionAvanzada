@@ -24,6 +24,7 @@ class MenuAdministrador {
 
         void agregarProveedor();
         void modificarProveedor();
+        void registrarProveedorProducto();
 
         //FUNCIONES DE LISTAR
         void listarEmpleados();

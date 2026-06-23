@@ -3,10 +3,12 @@
 //
 
 #include "LineaDeCompra.h"
+#include "Producto.h"
 //CONSTRUCTORES
-LineaDeCompra :: LineaDeCompra(float precioCompra, Producto* producto) {
+LineaDeCompra :: LineaDeCompra(float precioCompra, Producto* producto, int tiempoEntrega) {
     this-> precioCompra = precioCompra;
     this->producto = producto;
+    this->tiempoEntrega = tiempoEntrega;
 }
 
 //GETTERS
@@ -18,6 +20,10 @@ Producto* LineaDeCompra::getProducto() {
     return producto;
 }
 
+int LineaDeCompra :: getTiempoEntrega() {
+    return tiempoEntrega;
+}
+
 //SETTERS
 void LineaDeCompra :: setPrecioCompra(float precioCompra) {
     this-> precioCompra = precioCompra;
@@ -25,4 +31,8 @@ void LineaDeCompra :: setPrecioCompra(float precioCompra) {
 
 void LineaDeCompra :: setProducto(Producto* producto) {
     this-> producto = producto;
+}
+
+void LineaDeCompra :: setTiempoEntrega(int tiempoEntrega) {
+    this-> tiempoEntrega = tiempoEntrega;
 }

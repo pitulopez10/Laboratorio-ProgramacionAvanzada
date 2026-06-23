@@ -51,14 +51,16 @@ public:
 
 
 
-    void agregarProveedor(int rut, string nombre, string telContacto,
-                          string nombreContacto, int tiempoEntrega);
+    void agregarProveedor(int rut, string nombre, string telContacto, string nombreContacto);
 
     bool agregarOrdenCompra(OrdenDeCompra* ordenesCompra);
     
     void modificarProveedor(Proveedor* proveedor, string nombre, string telContacto, string nombreContacto);
-
     Proveedor* buscarProveedor(int rutBuscado);
+
+    vector<Producto*> listarProductosNoAsociados(int rutProveedor); 
+    void asociarProductoProveedor(int rutProveedor, string codigoProducto, float precioCompra, int tiempoEntrega);
+    void actualizarAsociacion(int rutProveedor, string codigoProducto, float precioCompra, int tiempoEntrega);
 
     //FUNCIONES DE LISTAR
     vector<Empleado*> listarEmpleados();

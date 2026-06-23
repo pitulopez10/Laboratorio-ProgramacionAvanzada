@@ -185,16 +185,13 @@ void AdminController::eliminarProducto(string codigo) {
     }
 }
 
-void AdminController::agregarProveedor(int rut, string nombre, string telContacto, string nombreContacto, int tiempoEntrega) {
+void AdminController::agregarProveedor(int rut, string nombre, string telContacto, string nombreContacto) {
     for (int i =0; i < proveedores.size(); i++) {
         if (proveedores[i]->getRut() == rut) {
             throw 1;
         }
     }
-    if (tiempoEntrega < 0) {
-        throw 2;
-    }
-    Proveedor* proveedor = new Proveedor(rut, nombre, telContacto, nombreContacto, tiempoEntrega);
+    Proveedor* proveedor = new Proveedor(rut, nombre, telContacto, nombreContacto);
     proveedores.push_back(proveedor);
 }
 
@@ -217,6 +214,53 @@ void AdminController::modificarProveedor(Proveedor* proveedor, string nombre, st
     if(nombreContacto != "") {
         proveedor->setNombreContacto(nombreContacto);
     }
+}
+
+void AdminController::asociarProductoProveedor(int rutProveedor, string codigoProducto, float precioCompra, int tiempoEntrega) {
+    
+    Proveedor* proveedor = buscarProveedor(rutProveedor);
+    if (proveedor == NULL) {
+        throw 1;
+    }
+
+    Producto* productoEncontrado = NULL;
+    for (Producto* p : productos) {
+        if (p->getCodigo() == codigoProducto) {
+            productoEncontrado = p;
+            break;
+        }
+    }
+    if (productoEncontrado == NULL) {
+        throw 2;
+    }
+    if (proveedor->abasteceProducto(codigoProducto)) {
+        throw 3;
+    }
+
+    proveedor->agregarProducto(productoEncontrado, precioCompra, tiempoEntrega);
+}
+
+void AdminController::actualizarAsociacion(int rutProveedor, string codigoProducto, float precioCompra, int tiempoEntrega) {
+    
+    Proveedor* proveedor = buscarProveedor(rutProveedor);
+
+    proveedor->actualizarDatosProducto(codigoProducto, precioCompra, tiempoEntrega);
+}
+
+vector<Producto*> AdminController::listarProductosNoAsociados(int rutProveedor) {
+    vector<Producto*> productosNoAsociados;
+    
+    Proveedor* proveedor = buscarProveedor(rutProveedor);
+    if (proveedor == NULL) throw 2;
+    
+    vector<Producto*> todosLosProductos = listarProductos(); 
+    for (Producto* p : todosLosProductos) {
+        
+        if (!proveedor->abasteceProducto(p->getCodigo())) {
+            productosNoAsociados.push_back(p);
+        }
+    }
+    return productosNoAsociados;
 }
 
 
