@@ -26,7 +26,6 @@ class OrdenDeCompra {
         DTFecha getFechaEmision() const;
         Proveedor* getProveedor() const;
         EstadoCompra getEstado() const;
-        //para filtrar solo las ordenes en estado pendiente
         vector<LineaOrden*> getLineasOrden();
 
         // SETTERS
