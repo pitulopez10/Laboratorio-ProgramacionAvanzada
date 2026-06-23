@@ -29,6 +29,7 @@ void MenuPrincipal::mostrar() {
         cout << "============================\n";
         cout << "1. Ingresar correo" << endl;
         cout << "0. Salir" << endl;
+        cout << "Ingrese una opcion: ";
         cin >> opcion;
 
         switch (opcion) {

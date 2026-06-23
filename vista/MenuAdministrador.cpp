@@ -11,6 +11,9 @@
 using namespace std;
 
 #include "MenuAdministrador.h"
+#include "../logica/dominio/Calificacion.h"
+#include "../logica/controladores/EmpleadoController.h"
+#include "../logica/controladores/VentaController.h"
 
 MenuAdministrador::MenuAdministrador(AdminController* adminCtrl) {
     this->adminCtrl = adminCtrl;
@@ -25,7 +28,12 @@ void MenuAdministrador::mostrar() {
     cout << "2. Gestion de categorias\n";
     cout << "3. Gestion de productos\n";
     cout << "4. Gestion de proveedores\n";
+    cout << "5. Calificaciones\n";
+    cout << "6. Informacion de producto\n";
+    cout << "7. Stock\n";
+    cout << "8. Reportes\n";
     cout << "0. Cerrar sesion\n";
+    cout << "Elegir opcion: ";
     cin >> opcion;
     switch(opcion) {
         case 1: {
@@ -36,6 +44,7 @@ void MenuAdministrador::mostrar() {
                 cout << "1. Alta empleado\n";
                 cout << "2. Listar empleados\n";
                 cout << "0. Volver\n";
+                cout << "Elegir opcion: ";
                 cin >> opEmpleado;
                 switch(opEmpleado) {
                     case 1:
@@ -61,6 +70,7 @@ void MenuAdministrador::mostrar() {
                 cout << "2. Modificar categoria\n";
                 cout << "3. Listar categorias\n";
                 cout << "0. Volver\n";
+                cout << "Elegir opcion: ";
                 cin >> opCategoria;
                 switch(opCategoria) {
                     case 1:
@@ -90,6 +100,7 @@ void MenuAdministrador::mostrar() {
                 cout << "3. Eliminar producto\n";
                 cout << "4. Listar productos\n";
                 cout << "0. Volver\n";
+                cout << "Elegir opcion: ";
                 cin >> opProducto;
                 switch(opProducto) {
                     case 1:
@@ -122,6 +133,7 @@ void MenuAdministrador::mostrar() {
                 cout << "3. Modificar proveedor\n";
                 cout << "4. Registrar combinacion proveedor-producto\n";
                 cout << "0. Volver\n";
+                cout << "Elegir opcion: ";
                 cin >> opProveedor;
                 switch(opProveedor) {
                     case 1:
@@ -142,6 +154,94 @@ void MenuAdministrador::mostrar() {
                         cout << "Opcion invalida." << endl;
                 }
             } while(opProveedor != 0);
+            break;
+        }
+        case 5: {
+            int opCalificacion;
+            do {
+                cin.ignore();
+                cout << "\n--- CALIFICACIONES ---\n";
+                cout << "1. Consultar calificaciones de producto\n";
+                cout << "0. Volver\n";
+                cout << "Elegir opcion: ";
+                cin >> opCalificacion;
+                switch(opCalificacion) {
+                    case 1:
+                        consultarCalificacionesProducto();
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        cout << "Opcion invalida." << endl;
+                }
+            } while(opCalificacion != 0);
+            break;
+        }
+        case 6: {
+            int opInfoPro;
+            do {
+                cin.ignore();
+                cout << "\n--- INFO DETALLADA DE PRODUCTO ---\n";
+                cout << "1. Consultar informacion detallada de producto\n";
+                cout << "0. Volver\n";
+                cout << "Elegir opcion: ";
+                cin >> opInfoPro;
+                switch(opInfoPro) {
+                    case 1:
+                        consultarInfoDetalladaProducto();
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        cout << "Opcion invalida." << endl;
+                }
+            } while(opInfoPro != 0);
+            break;
+        }
+        case 7: {
+            int opStock;
+            do {
+                cin.ignore();
+                cout << "\n--- STOCK ---\n";
+                cout << "1. Consultar stock actual" << endl;
+                cout << "2. Consultar productos bajo minimo" << endl;
+                cout << "0. Volver\n";
+                cout << "Elegir opcion: ";
+                cin >> opStock;
+                switch(opStock) {
+                    case 1:
+                        consultarStock();
+                        break;
+                    case 2:
+                        consultarProductosBajoMinimo();
+                    case 0:
+                        break;
+                    default:
+                        cout << "Opcion invalida." << endl;
+                }
+            } while(opStock != 0);
+            break;
+        }
+        case 8: {
+            int opStock;
+            do {
+                cin.ignore();
+                cout << "\n--- REPORTES ---\n";
+                cout << "1. Monto total facturado a cliente" << endl;
+                cout << "2. Unidades vendidas de producto" << endl;
+                cout << "0. Volver\n";
+                cout << "Elegir opcion: ";
+                cin >> opStock;
+                switch(opStock) {
+                    case 1:
+                        montoTotalFacturadoAcliente();
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        cout << "Opcion invalida." << endl;
+                }
+            } while(opStock != 0);
             break;
         }
         case 0:
@@ -248,7 +348,7 @@ void MenuAdministrador::agregarProducto() {
 
     string nombre, codigo, descripcion, nombreCategoria;
     float precioUnitario;
-    int estaEnStock;
+    int estaEnStock, stockMinimo;
 
     cout << "\n---AGREGAR PRODUCTO---\n";
 
@@ -272,8 +372,12 @@ void MenuAdministrador::agregarProducto() {
     cout << "Nombre de la categoria: ";
     getline(cin, nombreCategoria);
 
+    cout << "Stock minimo: ";
+    cin >> stockMinimo;
+    cin.ignore();
+
     try {
-        adminCtrl->agregarProducto(nombre,codigo,descripcion,precioUnitario,estaEnStock,nombreCategoria);
+        adminCtrl->agregarProducto(nombre,codigo,descripcion,precioUnitario,estaEnStock,nombreCategoria, stockMinimo);
         cout << "Producto agregado correctamente." << endl;
     }
     catch(int error) {
@@ -605,5 +709,116 @@ void MenuAdministrador::listarProveedores() {
         cout << "Telefono contacto: " << proveedores[i]->getTelContacto() << endl;
         cout << "Nombre contacto: " << proveedores[i]->getNombreContacto() << endl;
         cout << "-----------------------------\n";
+    }
+}
+
+void MenuAdministrador::consultarCalificacionesProducto() {
+    string codigoProducto;
+    cout << "\n--- CONSULTAR CALIFICACIONES DE PRODUCTO ---\n";
+    cout << "Ingrese el codigo del producto: ";
+    cin >> codigoProducto;
+    try {
+        vector<Calificacion*> calificaciones = EmpleadoController::getInstancia()->consultarCalificacionesProducto(codigoProducto);
+        cout << "\n--- CALIFICACIONES ---\n";
+
+        for (int i = 0; i < calificaciones.size(); i++) {
+            cout << "Puntaje: " << calificaciones[i]->getPuntaje() << endl;
+            cout << "Comentario: " << calificaciones[i]->getComentario() << endl;
+        }
+
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe un producto con ese codigo.";
+        } else if (error == 2) {
+            cout << "El producto no tiene calificaciones.";
+        }
+    }
+}
+
+//CONSULTAR INFO DETALLADA PRODUCTO
+void MenuAdministrador::consultarInfoDetalladaProducto() {
+    string nombre, codigoProducto, descripcion;
+    int cantVendidas, estaEnStock;
+    float precioUnitario, puntajePromedio;
+    Categoria* categoria;
+
+    cout << "\n---CONSULTAR INFO DETALLADA PRODUCTO---\n";
+
+    cout<<"Ingrese codigo del producto: ";
+    cin >> codigoProducto;
+
+    try {
+        Producto* producto = VentaController::getInstancia()->consultarInfoDetalladaProducto(codigoProducto);
+
+        cout<<"Nombre: "<< producto->getNombre()<<endl;
+        cout<<"Codigo: "<< producto->getCodigo()<<endl;
+        cout<<"Descripcion: "<< producto->getDescripcion()<<endl;
+        cout<<"Precio unitario: "<< producto->getPrecioUnitario()<<endl;
+        cout<<"Puntaje promedio: "<< producto->getPuntajePromedio()<<endl;
+        cout<<"Cantidad de vendidas: "<< producto->getCantVendidas()<<endl;
+        cout<<"Esta en stock: "<< producto->getEstaEnStock()<<endl;
+        cout<<"Categoria: " << producto->getCategoria()->getNombre()<<endl;
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe un producto con ese codigo." << endl;
+        }
+    }
+}
+
+void MenuAdministrador::consultarStock() {
+    string codigoProducto;
+    int stock;
+    cout << "\n--- CONSULTAR STOCK ---\n";
+    cout << "Ingrese el codigo del producto: ";
+    cin >> codigoProducto;
+    try {
+        stock = EmpleadoController::getInstancia()->consultarStock(codigoProducto);
+        cout << "Stock actual del producto: " << stock << endl;
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe un producto con ese codigo.";
+        }
+    }
+}
+
+void MenuAdministrador::consultarProductosBajoMinimo() {
+    try {
+        vector<Producto*> productos = EmpleadoController::getInstancia()->consultarProductosBajoMinimo();
+        cout << "\n--- PRODUCTOS DEBAJO DEL STOCK MINIMO ---\n";
+        for (int i = 0; i < productos.size(); i++) {
+            cout << "Nombre: " << productos[i]->getNombre() << endl;
+            cout << "Codigo: " << productos[i]->getCodigo() << endl;
+            cout << "Stock actual: " << productos[i]->getEstaEnStock() << endl;
+            cout << "Stock minimo: " << productos[i]->getStockMinimo() << endl;
+            cout << "-----------------------------\n";
+        }
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No hay productos debajo del stock minimo.";
+        }
+    }
+}
+
+void MenuAdministrador::montoTotalFacturadoAcliente() {
+    int rutCliente;
+    cout << "\n--- MONTO TOTAL FACTURADO A CLIENTE ---\n";
+    cout << "Ingrese el RUT del cliente: ";
+    cin >> rutCliente;
+
+    try {
+        float montoTotal = EmpleadoController::getInstancia()->montoTotalFacturadoAcliente(rutCliente);
+
+        cout << "Monto total facturado al cliente: $" << montoTotal << endl;
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe un cliente registrado con ese RUT.";
+        } else if (error == 2) {
+            cout << "El cliente no tiene ventas registradas.";
+        }
     }
 }

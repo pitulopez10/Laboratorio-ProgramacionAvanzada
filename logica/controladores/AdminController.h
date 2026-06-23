@@ -45,7 +45,7 @@ public:
     void altaEmpleado(string nombreCompleto, string direccion, string correo, string password);
     void agregarCategoria(string nombre, string descripcion);
     void modificarCategoria(string nombreActual, string nuevoNuombre, string nuevaDescripcion);
-    void agregarProducto(string nombre, string codigo, string descripcion, float precioUnitario, int estaEnStock, string nombreCategoria);
+    void agregarProducto(string nombre, string codigo, string descripcion, float precioUnitario, int estaEnStock, string nombreCategoria, int stockMinimo);
     void modificarProducto(string codigo, string nuevoNombre, string nuevaDescripcion, float nuevoPrecioUnitario, int nuevoStock, string nuevaCategoria);
     void eliminarProducto(string codigo);
 
@@ -70,6 +70,7 @@ public:
     vector<Producto*> listarProductos();
     vector<Proveedor*> listarProveedores();
     vector<OrdenDeCompra*> crearOrdenCompra();
+    vector<OrdenDeCompra*> listarOrdenesCompra();
 };
 
 

@@ -13,6 +13,7 @@
 #include "../dominio/DTHora.h"
 #include "../dominio/Cliente.h"
 #include "../dominio/EstadoCompra.h"
+#include "../dominio/Calificacion.h"
 using namespace std;
 
 EmpleadoController* EmpleadoController::instancia = NULL;
@@ -127,6 +128,7 @@ void EmpleadoController::descontarStock(vector<LineaDeDetalle*> lineas) {
     {
         Producto* p = l->getProducto();
         p->setEstaEnStock(p->getEstaEnStock() - l->getCantidad());
+        p->setCantVendidas(p->getCantVendidas() + l->getCantidad());
     }
 }
 
@@ -171,41 +173,41 @@ Venta* EmpleadoController::seleccionarVentaDeHistorial(vector<Venta*> historial,
 }
 
 vector<LineaOrden*> EmpleadoController::getLineasTempOrden() const {
-    return lineasTempOrden; 
+    return lineasTempOrden;
 }
 
 //EMITIR ORDEN DE COMPRA
 void EmpleadoController::agregarLineaTemporalOrden(Producto* producto, int cantidad) {
     LineaOrden* linea = new LineaOrden(producto, cantidad);
 
-    this->lineasTempOrden.push_back(linea); 
+    this->lineasTempOrden.push_back(linea);
 }
 
 void EmpleadoController::limpiarLineasTemporalesOrden() {
-    //liberar memoria
     for (LineaOrden* l : this->lineasTempOrden) {
         delete l;
     }
-    //limpiar
+
     this->lineasTempOrden.clear();
 }
 
 void EmpleadoController::registrarOrdenDeCompra(Proveedor* proveedor, vector<LineaOrden*> lineasTemp, DTFecha fechaActual, DTHora horaActual) {
-    
+
     if (lineasTemp.empty()) {
-        throw 1; 
+        throw 1;
     }
+
     string idGenerado = "OC-" + to_string(this->listaOrdenes.size() + 1);
     OrdenDeCompra* nuevaOrden = new OrdenDeCompra(idGenerado, fechaActual, proveedor);
 
     for (LineaOrden* linea : lineasTemp) {
         nuevaOrden->agregarLineaOrden(linea);
     }
+
     this->listaOrdenes.push_back(nuevaOrden);
 }
 
 //CANCELAR ORDEN DE COMPRA
-
 vector<OrdenDeCompra*> EmpleadoController::listarOrdenesPendientes() {
     vector<OrdenDeCompra*> pendientes;
 
@@ -213,10 +215,12 @@ vector<OrdenDeCompra*> EmpleadoController::listarOrdenesPendientes() {
         if (orden->getEstado() == PENDIENTE) {
             pendientes.push_back(orden);
         }
-    }   
-    if (pendientes.empty()) {
-        throw 1; 
     }
+
+    if (pendientes.empty()) {
+        throw 1;
+    }
+
     return pendientes;
 }
 
@@ -224,22 +228,108 @@ OrdenDeCompra* EmpleadoController::buscarOrdenDeCompra(string idOrden) {
     for (OrdenDeCompra* orden : this->listaOrdenes) {
         if (orden->getIdOrden() == idOrden) {
             if (orden->getEstado() != PENDIENTE) {
-                throw 2; 
+                throw 2;
             }
+
             return orden;
         }
     }
-    throw 2; 
+
+    throw 2;
 }
 
 void EmpleadoController::cancelarOrdenDeCompra(string idOrden) {
     OrdenDeCompra* orden = buscarOrdenDeCompra(idOrden);
-    
+
     orden->setEstado(CANCELADO);
 }
 
-void EmpleadoController::consultarStock() {
+//REGISTRAR RECEPCION DE ORDEN
+void EmpleadoController::registrarRecepcionDeOrden(string idOrden) {
+    OrdenDeCompra* orden = buscarOrdenDeCompra(idOrden);
 
+    vector<LineaOrden*> lineas = orden->getLineasOrden();
+
+    for (int i = 0; i < lineas.size(); i++) {
+        Producto* producto = lineas[i]->getProducto();
+        int cantidad = lineas[i]->getCantidad();
+
+        producto->setEstaEnStock(producto->getEstaEnStock() + cantidad);
+    }
+
+    orden->setEstado(RECIBIDO);
+}
+
+//Caso de uso 20 consultar calificaciones de producto
+vector<Calificacion*> EmpleadoController::consultarCalificacionesProducto(string codigoProducto) {
+    Producto* producto = NULL;
+    vector<Producto*> productos = AdminController::getInstancia()->listarProductos();
+
+    for (int i = 0; i < productos.size(); i++) {
+        if (productos[i]->getCodigo() == codigoProducto) {
+            producto = productos[i];
+        }
+    }
+    if (producto == NULL) {
+        throw 1;
+    }
+
+    vector<Calificacion*> calificaciones = producto->getCalificaciones();
+
+    if (calificaciones.empty()) {
+        throw 2;
+    }
+    return calificaciones;
+}
+
+//Caso de uso 21 consultar stock actual
+int EmpleadoController::consultarStock(string codigoProducto) {
+    vector<Producto*> productos = AdminController::getInstancia()->listarProductos();
+    for (int i = 0; i < productos.size(); i++) {
+        if (productos[i]->getCodigo() == codigoProducto) {
+            return productos[i]->getEstaEnStock();
+        }
+    }
+    throw 1;
+}
+
+vector<Producto*> EmpleadoController::consultarProductosBajoMinimo() {
+    vector<Producto*> productos = AdminController::getInstancia()->listarProductos(); //Lista completa de productos registrados en el sistema
+    vector<Producto*> productosBajoMinimo; //Vector aux para guardar solo productos que esten debajo del minimo
+    for (int i = 0; i < productos.size(); i++) {
+        if (productos[i]->getEstaEnStock() < productos[i]->getStockMinimo()) {
+            productosBajoMinimo.push_back(productos[i]);          //Si el stock actual es menor al mínimo, agrego el producto al vector de productos bajo mínimo
+        }
+    }
+    if (productosBajoMinimo.empty()) {
+        throw 1;        //Error si no encuentra productos bajo minimo
+    }
+    return productosBajoMinimo; //Lista productos que estan debajo del minimo
+}
+
+float EmpleadoController::montoTotalFacturadoAcliente(int rutCliente) {
+    ClienteRegistrado* clienteEncontrado = nullptr;
+    float montoTotal = 0;
+    for (int i = 0; i < clientes.size(); i++) {
+        if (clientes[i]->getRut() == rutCliente) {
+            clienteEncontrado = clientes[i];
+            break;
+        }
+    }
+    if (clienteEncontrado == nullptr) {
+        throw 1; //Cliente no encontrado
+    }
+
+    vector<Venta*> ventasCliente = VentaController::getInstancia()->obtenerVentasCliente(clienteEncontrado);
+
+    if (ventasCliente.empty()) {
+        throw 2; //Cliente sin ventas
+    }
+
+    for (int i = 0; i < ventasCliente.size(); i++) {
+        montoTotal += ventasCliente[i]->getPrecioTotal();
+    }
+    return montoTotal;
 }
 
 

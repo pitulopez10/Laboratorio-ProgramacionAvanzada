@@ -55,8 +55,13 @@ public:
     vector<Venta*> consultarHistorialDeCompras(ClienteRegistrado* cliente) const;
     Venta* seleccionarVentaDeHistorial(vector<Venta*> historial, string idBuscado);
 
-    Producto* consultarInfoDetalladaProducto(string codigoProducto);
-    void consultarStock();
+    void registrarRecepcionDeOrden(string idOrden);//Caso de uso 18
+    vector<Calificacion*> consultarCalificacionesProducto(string codigoProducto);//Caso de uso 20
+    int consultarStock(string codigoProducto);//Caso de uso 21
+    vector<Producto*> consultarProductosBajoMinimo();//Caso de uso 22
+    float montoTotalFacturadoAcliente(int rutCliente); //Caso de uso 23
+    Producto* consultarInfoDetalladaProducto(string codigoProducto);//Caso de uso 25
+
 
     //METODOS
     void agregarLineaTemporalOrden(Producto* producto, int cantidad);

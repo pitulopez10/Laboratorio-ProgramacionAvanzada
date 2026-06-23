@@ -9,7 +9,7 @@
 Producto::Producto() {
 
 }
-Producto::Producto(string nombre, string codigo, string descripcion, float precioUnitario, float puntajePromedio, int cantVendidas, int estaEnStock, Categoria* categoria) {
+Producto::Producto(string nombre, string codigo, string descripcion, float precioUnitario, float puntajePromedio, int cantVendidas, int estaEnStock, Categoria* categoria, int stockMinimo) {
     this->nombre = nombre;
     this->codigo = codigo;
     this->descripcion = descripcion;
@@ -18,6 +18,7 @@ Producto::Producto(string nombre, string codigo, string descripcion, float preci
     this->cantVendidas = cantVendidas;
     this->estaEnStock = estaEnStock;
     this->categoria = categoria;
+    this->stockMinimo = stockMinimo;
 }
 
 //GETTERS
@@ -46,6 +47,12 @@ int Producto::getEstaEnStock() {
 Categoria* Producto::getCategoria() {
     return this->categoria;
 }
+int Producto::getStockMinimo() {
+    return this->stockMinimo;
+}
+vector<Calificacion*> Producto::getCalificaciones() {
+    return calificaciones;
+}
 
 //SETTERS
 
@@ -70,9 +77,14 @@ void Producto::setCantVendidas(int cantVendidas) {
 void Producto::setEstaEnStock(int estaEnStock) {
     this->estaEnStock = estaEnStock;
 }
-
 void Producto::setCategoria(Categoria *categoria) {
     this->categoria = categoria;
+}
+void Producto::setStockMinimo(int stockMinimo) {
+    this->stockMinimo = stockMinimo;
+}
+void Producto::setCalificaciones(vector<Calificacion*> calificaciones) {
+    this->calificaciones = calificaciones;
 }
 
 //METODOS

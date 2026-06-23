@@ -211,7 +211,7 @@ ClienteRegistrado* VentaController::iniciarSesion(string correo, string password
             return clientesRegistrados[i];
         }
     }
-            return NULL;
+    return NULL;
 }
 
 //CERRAR SESION

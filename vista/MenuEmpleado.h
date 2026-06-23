@@ -28,8 +28,11 @@ class MenuEmpleado {
         void consultarInfoDetalladaProducto();
         void emitirOrdenDeCompra();
         void cancelarOdenDeCompra();
-        
+        void registrarRecepcionDeOrden();
+        void consultarCalificacionesProducto();
         void consultarStock();
+        void consultarProductosBajoMinimo();
+        void montoTotalFacturadoAcliente();
     public:
         MenuEmpleado(EmpleadoController* controllerEmp,
         VentaController* controllerVenta,

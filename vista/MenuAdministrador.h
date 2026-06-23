@@ -31,10 +31,18 @@ class MenuAdministrador {
         void listarCategorias();
 
         void listarProductos();
-        void listarProveedores();   
+        void listarProveedores();
+
+        void consultarCalificacionesProducto();
+        void consultarInfoDetalladaProducto();
+
+        void consultarStock();
+        void consultarProductosBajoMinimo();
+        void montoTotalFacturadoAcliente();
 
     public:
         MenuAdministrador(AdminController* adminCtrl);
+
         void mostrar();
 
 };

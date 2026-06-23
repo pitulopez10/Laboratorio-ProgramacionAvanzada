@@ -106,6 +106,7 @@ void MenuEmpleado::mostrar() {
                     cout << "\n--- ORDENES DE COMPRA ---\n";
                     cout << "1. Emitir orden de compra" << endl;
                     cout << "2. Cancelar orden de compra" << endl;
+                    cout << "3. Registrar recepcion de orden" << endl;
                     cout << "0. Volver" << endl;
                     cout << "Elegir opcion: ";
                     cin >> opcionOrdenes;
@@ -117,6 +118,9 @@ void MenuEmpleado::mostrar() {
                             break;
                         case 2:
                             cancelarOdenDeCompra();
+                            break;
+                        case 3:
+                            registrarRecepcionDeOrden();
                             break;
                         case 0:
                             break;
@@ -132,10 +136,12 @@ void MenuEmpleado::mostrar() {
 
             case 4: {
                 int opcionReportes;
-
                 do {
                     cout << "\n--- REPORTES ---\n";
-                    cout << "1. Consultar stock" << endl;
+                    cout << "1. Consultar stock actual" << endl;
+                    cout << "2. Consultar productos bajo minimo" << endl;
+                    cout << "3. Monto total facturado a cliente" << endl;
+                    cout << "4. Unidades vendidas de producto" << endl;
                     cout << "0. Volver" << endl;
                     cout << "Elegir opcion: ";
                     cin >> opcionReportes;
@@ -145,6 +151,10 @@ void MenuEmpleado::mostrar() {
                         case 1:
                             consultarStock();
                             break;
+                        case 2:
+                            consultarProductosBajoMinimo();
+                        case 3:
+                            montoTotalFacturadoAcliente();
                         case 0:
                             break;
                         default:
@@ -739,8 +749,79 @@ void MenuEmpleado::cancelarOdenDeCompra() {
 }
 
 
-void::MenuEmpleado::consultarStock() {
-    empleadoCtrl->consultarStock();
+void MenuEmpleado::registrarRecepcionDeOrden() {
+    string idOrden;
+    cout << "\n--- REGISTRAR RECEPCION DE COMPRA ---\n";
+    cout << "Ingrese el ID de la compra: ";
+    cin >> idOrden;
+    try {
+        empleadoCtrl->registrarRecepcionDeOrden(idOrden);
+        cout << "Recepcion registrada correctamente.";
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe una orden de compra con ese ID" << endl;
+        } else if (error == 2) {
+            cout << "La orden ya fue recibida o no esta pendiente." << endl;
+        }
+    }
+}
+
+
+
+void MenuEmpleado::consultarStock() {
+    string codigoProducto;
+    int stock;
+    cout << "\n--- CONSULTAR STOCK ---\n";
+    cout << "Ingrese el codigo del producto: ";
+    cin >> codigoProducto;
+    try {
+        stock = EmpleadoController::getInstancia()->consultarStock(codigoProducto);
+        cout << "\nStock actual del producto: " << stock << endl;
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe un producto con ese codigo.";
+        }
+    }
+}
+
+void MenuEmpleado::consultarProductosBajoMinimo() {
+    try {
+        vector<Producto*> productos = EmpleadoController::getInstancia()->consultarProductosBajoMinimo();
+        cout << "\n--- PRODUCTOS DEBAJO DEL STOCK MINIMO ---\n";
+        for (int i = 0; i < productos.size(); i++) {
+            cout << "Nombre: " << productos[i]->getNombre() << endl;
+            cout << "Codigo: " << productos[i]->getCodigo() << endl;
+            cout << "Stock actual: " << productos[i]->getEstaEnStock() << endl;
+            cout << "Stock minimo: " << productos[i]->getStockMinimo() << endl;
+            cout << "-----------------------------\n";
+        }
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No hay productos debajo del stock minimo.";
+        }
+    }
+}
+
+void MenuEmpleado::montoTotalFacturadoAcliente() {
+    int rutCliente;
+    cout << "\n--- MONTO TOTAL FACTURADO A CLIENTE ---\n";
+    cout << "Ingrese el RUT del cliente: ";
+    cin >> rutCliente;
+    try {
+        float montoTotal = EmpleadoController::getInstancia()->montoTotalFacturadoAcliente(rutCliente);
+        cout << "Monto total facturado al cliente: $" << montoTotal << endl;
+
+    }
+    catch (int error) {
+        if (error == 1) {
+            cout << "No existe un cliente registrado con ese RUT.";
+        } else if (error == 2) {
+            cout << "El cliente no tiene ventas registradas.";
+        }
+    }
 }
 
 void MenuEmpleado::cerrarSesion() {

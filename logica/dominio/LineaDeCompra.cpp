@@ -12,7 +12,11 @@ LineaDeCompra :: LineaDeCompra(float precioCompra, Producto* producto, int tiemp
 }
 
 //GETTERS
-float LineaDeCompra :: getPrecioCompra() {
+int LineaDeCompra::getCantidad() {
+    return this-> cantidad;
+}
+
+float LineaDeCompra::getPrecioCompra() {
     return precioCompra;
 }
 
@@ -25,11 +29,15 @@ int LineaDeCompra :: getTiempoEntrega() {
 }
 
 //SETTERS
-void LineaDeCompra :: setPrecioCompra(float precioCompra) {
+void LineaDeCompra::setCantidad(int cantidad) {
+    this-> cantidad = cantidad;
+}
+
+void LineaDeCompra::setPrecioCompra(float precioCompra) {
     this-> precioCompra = precioCompra;
 }
 
-void LineaDeCompra :: setProducto(Producto* producto) {
+void LineaDeCompra::setProducto(Producto* producto) {
     this-> producto = producto;
 }
 

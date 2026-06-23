@@ -42,6 +42,7 @@ add_executable(Laboratorio3 main.cpp
         logica/dominio/Venta.h
         logica/dominio/LineaDeCompra.cpp
         logica/dominio/LineaDeCompra.h
+        logica/dominio/LineaOrden.cpp
         logica/dominio/Empleado.cpp
         logica/dominio/Empleado.h
         logica/dominio/Admin.cpp

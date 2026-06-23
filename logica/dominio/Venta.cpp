@@ -47,6 +47,7 @@ Cliente* Venta::getCliente() {
     return cliente;
 }
 
+
 //SETTERS
 
 void Venta :: setFecha(DTFecha fecha) {
