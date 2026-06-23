@@ -52,8 +52,6 @@ public:
 
 
     void agregarProveedor(int rut, string nombre, string telContacto, string nombreContacto);
-
-    bool agregarOrdenCompra(OrdenDeCompra* ordenesCompra);
     
     void modificarProveedor(Proveedor* proveedor, string nombre, string telContacto, string nombreContacto);
     Proveedor* buscarProveedor(int rutBuscado);
@@ -69,7 +67,6 @@ public:
     vector<Categoria*> listarCategorias();
     vector<Producto*> listarProductos();
     vector<Proveedor*> listarProveedores();
-    vector<OrdenDeCompra*> crearOrdenCompra();
     vector<OrdenDeCompra*> listarOrdenesCompra();
 };
 
