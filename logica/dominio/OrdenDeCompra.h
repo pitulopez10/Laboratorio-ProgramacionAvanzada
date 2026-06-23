@@ -1,44 +1,40 @@
-//
-// Created by facuw on 27/5/2026.
-//
-
 #ifndef LABORATORIO3_ORDENDECOMPRA_H
 #define LABORATORIO3_ORDENDECOMPRA_H
 #include "DTFecha.h"
 #include "EstadoCompra.h"
+#include "LineaOrden.h"
+#include "Proveedor.h"
 #include <iostream>
 #include <vector>
 
-#include "LineaDeCompra.h"
 using namespace std;
 
-
-class OrdenDeCompra  {
+class OrdenDeCompra {
     private:
+        string idOrden;
         DTFecha fechaEmision;
         EstadoCompra estado;
-        string idOrden;
-        vector<LineaDeCompra*> lineasCompra;
+        Proveedor* proveedor;
+        vector<LineaOrden*> lineasOrden;
 
     public:
         OrdenDeCompra();
-        OrdenDeCompra(DTFecha fechaEmision, EstadoCompra estado, string idOrden);
+        OrdenDeCompra(string idOrden, DTFecha fechaActual, Proveedor* proveedor);
 
-        //GETTERS
-        DTFecha getFechaEmision() const;
-        EstadoCompra getEstado() const;
+        // GETTERS
         string getIdOrden() const;
-        vector<LineaDeCompra*> getLineasCompra();
+        DTFecha getFechaEmision() const;
+        Proveedor* getProveedor() const;
+        EstadoCompra getEstado() const;
+        //para filtrar solo las ordenes en estado pendiente
+        vector<LineaOrden*> getLineasOrden();
 
-        //SETTERS
+        // SETTERS
         void setFechaEmision(DTFecha fechaEmision);
-        void setEstado(EstadoCompra estado);
-        void setIdOrden(string idOrden);
+        void setEstado(EstadoCompra nuevoEstado);
 
-        //METODOS
-        void agregarLineaCompra(LineaDeCompra* lineaCompra);
+        // METODOS
+        void agregarLineaOrden(LineaOrden* lineaOrden);
 };
 
-
-
-#endif //LABORATORIO3_ORDENDECOMPRA_H
+#endif

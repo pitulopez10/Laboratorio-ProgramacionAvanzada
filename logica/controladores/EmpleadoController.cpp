@@ -169,6 +169,44 @@ Venta* EmpleadoController::seleccionarVentaDeHistorial(vector<Venta*> historial,
     throw 1;
 }
 
+vector<LineaOrden*> EmpleadoController::getLineasTempOrden() const {
+    return lineasTempOrden; 
+}
+
+//EMITIR ORDEN DE COMPRA
+void EmpleadoController::agregarLineaTemporalOrden(Producto* producto, int cantidad) {
+    LineaOrden* linea = new LineaOrden(producto, cantidad);
+
+    this->lineasTempOrden.push_back(linea); 
+}
+
+void EmpleadoController::limpiarLineasTemporalesOrden() {
+    //liberar memoria
+    for (LineaOrden* l : this->lineasTempOrden) {
+        delete l;
+    }
+    //limpiar
+    this->lineasTempOrden.clear();
+}
+
+void EmpleadoController::registrarOrdenDeCompra(Proveedor* proveedor, vector<LineaOrden*> lineasTemp, DTFecha fechaActual, DTHora horaActual) {
+    
+    if (lineasTemp.empty()) {
+        throw 1; 
+    }
+    string idGenerado = "OC-" + to_string(this->listaOrdenes.size() + 1);
+    OrdenDeCompra* nuevaOrden = new OrdenDeCompra(idGenerado, fechaActual, proveedor);
+
+    for (LineaOrden* linea : lineasTemp) {
+        nuevaOrden->agregarLineaOrden(linea);
+    }
+    this->listaOrdenes.push_back(nuevaOrden);
+}
+
+
+
+
+
 
 void EmpleadoController::consultarStock() {
 

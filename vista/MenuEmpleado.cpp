@@ -7,6 +7,7 @@
 #include "../logica/controladores/EmpleadoController.h"
 #include "../logica/controladores/VentaController.h"
 #include "../logica/controladores/AdminController.h"
+#include "../logica/dominio/LineaDeCompra.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -557,9 +558,130 @@ void MenuEmpleado::consultarInfoDetalladaProducto() {
         }
     }
 }
+void MenuEmpleado::emitirOrdenDeCompra() { 
+    int rutProveedor;
+    cout << "\n=====================================\n";
+    cout << "====== EMITIR ORDEN DE COMPRA =======";
+    cout << "\n======================================\n";
+    
+    vector<Proveedor*> proveedores = adminCtrl->listarProveedores();
+    for (Proveedor* p : proveedores) {
+        cout << "RUT: " << p->getRut() << endl; 
+        cout << "Nombre: " << p->getNombre() << endl;
+    }
+    
+    cout << "\nIngrese el RUT del proveedor a seleccionar: ";
+    cin >> rutProveedor;
+    cin.ignore();
+    
+    Proveedor* proveedor = adminCtrl->buscarProveedor(rutProveedor);
+    if(!proveedor) {
+        cout << "\n--- No existe un proveedor registrado con ese RUT ---\n\n";
+        cout << "Enter para continuar";
+        cin.get();
+        return; 
+    }
+    
+    empleadoCtrl->limpiarLineasTemporalesOrden();
+    string opcion;
 
-void MenuEmpleado::emitirOrdenDeCompra() { }
-void MenuEmpleado::cancelarOdenDeCompra() { }
+    do {
+        string codigoProducto;
+        int cantidad;
+
+        cout << "\n=== Agregar nueva linea de orden ===\n";
+        cout << "Ingrese el codigo del producto: ";
+        getline(cin, codigoProducto);
+
+        Producto* producto = adminCtrl->buscarProducto(codigoProducto);
+        if(!producto) {
+            cout << "--- El producto no existe en el sistema ---\n";
+            cout << "Enter para continuar";
+            cin.get();
+            continue;
+        }
+        
+        LineaDeCompra* info = proveedor->buscarLineaDeCompra(codigoProducto);
+
+        if(!info) {
+            cout << "--- Este proveedor no puede abastecer este producto ---\n";
+            cout << "Enter para continuar";
+            cin.get();
+        } else {
+            cout << "Precio de compra vigente: $" << info->getPrecioCompra() << endl;
+            cout << "Tiempo de entrega estimado: " << info->getTiempoEntrega() << " dias\n";
+
+            cout << "Ingrese cantidad: ";
+            cin >> cantidad;
+            cin.ignore();
+
+            if(cantidad <= 0) {
+                cout << "Cantidad inválida.\n";
+            } else {
+                empleadoCtrl->agregarLineaTemporalOrden(producto, cantidad);
+                cout << "--- Linea agregada correctamente ---\n";
+            }
+        }
+        cout << "\n¿Desea seguir agregando líneas de detalle? (si/no): ";
+        cin >> opcion;
+        cin.ignore();
+
+    } while(opcion == "si");
+    
+    vector<LineaOrden*> lineasTemp = empleadoCtrl->getLineasTempOrden();
+
+    cout << "\n===== RESUMEN DE LA ORDEN =====\n";
+    cout << "Proveedor: " << proveedor->getNombre() <<endl;
+    
+    DTFecha fechaActual = empleadoCtrl->obtenerFechaActual(); 
+    DTHora horaActual = empleadoCtrl->obtenerHoraActual();
+    
+    cout << "Cantidad de lineas: " << lineasTemp.size() << endl;
+    cout << "Fecha: " << fechaActual.getDia() << "/" << fechaActual.getMes() << "/" << fechaActual.getAnio() << endl;
+    cout << "\nDetalle de productos:\n";
+    
+    // ---> AQUI AGREGAMOS EL FOR PARA IMPRIMIR EL RESUMEN DE LOS PRODUCTOS CARGADOS <---
+    for(LineaOrden* linea : lineasTemp) {
+        cout << "- Producto: " << linea->getProducto()->getNombre() 
+             << " | Cantidad: " << linea->getCantidad() << endl;
+    }
+
+    cout << "\n¿Desea confirmar la orden? (si/no): ";
+    cin >> opcion;
+    cin.ignore();
+
+    if(opcion == "si") {
+        try {
+            empleadoCtrl->registrarOrdenDeCompra(proveedor, lineasTemp, fechaActual, horaActual);
+            empleadoCtrl->limpiarLineasTemporalesOrden();
+            
+            cout << "\n--- La orden ha sido registrada con estado 'PENDIENTE' ---\n";
+        } 
+        catch(int error) {
+            if(error == 1) {
+                cout << "Debe agregar al menos una linea a la orden de compra\n";
+            }
+        }
+    } else {
+        empleadoCtrl->limpiarLineasTemporalesOrden();
+        cout << "\n--- Orden de compra cancelada ---\n";
+        cout << "Enter para continuar";
+        cin.get();
+    }
+}
+
+void MenuEmpleado::cancelarOdenDeCompra() {
+/*El caso de uso comienza cuando el Empleado desea cancelar una orden de
+compra pendiente. El sistema lista todas las órdenes con estado 'pendiente',
+mostrando para cada una su identificador, proveedor, fecha de emisión y
+cantidad de líneas. El Empleado selecciona la orden que desea cancelar
+ingresando su identificador.
+El sistema muestra el detalle completo de la orden seleccionada y solicita
+confirmación. En caso de confirmar, la orden pasa al estado 'cancelada'. El
+sistema informa que una orden cancelada no generará movimiento de stock.
+En caso de cancelar la operación, no se realiza ningún cambio*/
+
+}
 
 
 void::MenuEmpleado::consultarStock() {

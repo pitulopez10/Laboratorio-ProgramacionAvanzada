@@ -153,7 +153,7 @@ void AdminController::eliminarProducto(string codigo) {
 
     Producto* producto = NULL;
 
-    for (int i =0; i < productos.size(); i++) {
+    for (int i = 0; i < productos.size(); i++) {
         if (productos[i]->getCodigo() == codigo) {
             producto = productos[i];
         }
@@ -165,9 +165,12 @@ void AdminController::eliminarProducto(string codigo) {
     if (producto->getCantVendidas() > 0) {
         throw 2;
     }
+    
     for(int i = 0; i < ordenesCompra.size(); i++) {
         if(ordenesCompra[i]->getEstado() == PENDIENTE) {
-            vector<LineaDeCompra*> lineas = ordenesCompra[i]->getLineasCompra();
+            
+            vector<LineaOrden*> lineas = ordenesCompra[i]->getLineasOrden(); 
+            
             for(int j = 0; j < lineas.size(); j++) {
                 if(lineas[j]->getProducto()->getCodigo() == codigo) {
                     throw 3;

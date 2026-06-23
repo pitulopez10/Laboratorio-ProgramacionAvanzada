@@ -80,3 +80,12 @@ void Proveedor::actualizarDatosProducto(string codigoProducto, float nuevoPrecio
         }
     }
 }
+LineaDeCompra* Proveedor::buscarLineaDeCompra(string codigoProducto) {
+    for (LineaDeCompra* linea : this->lineasAsociadas) {
+        
+        if (linea->getProducto()->getCodigo() == codigoProducto) {
+            return linea;
+        }
+    }
+    return nullptr;
+}

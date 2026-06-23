@@ -1,15 +1,17 @@
-//
 // Created by facuw on 3/6/2026.
 //
 
 #ifndef LABORATORIO3_EMPLEADOCONTROLLER_H
 #define LABORATORIO3_EMPLEADOCONTROLLER_H
+
 #include "../dominio/Venta.h"
 #include "../dominio/DTFecha.h"
 #include "../dominio/DTHora.h"
 #include "../dominio/Empleado.h"
 #include "../dominio/Cliente.h"
 #include "../dominio/EstadoCompra.h"
+#include "../dominio/OrdenDeCompra.h" 
+#include "../dominio/Proveedor.h"
 #include "../controladores/AdminController.h"
 #include "../controladores/VentaController.h"
 #include <string>
@@ -27,9 +29,11 @@ private:
     vector<Empleado*> empleados;
     vector<ClienteRegistrado*> clientes;
 
+    vector<OrdenDeCompra*> listaOrdenes;
+    vector<LineaOrden*> lineasTempOrden;
+
     static EmpleadoController* instancia;
     Empleado* empleadoLogeado;
-
 
 public:
     EmpleadoController();
@@ -41,7 +45,6 @@ public:
     void cerrarSesion();
 
     //METODOS
-    
     void altaClienteRegistrado(int rut, string nombreCompleto, string direccion, string correo, string password);
     void modificarClienteRegistrado(ClienteRegistrado* cliente, string nombreCompleto, string direccion, string correo, string password);
 
@@ -55,6 +58,13 @@ public:
     Producto* consultarInfoDetalladaProducto(string codigoProducto);
     void consultarStock();
 
+    //METODOS
+    void agregarLineaTemporalOrden(Producto* producto, int cantidad);
+    void limpiarLineasTemporalesOrden();
+    void registrarOrdenDeCompra(Proveedor* proveedor, vector<LineaOrden*> lineasTemp, DTFecha fechaActual, DTHora horaActual);
+    
+    vector<LineaOrden*> getLineasTempOrden() const ;
+
     //METODOS AUXILIARES
     void validarRutCliente(int rut);
     void validarCorreoCliente(string correo);
@@ -62,7 +72,5 @@ public:
     DTHora obtenerHoraActual();    
     ClienteRegistrado* buscarCliente(int rutBuscado);
 };
-
-
 
 #endif //LABORATORIO3_EMPLEADOCONTROLLER_H

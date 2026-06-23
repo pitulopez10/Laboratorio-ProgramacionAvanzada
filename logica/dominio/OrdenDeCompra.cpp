@@ -5,49 +5,54 @@
 #include "OrdenDeCompra.h"
 #include "DTFecha.h"
 #include "EstadoCompra.h"
+#include "Producto.h"
+#include "LineaOrden.h"
 #include <iostream>
 using namespace std;
 
+#include "OrdenDeCompra.h"
 
-//CONSTRUCTORES
 OrdenDeCompra::OrdenDeCompra() {
 
 }
-
-OrdenDeCompra::OrdenDeCompra(DTFecha fechaEmision, EstadoCompra estado, string idOrden) {
-  this->fechaEmision = fechaEmision;
-  this->estado = estado;
+OrdenDeCompra::OrdenDeCompra(string idOrden, DTFecha fechaEmision, Proveedor* proveedor) {
   this->idOrden = idOrden;
+  this->fechaEmision = fechaEmision;
+  this->proveedor = proveedor;
+
+  //la orden se registra en estado 'pendiente'
+  this->estado = PENDIENTE;
 }
 
-//GETTERS
+// GETTERS
+string OrdenDeCompra::getIdOrden() const {
+  return this->idOrden;
+}
 DTFecha OrdenDeCompra::getFechaEmision() const {
   return this->fechaEmision;
+}
+Proveedor* OrdenDeCompra::getProveedor() const {
+  return this->proveedor;
 }
 EstadoCompra OrdenDeCompra::getEstado() const {
   return this->estado;
 }
-string OrdenDeCompra::getIdOrden() const {
-  return this->idOrden;
-}
-vector<LineaDeCompra*> OrdenDeCompra::getLineasCompra() {
-  return lineasCompra;
+
+vector<LineaOrden*> OrdenDeCompra::getLineasOrden() {
+  return this->lineasOrden;
 }
 
-
-//SETTERS
+// SETTERS
 void OrdenDeCompra::setFechaEmision(DTFecha fechaEmision) {
   this->fechaEmision = fechaEmision;
 }
-void OrdenDeCompra::setEstado(EstadoCompra estado) {
+
+void OrdenDeCompra::setEstado(EstadoCompra nuevoEstado) {
   this->estado = estado;
 }
-void OrdenDeCompra::setIdOrden(string idOrden) {
-  this->idOrden = idOrden;
+
+// METODOS
+void OrdenDeCompra::agregarLineaOrden(LineaOrden* lineaOrden) {
+    this->lineasOrden.push_back(lineaOrden);
 }
 
-//METODOS
-
-void OrdenDeCompra::agregarLineaCompra(LineaDeCompra* lineaCompra) {
-  lineasCompra.push_back(lineaCompra);
-}

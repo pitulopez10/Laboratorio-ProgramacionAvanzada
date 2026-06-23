@@ -46,6 +46,8 @@ public:
     bool abasteceProducto(string codigoProducto); 
     void agregarProducto(Producto* p, float precioCompra, int tiempoEntrega);
     void actualizarDatosProducto(string codigoProducto, float nuevoPrecio, int nuevoTiempo);
+    LineaDeCompra* buscarLineaDeCompra(string codigoProducto);
+
 
 };
 
