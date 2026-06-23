@@ -23,6 +23,7 @@ class MenuAdministrador {
         void eliminarProducto();
 
         void agregarProveedor();
+        void modificarProveedor();
 
         //FUNCIONES DE LISTAR
         void listarEmpleados();

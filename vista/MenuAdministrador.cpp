@@ -119,6 +119,7 @@ void MenuAdministrador::mostrar() {
                 cout << "\n--- GESTION DE PROVEEDORES ---\n";
                 cout << "1. Agregar proveedor\n";
                 cout << "2. Listar proveedores\n";
+                cout << "3. Modificar proveedor\n";
                 cout << "0. Volver\n";
                 cin >> opProveedor;
                 switch(opProveedor) {
@@ -127,6 +128,9 @@ void MenuAdministrador::mostrar() {
                         break;
                     case 2:
                         listarProveedores();
+                        break;
+                    case 3:
+                        modificarProveedor();
                         break;
                     case 0:
                         break;
@@ -388,6 +392,58 @@ void MenuAdministrador::agregarProveedor() {
         }
         else if(error == 2) {
             cout << "El tiempo de entrega no puede ser negativo." << endl;
+        }
+    }
+}
+
+void MenuAdministrador::modificarProveedor() {
+    int rutBuscado;
+    string nuevoNombre, nuevoTelContacto, nuevoNombreContacto;
+
+    cout << "\n=== MODIFICAR PROVEEDOR ===\n";
+    vector<Proveedor*> proveedores = adminCtrl->listarProveedores();
+    for (Proveedor* p : proveedores) {
+        cout << "RUT: " << p->getRut() << endl; 
+        cout << "Nombre: " << p->getNombre() << endl;
+    }
+
+    cout << "\nIngrese el RUT del proveedor a modificar: ";
+    cin >> rutBuscado;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    Proveedor* proveedor = adminCtrl->buscarProveedor(rutBuscado);
+    if (!proveedor) {
+        cout << "\n---- No existe ningun proveedor registrado con ese RUT ----\n";
+    } else {
+        cout << "\n------------------------------------\n";
+        cout << "==== DATOS ACTUALES DEL PROVEEDOR ====";
+        cout << "\n------------------------------------\n";
+        cout << "RUT: " << proveedor->getRut() << endl;
+        cout << "Nombre de empresa: " << proveedor->getNombre() << endl;
+        cout << "Teléfono de contacto: " << proveedor->getTelContacto() << endl;
+        cout << "Contacto Comercial: " << proveedor->getNombreContacto() << endl;
+
+        cout << "\n=== === MODIFICAR PROVEEDOR === ===\n";
+        cout << "(Deje el campo vacio y presione Enter para mantener el valor actual)\n\n";
+
+        cout << "Ingrese nuevo nombre: ";
+        getline(cin, nuevoNombre);
+
+        cout << "Ingrese nuevo telefono: ";
+        getline(cin, nuevoTelContacto);
+
+        cout << "Ingrese nuevo contacto: ";
+        getline(cin, nuevoNombreContacto);
+        string confirmacion;
+        cout << "\n¿Desea confirmar la modificacion de datos? (si/no): ";
+        cin >> confirmacion;
+        cin.ignore();
+
+        if (confirmacion == "si") {
+            adminCtrl->modificarProveedor(proveedor, nuevoNombre, nuevoTelContacto, nuevoNombreContacto);
+            cout << "\n---- Proveedor modificado correctamente ----\n";
+        } else {
+            cout << "\n---- Modificacion cancelada ----\n";
         }
     }
 }

@@ -55,6 +55,10 @@ public:
                           string nombreContacto, int tiempoEntrega);
 
     bool agregarOrdenCompra(OrdenDeCompra* ordenesCompra);
+    
+    void modificarProveedor(Proveedor* proveedor, string nombre, string telContacto, string nombreContacto);
+
+    Proveedor* buscarProveedor(int rutBuscado);
 
     //FUNCIONES DE LISTAR
     vector<Empleado*> listarEmpleados();

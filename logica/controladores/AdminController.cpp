@@ -198,6 +198,28 @@ void AdminController::agregarProveedor(int rut, string nombre, string telContact
     proveedores.push_back(proveedor);
 }
 
+Proveedor* AdminController::buscarProveedor(int rutBuscado) {
+    for(Proveedor* p : proveedores) {
+        if (p->getRut() == rutBuscado) {
+            return p;
+        }
+    }
+    return nullptr;
+}
+
+void AdminController::modificarProveedor(Proveedor* proveedor, string nombre, string telContacto, string nombreContacto) {
+    if(nombre != "") {
+        proveedor->setNombre(nombre);
+    }
+    if(telContacto != "") {
+        proveedor->setTelContacto(telContacto);
+    }    
+    if(nombreContacto != "") {
+        proveedor->setNombreContacto(nombreContacto);
+    }
+}
+
+
 bool AdminController::agregarOrdenCompra(OrdenDeCompra* ordenesCompra) {
 
 }
