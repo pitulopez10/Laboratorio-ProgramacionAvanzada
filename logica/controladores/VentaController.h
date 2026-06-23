@@ -30,14 +30,27 @@ public:
     ClienteRegistrado* iniciarSesion(string correo, string password);
     void cerrarSesion();
 
-    void nuevaVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal);
+    //FUNCIONES AUXILIARES REGISTRAR VENTA
+    void agregarVenta(Venta* v);
+    void agregarLineaTemporal(Producto* Producto, int cantidad);
+    void limpiarLineasTemporales();
+    string generarIdVenta();
+    float calcularTotal(vector<LineaDeDetalle*> lineas);    
+    
+    //FUNCIONES AUXILIARES HISTORIAL CLIENTE
+    vector<Venta*> obtenerVentasCliente(ClienteRegistrado* cliente);
+    static bool compararVentas(Venta* v1, Venta* v2);
+    void ordenarVentasPorFecha(vector<Venta*>& ventas);
+
+    //GETTERS
+    vector<LineaDeDetalle*> getLineasTemp();
+
+    void validarCompra(int rut, string codigoProducto);
     vector<Venta*> listarVentas();
     void consultarStock();
 
-    void consultarHistorialDeCompras(int rut, string codigoProducto);
     void calificarProducto(int rut, string codigoProducto, int puntaje, string comentario, DTFecha fecha);  //Caso uso 19
     Producto* consultarInfoDetalladaProducto(string codigoProducto);   //Caso uso 25
-
 };
 
 #endif //LABORATORIO3_VENTACONTROLLER_H

@@ -3,9 +3,11 @@
 //
 #include "VentaController.h"
 #include "AdminController.h"
+#include "EmpleadoController.h"
 
 #include <vector>
 #include <string>
+#include <algorithm>
 
 #include "../dominio/Venta.h"
 #include "../dominio/DTFecha.h"
@@ -32,14 +34,102 @@ VentaController* VentaController::getInstancia() {
 
 }
 
-void VentaController::nuevaVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal) {}
+//GETTERS
+
+vector<LineaDeDetalle*> VentaController::getLineasTemp() {
+    return lineas;
+}
+
+
+//REGISTRAR VENTA
+//Agrega lineas temporales a un vector hasta que el usuario confirme la venta
+void VentaController::agregarLineaTemporal(Producto* producto,int cantidad) {
+    
+    if(producto->getEstaEnStock() < cantidad)
+    {
+        throw 1;
+    }    
+    LineaDeDetalle* linea = new LineaDeDetalle(cantidad, producto->getPrecioUnitario(), producto);
+
+    lineas.push_back(linea);
+}
+//Si el usuario cancela la confirmacion de registrarVenta
+void VentaController::limpiarLineasTemporales() {
+    lineas.clear();
+}
+
+string VentaController::generarIdVenta() {
+    return "V" + to_string(ventas.size() + 1);
+}
+
+float VentaController::calcularTotal(vector<LineaDeDetalle*> lineas) {
+    float total = 0;
+    for(LineaDeDetalle* l : lineas)
+    {
+        total += l->getCantidad() * l->getPrecioUnitario();
+    }
+    return total;
+}
+
+void VentaController::agregarVenta(Venta* v) {
+    ventas.push_back(v);
+}
+
+//CONSULTAR HISTORIAL CLIENTE
+
+vector<Venta*> VentaController::obtenerVentasCliente(ClienteRegistrado* cliente)
+{
+    vector<Venta*> resultado;
+
+    for(Venta* v : ventas)
+    {
+        if(v->getCliente() == cliente)
+        {
+            resultado.push_back(v);
+        }
+    }
+
+    return resultado;
+}
+
+//Ordenar ventas
+
+bool VentaController::compararVentas(Venta* v1, Venta* v2) {
+    DTFecha f1 = v1->getFecha();
+    DTFecha f2 = v2->getFecha();
+
+    if(f1.getAnio() != f2.getAnio())
+        return f1.getAnio() > f2.getAnio();
+
+    if(f1.getMes() != f2.getMes())
+        return f1.getMes() > f2.getMes();
+
+    if(f1.getDia() != f2.getDia())
+        return f1.getDia() > f2.getDia();
+
+    DTHora h1 = v1->getHora();
+    DTHora h2 = v2->getHora();
+
+    if(h1.getHora() != h2.getHora())
+        return h1.getHora() > h2.getHora();
+
+    if(h1.getMinuto() != h2.getMinuto())
+        return h1.getMinuto() > h2.getMinuto();
+
+    return h1.getSegundo() > h2.getSegundo();
+}
+
+void VentaController::ordenarVentasPorFecha(vector<Venta*>& ventas)
+{
+    sort(ventas.begin(), ventas.end(), compararVentas);
+}
 
 vector<Venta*> VentaController::listarVentas() {
     return ventas;
 }
 
 //Verifica que haya comprado un producto
-void VentaController::consultarHistorialDeCompras(int rut, string codigoProducto) {
+void VentaController::validarCompra(int rut, string codigoProducto) {
     ClienteRegistrado* cliente = NULL;
     Producto* producto = NULL;
 
@@ -128,4 +218,5 @@ ClienteRegistrado* VentaController::iniciarSesion(string correo, string password
 void VentaController::cerrarSesion() {
     clienteLogeado = NULL;
 }
+
 

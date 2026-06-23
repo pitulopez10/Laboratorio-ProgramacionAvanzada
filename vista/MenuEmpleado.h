@@ -8,10 +8,15 @@
 #include <string>
 using namespace std;
 
+class VentaController;
+class EmpleadoController;
+class AdminController;
 
 class MenuEmpleado {
     private:
         EmpleadoController* empleadoCtrl;
+        VentaController* ventaCtrl;
+        AdminController* adminCtrl;
 
         //Funciones
         void cerrarSesion();
@@ -26,11 +31,12 @@ class MenuEmpleado {
         
         void consultarStock();
     public:
-        MenuEmpleado(EmpleadoController* controllerEmp);
+        MenuEmpleado(EmpleadoController* controllerEmp,
+        VentaController* controllerVenta,
+        AdminController* controllerAdmin);
         void mostrar();
 };
 
 
 
 #endif //LABORATORIO3_MENUEMPLEADO_H
-

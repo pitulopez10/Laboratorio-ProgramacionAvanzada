@@ -10,7 +10,11 @@
 #include <string>
 #include <vector>
 #include "LineaDeDetalle.h"
+#include "Cliente.h"
+
 using namespace std;
+
+class Cliente;
 
 class Venta {
     private:
@@ -19,9 +23,10 @@ class Venta {
         DTHora hora;
         float precioTotal;
         vector<LineaDeDetalle*> lineas;
+        Cliente* cliente;
     public:
         //CONSTRUCTORES
-        Venta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal);
+        Venta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal, Cliente* cliente);
 
         void agregarLinea(LineaDeDetalle* linea);
 
@@ -30,6 +35,7 @@ class Venta {
         DTFecha getFecha();
         DTHora getHora();
         float getPrecioTotal();
+        Cliente* getCliente();
         vector<LineaDeDetalle*> getLineas();
 
         //SETTERS

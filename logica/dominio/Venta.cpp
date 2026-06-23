@@ -5,15 +5,16 @@
 #include "Venta.h"
 #include <vector>
 #include "LineaDeDetalle.h"
-
+#include "Cliente.h"
 using namespace std;
 
 //CONSTRUCTORES
-Venta ::Venta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal) {
+Venta ::Venta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal, Cliente* cliente) {
     this-> idVenta = idVenta;
     this-> fecha = fecha;
     this-> hora = hora;
     this-> precioTotal = precioTotal;
+    this-> cliente =  cliente;
 }
 
 void Venta::agregarLinea(LineaDeDetalle* linea) {
@@ -40,6 +41,10 @@ DTHora Venta :: getHora() {
  
 float Venta :: getPrecioTotal() {
     return precioTotal;
+}
+
+Cliente* Venta::getCliente() {
+    return cliente;
 }
 
 //SETTERS

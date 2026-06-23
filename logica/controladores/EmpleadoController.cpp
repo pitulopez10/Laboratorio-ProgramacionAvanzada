@@ -4,8 +4,10 @@
 
 #include "EmpleadoController.h"
 #include "AdminController.h"
+#include "VentaController.h"
 #include <string>
 #include <vector>
+#include <ctime>
 #include "../dominio/Venta.h"
 #include "../dominio/DTFecha.h"
 #include "../dominio/DTHora.h"
@@ -96,13 +98,75 @@ Producto* EmpleadoController::consultarInfoDetalladaProducto(string codigoProduc
     throw 1;
 }
 
-bool EmpleadoController::registrarVenta(string idVenta, DTFecha fecha, DTHora hora, float precioTotal){
-    return true;
+
+//REGISTRAR VENTA
+
+void EmpleadoController::registrarVenta(Cliente* cliente, vector<LineaDeDetalle*> lineasTemp, DTFecha fechaActual, DTHora horaActual, float total) {    
+    if(lineasTemp.empty()) { throw 1; }
+    string idVenta = VentaController::getInstancia()->generarIdVenta();
+    
+    Venta* nuevaVenta = new Venta(idVenta, fechaActual, horaActual, total, cliente);
+
+    agregarLineasVenta(nuevaVenta, lineasTemp);
+
+    descontarStock(lineasTemp);
+
+    VentaController::getInstancia()->agregarVenta(nuevaVenta);
+}
+//Cuando el usuario confirma el registro de la nueva venta
+void EmpleadoController::agregarLineasVenta(Venta* venta, vector<LineaDeDetalle*> lineas) {
+    for(LineaDeDetalle* l : lineas)
+    {
+        venta->agregarLinea(l);
+    }
 }
 
+void EmpleadoController::descontarStock(vector<LineaDeDetalle*> lineas) {
+    for(LineaDeDetalle* l : lineas)
+    {
+        Producto* p = l->getProducto();
+        p->setEstaEnStock(p->getEstaEnStock() - l->getCantidad());
+    }
+}
 
-void EmpleadoController::consultarHistorialDeCompras(string rut) const {
+DTFecha EmpleadoController::obtenerFechaActual() {
+    time_t ahora = time(nullptr);
+    tm* tiempo = localtime(&ahora);
+    //convierte el valor time_t en una estructura tm con la fecha organizadas
 
+    return DTFecha(tiempo->tm_mday, tiempo->tm_mon + 1/*(0-11)*/, tiempo->tm_year + 1900);
+}
+
+DTHora EmpleadoController::obtenerHoraActual()
+{
+    time_t ahora = time(nullptr);
+    tm* tiempo = localtime(&ahora);
+
+    return DTHora(tiempo->tm_hour, tiempo->tm_min, tiempo->tm_sec);
+}
+
+//CONSULTAR HISTORIAL
+
+vector<Venta*> EmpleadoController::consultarHistorialDeCompras(ClienteRegistrado* cliente) const {
+
+    vector<Venta*> ventasCliente = VentaController::getInstancia()->obtenerVentasCliente(cliente);
+
+    if (ventasCliente.empty()) {
+        throw 1;
+    } 
+    VentaController::getInstancia()->ordenarVentasPorFecha(ventasCliente);
+
+    return ventasCliente;
+
+}
+
+Venta* EmpleadoController::seleccionarVentaDeHistorial(vector<Venta*> historial, string idBuscado) {
+    for(Venta* v : historial) {
+        if(v->getIdVenta() == idBuscado) {
+            return v;
+        }
+    }
+    throw 1;
 }
 
 

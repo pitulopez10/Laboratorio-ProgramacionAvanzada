@@ -62,6 +62,8 @@ public:
     void asociarProductoProveedor(int rutProveedor, string codigoProducto, float precioCompra, int tiempoEntrega);
     void actualizarAsociacion(int rutProveedor, string codigoProducto, float precioCompra, int tiempoEntrega);
 
+    Producto* buscarProducto(string codigo);
+
     //FUNCIONES DE LISTAR
     vector<Empleado*> listarEmpleados();
     vector<Categoria*> listarCategorias();

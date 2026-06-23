@@ -45,7 +45,7 @@ void MenuPrincipal::mostrar() {
                     break;
                 }
                 else if (empleadoCtrl->iniciarSesion(correo, password) != NULL) {
-                    MenuEmpleado menuEmpleado(empleadoCtrl);
+                    MenuEmpleado menuEmpleado(empleadoCtrl, ventaCtrl, adminCtrl);
                     menuEmpleado.mostrar();
                     break;
                 }

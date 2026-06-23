@@ -263,6 +263,16 @@ vector<Producto*> AdminController::listarProductosNoAsociados(int rutProveedor) 
     return productosNoAsociados;
 }
 
+//FUNCION AUXILIAR
+Producto* AdminController::buscarProducto(string codigo) {
+    for (Producto* p : productos) {
+        if (p->getCodigo() == codigo) {
+            return p;
+        }
+    }
+    return nullptr;
+}
+
 
 bool AdminController::agregarOrdenCompra(OrdenDeCompra* ordenesCompra) {
 

@@ -8,6 +8,7 @@
 using namespace std;
 
 class Calificacion;
+class Venta;
 
 class Cliente {
 };

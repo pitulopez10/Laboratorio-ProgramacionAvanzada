@@ -3,6 +3,7 @@
 
 #include "../logica/dominio/Producto.h"
 
+
 using namespace std;
 
 MenuCliente :: MenuCliente(VentaController* ventaCtrl) {
@@ -62,7 +63,7 @@ void MenuCliente::calificarProducto() {
     cin >> codigoProducto;
 
     try {
-        ventaCtrl->consultarHistorialDeCompras(rut, codigoProducto);
+        ventaCtrl->validarCompra(rut, codigoProducto);
 
         cout<<"Ingrese dia: ";
         cin>>dia;

@@ -11,6 +11,7 @@
 #include "../dominio/Cliente.h"
 #include "../dominio/EstadoCompra.h"
 #include "../controladores/AdminController.h"
+#include "../controladores/VentaController.h"
 #include <string>
 #include <vector>
 
@@ -21,6 +22,7 @@ class AdminController;
 class EmpleadoController {
 private:
     AdminController* adminController;
+    VentaController* ventaCtrl;
     vector<Venta*> venta;
     vector<Empleado*> empleados;
     vector<ClienteRegistrado*> clientes;
@@ -43,16 +45,21 @@ public:
     void altaClienteRegistrado(int rut, string nombreCompleto, string direccion, string correo, string password);
     void modificarClienteRegistrado(ClienteRegistrado* cliente, string nombreCompleto, string direccion, string correo, string password);
 
-    bool registrarVenta(string idVenta,DTFecha fecha,DTHora hora, float precioTotal);
-    void consultarHistorialDeCompras(string rut) const;
+    void registrarVenta(Cliente* cliente, vector<LineaDeDetalle*> lineasTemp, DTFecha fechaActual, DTHora horaActual, float total);
+    void agregarLineasVenta(Venta* venta, vector<LineaDeDetalle*> lineas);
+    void descontarStock(vector<LineaDeDetalle*> lineas);
+
+    vector<Venta*> consultarHistorialDeCompras(ClienteRegistrado* cliente) const;
+    Venta* seleccionarVentaDeHistorial(vector<Venta*> historial, string idBuscado);
+
     Producto* consultarInfoDetalladaProducto(string codigoProducto);
     void consultarStock();
-
 
     //METODOS AUXILIARES
     void validarRutCliente(int rut);
     void validarCorreoCliente(string correo);
-    
+    DTFecha obtenerFechaActual();
+    DTHora obtenerHoraActual();    
     ClienteRegistrado* buscarCliente(int rutBuscado);
 };
 
