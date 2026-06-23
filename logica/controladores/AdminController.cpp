@@ -277,10 +277,6 @@ Producto* AdminController::buscarProducto(string codigo) {
 }
 
 
-bool AdminController::agregarOrdenCompra(OrdenDeCompra* ordenesCompra) {
-
-}
-
 //FUNCIONES DE LISTAR
 vector<Empleado*> AdminController::listarEmpleados() {
     return empleados;
@@ -296,10 +292,6 @@ vector<Producto*> AdminController::listarProductos() {
 
 vector<Proveedor*> AdminController::listarProveedores() {
     return proveedores;
-}
-
-vector<OrdenDeCompra*> AdminController::crearOrdenCompra() {
-
 }
 
 vector<OrdenDeCompra*> AdminController::listarOrdenesCompra() {
